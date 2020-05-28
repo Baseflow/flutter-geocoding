@@ -19,6 +19,6 @@
 ### :thinking: Checklist before submitting
 
 - [ ] All projects build
-- [ ] Follows style guide lines ([code style guide](https://github.com/Baseflow/flutter-geocoder/blob/master/CONTRIBUTING.md))
+- [ ] Follows style guide lines ([code style guide](https://github.com/Baseflow/flutter-geocoding/blob/master/CONTRIBUTING.md))
 - [ ] Relevant documentation was updated
 - [ ] Rebased onto current develop
