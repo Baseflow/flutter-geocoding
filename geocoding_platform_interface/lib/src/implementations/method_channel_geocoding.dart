@@ -6,8 +6,8 @@ import 'package:meta/meta.dart';
 import '../geocoding_platform_interface.dart';
 import '../models/models.dart';
 
-/// An implementation of [geocodingPlatform] that uses method channels.
-class MethodChannelgeocoding extends geocodingPlatform {
+/// An implementation of [GeocodingPlatform] that uses method channels.
+class MethodChannelGeocoding extends GeocodingPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
   MethodChannel methodChannel = MethodChannel('flutter.baseflow.com/geocoding');

@@ -11,64 +11,66 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('$geocodingPlatform', () {
-    test('$MethodChannelgeocoding is the default instance', () {
-      expect(geocodingPlatform.instance, isA<MethodChannelgeocoding>());
+  group('$GeocodingPlatform', () {
+    test('$MethodChannelGeocoding is the default instance', () {
+      expect(GeocodingPlatform.instance, isA<MethodChannelGeocoding>());
     });
 
     test('Cannot be implemented with `implements`', () {
       expect(() {
-        geocodingPlatform.instance = ImplementsgeocodingPlatform();
+        GeocodingPlatform.instance = ImplementsGeocodingPlatform();
       }, throwsNoSuchMethodError);
     });
 
     test('Can be extended', () {
-      geocodingPlatform.instance = ExtendsgeocodingPlatform();
+      GeocodingPlatform.instance = ExtendsGeocodingPlatform();
     });
 
     test('Can be mocked with `implements`', () {
-      final mock = MockgeocodingPlatform();
-      geocodingPlatform.instance = mock;
+      final mock = MockGeocodingPlatform();
+      GeocodingPlatform.instance = mock;
     });
 
     test(
-      // ignore: lines_longer_than_80_chars
-      'Default implementation of placemarkFromAddress should throw unimplemented error',
-      (){
-        // Arrange
-        final geocodingPlatform = ExtendsgeocodingPlatform();
+        // ignore: lines_longer_than_80_chars
+        'Default implementation of placemarkFromAddress should throw unimplemented error',
+        () {
+      // Arrange
+      final geocodingPlatform = ExtendsGeocodingPlatform();
 
-        // Act & Assert
-        expect(
-          () => geocodingPlatform.placemarkFromAddress('address'),
-          throwsUnimplementedError,
-        );
+      // Act & Assert
+      expect(
+        () => geocodingPlatform.placemarkFromAddress('address'),
+        throwsUnimplementedError,
+      );
     });
 
     test(
-      // ignore: lines_longer_than_80_chars
-      'Default implementation of placemarkFromCoordinates should throw unimplemented error',
-      (){
-        // Arrange
-        final geocodingPlatform = ExtendsgeocodingPlatform();
+        // ignore: lines_longer_than_80_chars
+        'Default implementation of placemarkFromCoordinates should throw unimplemented error',
+        () {
+      // Arrange
+      final geocodingPlatform = ExtendsGeocodingPlatform();
 
-        // Act & Assert
-        expect(
-          () => geocodingPlatform.placemarkFromCoordinates(0, 0),
-          throwsUnimplementedError,
-        );
+      // Act & Assert
+      expect(
+        () => geocodingPlatform.placemarkFromCoordinates(0, 0),
+        throwsUnimplementedError,
+      );
     });
   });
 }
 
-class ImplementsgeocodingPlatform implements geocodingPlatform {
+class ImplementsGeocodingPlatform implements GeocodingPlatform {
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class MockgeocodingPlatform extends Mock
-    // ignore: prefer_mixin
-    with MockPlatformInterfaceMixin
-    implements geocodingPlatform {}
+class MockGeocodingPlatform extends Mock
+    with
+        // ignore: prefer_mixin
+        MockPlatformInterfaceMixin
+    implements
+        GeocodingPlatform {}
 
-class ExtendsgeocodingPlatform extends geocodingPlatform {}
+class ExtendsGeocodingPlatform extends GeocodingPlatform {}

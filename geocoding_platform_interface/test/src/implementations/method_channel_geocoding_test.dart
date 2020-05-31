@@ -10,7 +10,7 @@ void main() {
       administrativeArea: 'Overijssel',
       country: 'Netherlands',
       isoCountryCode: 'NL',
-      latitude: 52.561270,      
+      latitude: 52.561270,
       locality: 'Enschede',
       longitude: 5.639382,
       name: 'Gronausestraat',
@@ -20,12 +20,12 @@ void main() {
       subThoroughfare: '',
       thoroughfare: 'Gronausestraat');
 
-  group('$MethodChannelgeocoding()', () {
+  group('$MethodChannelGeocoding()', () {
     final log = <MethodCall>[];
-    MethodChannelgeocoding methodChannelgeocoding;
+    MethodChannelGeocoding methodChannelgeocoding;
 
     setUp(() async {
-      methodChannelgeocoding = MethodChannelgeocoding();
+      methodChannelgeocoding = MethodChannelGeocoding();
 
       methodChannelgeocoding.methodChannel
           .setMockMethodCallHandler((call) async {
