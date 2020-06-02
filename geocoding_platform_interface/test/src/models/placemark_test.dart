@@ -20,6 +20,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -29,11 +30,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'different test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -43,8 +43,45 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
+      );
+
+      // Act & Assert
+      expect(
+        firstPlacemark.hashCode != secondPlacemark,
+        true,
+      );
+    });
+
+    test(
+        // ignore: lines_longer_than_80_chars
+        'hashCode should not match when the street property is different',
+        () {
+      // Arrange
+      final firstPlacemark = Placemark(
+        name: 'test value',
+        street: 'test value',
+        isoCountryCode: 'test value',
+        country: 'test value',
+        postalCode: 'test value',
+        administrativeArea: 'test value',
+        subAdministrativeArea: 'test value',
+        locality: 'test value',
+        subLocality: 'test value',
+        thoroughfare: 'test value',
+        subThoroughfare: 'test value',
+      );
+      final secondPlacemark = Placemark(
+        name: 'test value',
+        street: 'different test value',
+        isoCountryCode: 'test value',
+        country: 'test value',
+        postalCode: 'test value',
+        administrativeArea: 'test value',
+        subAdministrativeArea: 'test value',
+        locality: 'test value',
+        subLocality: 'test value',
+        thoroughfare: 'test value',
+        subThoroughfare: 'test value',
       );
 
       // Act & Assert
@@ -61,6 +98,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -70,11 +108,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'different test value',
         country: 'test value',
         postalCode: 'test value',
@@ -84,8 +121,6 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
 
       // Act & Assert
@@ -100,6 +135,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -109,11 +145,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'different test value',
         postalCode: 'test value',
@@ -123,8 +158,6 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
 
       // Act & Assert
@@ -139,6 +172,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -148,11 +182,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'different test value',
@@ -162,8 +195,6 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
 
       // Act & Assert
@@ -180,6 +211,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -189,11 +221,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -203,8 +234,6 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
 
       // Act & Assert
@@ -221,6 +250,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -230,11 +260,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -244,8 +273,6 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
 
       // Act & Assert
@@ -262,6 +289,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -271,11 +299,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -285,8 +312,6 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
 
       // Act & Assert
@@ -303,6 +328,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -312,11 +338,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -326,8 +351,6 @@ void main() {
         subLocality: 'different test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
 
       // Act & Assert
@@ -344,6 +367,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -353,11 +377,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -367,8 +390,6 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'different test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
 
       // Act & Assert
@@ -385,6 +406,7 @@ void main() {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -394,11 +416,10 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
       );
       final secondPlacemark = Placemark(
         name: 'test value',
+        street: 'test value',
         isoCountryCode: 'test value',
         country: 'test value',
         postalCode: 'test value',
@@ -408,90 +429,6 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'different test value',
-        latitude: 0,
-        longitude: 0,
-      );
-
-      // Act & Assert
-      expect(
-        firstPlacemark.hashCode != secondPlacemark,
-        true,
-      );
-    });
-
-    test(
-        // ignore: lines_longer_than_80_chars
-        'hashCode should not match when the latitude property is different',
-        () {
-      // Arrange
-      final firstPlacemark = Placemark(
-        name: 'test value',
-        isoCountryCode: 'test value',
-        country: 'test value',
-        postalCode: 'test value',
-        administrativeArea: 'test value',
-        subAdministrativeArea: 'test value',
-        locality: 'test value',
-        subLocality: 'test value',
-        thoroughfare: 'test value',
-        subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
-      );
-      final secondPlacemark = Placemark(
-        name: 'test value',
-        isoCountryCode: 'test value',
-        country: 'test value',
-        postalCode: 'test value',
-        administrativeArea: 'test value',
-        subAdministrativeArea: 'test value',
-        locality: 'test value',
-        subLocality: 'test value',
-        thoroughfare: 'test value',
-        subThoroughfare: 'test value',
-        latitude: 1,
-        longitude: 0,
-      );
-
-      // Act & Assert
-      expect(
-        firstPlacemark.hashCode != secondPlacemark,
-        true,
-      );
-    });
-
-    test(
-        // ignore: lines_longer_than_80_chars
-        'hashCode should not match when the longitude property is different',
-        () {
-      // Arrange
-      final firstPlacemark = Placemark(
-        name: 'test value',
-        isoCountryCode: 'test value',
-        country: 'test value',
-        postalCode: 'test value',
-        administrativeArea: 'test value',
-        subAdministrativeArea: 'test value',
-        locality: 'test value',
-        subLocality: 'test value',
-        thoroughfare: 'test value',
-        subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 0,
-      );
-      final secondPlacemark = Placemark(
-        name: 'test value',
-        isoCountryCode: 'test value',
-        country: 'test value',
-        postalCode: 'test value',
-        administrativeArea: 'test value',
-        subAdministrativeArea: 'test value',
-        locality: 'test value',
-        subLocality: 'test value',
-        thoroughfare: 'test value',
-        subThoroughfare: 'test value',
-        latitude: 0,
-        longitude: 1,
       );
 
       // Act & Assert
@@ -511,6 +448,38 @@ void main() {
   group('fromMap tests:', () {
     test('fromMap should throw argument error when message is null', () {
       expect(() => Placemark.fromMap(null), throwsArgumentError);
+    });
+  });
+
+  group('toString tests:', (){
+    test('toString should list the contents of all properties', () { 
+      final mockPlacemark = Placemark(
+        administrativeArea: 'Overijssel',
+        country: 'Netherlands',
+        isoCountryCode: 'NL',
+        locality: 'Enschede',
+        name: 'Gronausestraat',
+        postalCode: '',
+        street: 'Gronausestraat 710',
+        subAdministrativeArea: 'Enschede',
+        subLocality: 'Enschmarke',
+        subThoroughfare: '',
+        thoroughfare: 'Gronausestraat');
+      
+      final expected = '''
+      Name: ${mockPlacemark.name}, 
+      Street: ${mockPlacemark.street}, 
+      ISO Country Code: ${mockPlacemark.isoCountryCode}, 
+      Country: ${mockPlacemark.country}, 
+      Postal code: ${mockPlacemark.postalCode}, 
+      Administrative area: ${mockPlacemark.administrativeArea}, 
+      Subadministrative area: ${mockPlacemark.subAdministrativeArea},
+      Locality: ${mockPlacemark.locality},
+      Sublocality: ${mockPlacemark.subLocality},
+      Thoroughfare: ${mockPlacemark.thoroughfare},
+      Subthoroughfare: ${mockPlacemark.subThoroughfare}''';
+
+      expect(mockPlacemark.toString(), expected);
     });
   });
 }

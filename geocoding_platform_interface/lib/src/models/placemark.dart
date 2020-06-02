@@ -8,6 +8,7 @@ class Placemark {
   /// from the platform, just whatever was passed in at construction time.
   Placemark({
     this.name,
+    this.street,
     this.isoCountryCode,
     this.country,
     this.postalCode,
@@ -17,12 +18,11 @@ class Placemark {
     this.subLocality,
     this.thoroughfare,
     this.subThoroughfare,
-    this.latitude,
-    this.longitude,
   });
 
   Placemark._({
     this.name,
+    this.street,
     this.isoCountryCode,
     this.country,
     this.postalCode,
@@ -32,12 +32,13 @@ class Placemark {
     this.subLocality,
     this.thoroughfare,
     this.subThoroughfare,
-    this.latitude,
-    this.longitude,
   });
 
-  /// The name of the placemark.
+  /// The name associated with the placemark.
   final String name;
+
+  /// The street associated with the placemark.
+  final String street;
 
   /// The abbreviated country name, according to the two letter (alpha-2) [ISO standard](https://www.iso.org/iso-3166-country-codes.html).
   final String isoCountryCode;
@@ -66,23 +67,16 @@ class Placemark {
   /// Additional street address information for the placemark.
   final String subThoroughfare;
 
-  /// The latitude associated with the placemark.
-  final double latitude;
-
-  /// The longitude associated with the placemark.
-  final double longitude;
-
   @override
   bool operator ==(dynamic o) =>
       o is Placemark &&
       o.administrativeArea == administrativeArea &&
       o.country == country &&
       o.isoCountryCode == isoCountryCode &&
-      o.latitude == latitude &&
       o.locality == locality &&
-      o.longitude == longitude &&
       o.name == name &&
       o.postalCode == postalCode &&
+      o.street == street &&
       o.subAdministrativeArea == subAdministrativeArea &&
       o.subLocality == subLocality &&
       o.subThoroughfare == subThoroughfare &&
@@ -93,11 +87,10 @@ class Placemark {
       administrativeArea.hashCode ^
       country.hashCode ^
       isoCountryCode.hashCode ^
-      latitude.hashCode ^
       locality.hashCode ^
-      longitude.hashCode ^
       name.hashCode ^
       postalCode.hashCode ^
+      street.hashCode ^
       subAdministrativeArea.hashCode ^
       subLocality.hashCode ^
       subThoroughfare.hashCode ^
@@ -123,6 +116,7 @@ class Placemark {
 
     return Placemark._(
       name: placemarkMap['name'] ?? '',
+      street: placemarkMap['street'] ?? '',
       isoCountryCode: placemarkMap['isoCountryCode'] ?? '',
       country: placemarkMap['country'] ?? '',
       postalCode: placemarkMap['postalCode'] ?? '',
@@ -132,8 +126,6 @@ class Placemark {
       subLocality: placemarkMap['subLocality'] ?? '',
       thoroughfare: placemarkMap['thoroughfare'] ?? '',
       subThoroughfare: placemarkMap['subThoroughfare'] ?? '',
-      latitude: placemarkMap['latitude'] ?? null,
-      longitude: placemarkMap['longitude'] ?? null,
     );
   }
 
@@ -141,6 +133,7 @@ class Placemark {
   /// serialized to JSON.
   Map<String, dynamic> toJson() => {
         'name': name,
+        'street': street,
         'isoCountryCode': isoCountryCode,
         'country': country,
         'postalCode': postalCode,
@@ -150,7 +143,21 @@ class Placemark {
         'subLocality': subLocality,
         'thoroughfare': thoroughfare,
         'subThoroughfare': subThoroughfare,
-        'latitude': latitude,
-        'longitude': longitude,
       };
+
+  @override
+  String toString() {
+    return '''
+      Name: $name, 
+      Street: $street, 
+      ISO Country Code: $isoCountryCode, 
+      Country: $country, 
+      Postal code: $postalCode, 
+      Administrative area: $administrativeArea, 
+      Subadministrative area: $subAdministrativeArea,
+      Locality: $locality,
+      Sublocality: $subLocality,
+      Thoroughfare: $thoroughfare,
+      Subthoroughfare: $subThoroughfare''';
+  }
 }

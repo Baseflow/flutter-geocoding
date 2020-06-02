@@ -1,53 +1,50 @@
 package com.baseflow.geocoding;
 
+import android.util.Log;
 import androidx.annotation.NonNull;
-
+import androidx.annotation.Nullable;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
-import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-/** GeocodingPlugin */
-public class GeocodingPlugin implements FlutterPlugin, MethodCallHandler {
-  /// The MethodChannel that will the communication between Flutter and native Android
-  ///
-  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-  /// when the Flutter Engine is detached from the Activity
-  private MethodChannel channel;
+/**
+ * Plugin implementation that uses the new {@code io.flutter.embedding} package.
+ *
+ * <p>Instantiate this in an add to app scenario to gracefully handle activity and context changes.
+ */
+public final class GeocodingPlugin implements FlutterPlugin {
+  private static final String TAG = "GeocodingPlugin";
+  @Nullable private MethodCallHandlerImpl methodCallHandler;
+  @Nullable private Geocoding geocoding;
 
-  @Override
-  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "geocoding");
-    channel.setMethodCallHandler(this);
-  }
-
-  // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-  // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-  // plugin registration via this function while apps migrate to use the new Android APIs
-  // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
-  //
-  // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-  // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-  // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-  // in the same class.
+  /**
+   * Registers a plugin implementation that uses the stable {@code io.flutter.plugin.common}
+   * package.
+   *
+   * <p>Calling this automatically initializes the plugin. However plugins initialized this way
+   * won't react to changes in activity or context, unlike {@link GeocodingPlugin}.
+   */
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "geocoding");
-    channel.setMethodCallHandler(new GeocodingPlugin());
+    MethodCallHandlerImpl handler =
+            new MethodCallHandlerImpl(new Geocoding(registrar.activeContext()));
+    handler.startListening(registrar.messenger());
   }
 
   @Override
-  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-    if (call.method.equals("getPlatformVersion")) {
-      result.success("Android " + android.os.Build.VERSION.RELEASE);
-    } else {
-      result.notImplemented();
-    }
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+    geocoding = new Geocoding(binding.getApplicationContext());
+    methodCallHandler = new MethodCallHandlerImpl(geocoding);
+    methodCallHandler.startListening(binding.getBinaryMessenger());
   }
 
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-    channel.setMethodCallHandler(null);
+    if (methodCallHandler == null) {
+      Log.wtf(TAG, "Already detached from the engine.");
+      return;
+    }
+
+    methodCallHandler.stopListening();
+    methodCallHandler = null;
+    geocoding = null;
   }
 }

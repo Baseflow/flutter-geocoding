@@ -1,6 +1,6 @@
 name: geocoding
-description: A new flutter plugin project.
-version: 0.0.1
+description: A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding features.
+version: 1.0.0
 author:
 homepage:
 
@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  geocoding_platform_interface: ^1.0.0
 
 dev_dependencies:
   flutter_test:

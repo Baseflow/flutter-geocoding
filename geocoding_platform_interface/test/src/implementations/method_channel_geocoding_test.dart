@@ -6,15 +6,20 @@ import 'package:geocoding_platform_interface/src/implementations/method_channel_
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  final _mockLocation = Location(
+    latitude: 52.2165157,
+    longitude: 6.9437819,
+    timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),
+  );
+
   final _mockPlacemark = Placemark(
       administrativeArea: 'Overijssel',
       country: 'Netherlands',
       isoCountryCode: 'NL',
-      latitude: 52.561270,
       locality: 'Enschede',
-      longitude: 5.639382,
       name: 'Gronausestraat',
       postalCode: '',
+      street: 'Gronausestraat 710',
       subAdministrativeArea: 'Enschede',
       subLocality: 'Enschmarke',
       subThoroughfare: '',
@@ -33,7 +38,7 @@ void main() {
 
         switch (call.method) {
           case 'placemarkFromAddress':
-            return [_mockPlacemark.toJson()];
+            return [_mockLocation.toJson()];
           case 'placemarkFromCoordinates':
             return [_mockPlacemark.toJson()];
           default:
@@ -52,12 +57,12 @@ void main() {
           final address = 'Gronausestraat, Enschede';
 
           // Act
-          final placemarks =
+          final locations =
               await methodChannelgeocoding.placemarkFromAddress(address);
 
           // Assert
-          expect(placemarks.length, 1);
-          expect(placemarks.first, _mockPlacemark);
+          expect(locations.length, 1);
+          expect(locations.first, _mockLocation);
         });
 
         test('Should not send the localeIdentifier parameter to the platform',
@@ -84,14 +89,14 @@ void main() {
           final address = 'Gronausestraat, Enschede';
 
           // Act
-          final placemarks = await methodChannelgeocoding.placemarkFromAddress(
+          final locations = await methodChannelgeocoding.placemarkFromAddress(
             address,
             localeIdentifier: 'nl-NL',
           );
 
           // Assert
-          expect(placemarks.length, 1);
-          expect(placemarks.first, _mockPlacemark);
+          expect(locations.length, 1);
+          expect(locations.first, _mockLocation);
         });
 
         test('Should send the localeIdentifier to the platform', () async {
