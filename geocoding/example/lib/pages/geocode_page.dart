@@ -54,15 +54,16 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
         ),
         Center(
           child: RaisedButton(
-            child: Text('Look up'),
-            onPressed: () {
-              final latitude = double.parse(_latitudeController.text);
-              final longitude = double.parse(_longitudeController.text);
-              
-              placemarkFromCoordinates(latitude, longitude).then((placemarks) {
-              print(placemarks[0].toString());
-            });
-          }),
+              child: Text('Look up'),
+              onPressed: () {
+                final latitude = double.parse(_latitudeController.text);
+                final longitude = double.parse(_longitudeController.text);
+
+                placemarkFromCoordinates(latitude, longitude)
+                    .then((placemarks) {
+                  print(placemarks[0].toString());
+                });
+              }),
         ),
         Expanded(
           child: Container(),

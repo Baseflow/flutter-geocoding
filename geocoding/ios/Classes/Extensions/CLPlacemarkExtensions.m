@@ -26,7 +26,7 @@
     
     NSMutableDictionary<NSString *, NSObject *> *dict = [[NSMutableDictionary alloc] initWithDictionary:@{
         @"name": self.name == nil ? @"" : self.name,
-        @"street": street,
+        @"street": street == nil ? @"" : street,
         @"isoCountryCode": self.ISOcountryCode == nil ? @"" : self.ISOcountryCode,
         @"country": self.country == nil ? @"" : self.country,
         @"thoroughfare": self.thoroughfare == nil ? @"" : self.thoroughfare,
