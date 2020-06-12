@@ -17,7 +17,7 @@ Future<List<Location>> locationFromAddress(
   String address, {
   String localeIdentifier,
 }) =>
-    GeocodingPlatform.instance.placemarkFromAddress(
+    GeocodingPlatform.instance.locationFromAddress(
       address,
       localeIdentifier: localeIdentifier,
     );

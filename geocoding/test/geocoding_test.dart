@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
@@ -25,7 +24,6 @@ final mockPlacemark = Placemark(
     thoroughfare: 'Gronausestraat');
 
 void main() {
-
   group('Geocoding', () {
     setUp(() {
       GeocodingPlatform.instance = MockGeocodingPlatform();
