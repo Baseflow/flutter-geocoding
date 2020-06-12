@@ -13,7 +13,7 @@ class MethodChannelGeocoding extends GeocodingPlatform {
   MethodChannel methodChannel = MethodChannel('flutter.baseflow.com/geocoding');
 
   @override
-  Future<List<Location>> placemarkFromAddress(
+  Future<List<Location>> locationFromAddress(
     String address, {
     String localeIdentifier,
   }) async {
@@ -26,7 +26,7 @@ class MethodChannelGeocoding extends GeocodingPlatform {
     }
 
     final placemarks = await methodChannel.invokeMethod(
-      'placemarkFromAddress',
+      'locationFromAddress',
       parameters,
     );
 

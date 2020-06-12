@@ -1,3 +1,7 @@
+## 1.0.0+3
+
+- Renamed the method `placemarkFromAddress` to `locationFromAddress`.
+
 ## 1.0.0+2
 
 - Return `location` class from the `placemarkFromAddress` method.

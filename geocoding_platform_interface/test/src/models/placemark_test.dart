@@ -54,8 +54,7 @@ void main() {
 
     test(
         // ignore: lines_longer_than_80_chars
-        'hashCode should not match when the street property is different',
-        () {
+        'hashCode should not match when the street property is different', () {
       // Arrange
       final firstPlacemark = Placemark(
         name: 'test value',
@@ -451,21 +450,21 @@ void main() {
     });
   });
 
-  group('toString tests:', (){
-    test('toString should list the contents of all properties', () { 
+  group('toString tests:', () {
+    test('toString should list the contents of all properties', () {
       final mockPlacemark = Placemark(
-        administrativeArea: 'Overijssel',
-        country: 'Netherlands',
-        isoCountryCode: 'NL',
-        locality: 'Enschede',
-        name: 'Gronausestraat',
-        postalCode: '',
-        street: 'Gronausestraat 710',
-        subAdministrativeArea: 'Enschede',
-        subLocality: 'Enschmarke',
-        subThoroughfare: '',
-        thoroughfare: 'Gronausestraat');
-      
+          administrativeArea: 'Overijssel',
+          country: 'Netherlands',
+          isoCountryCode: 'NL',
+          locality: 'Enschede',
+          name: 'Gronausestraat',
+          postalCode: '',
+          street: 'Gronausestraat 710',
+          subAdministrativeArea: 'Enschede',
+          subLocality: 'Enschmarke',
+          subThoroughfare: '',
+          thoroughfare: 'Gronausestraat');
+
       final expected = '''
       Name: ${mockPlacemark.name}, 
       Street: ${mockPlacemark.street}, 

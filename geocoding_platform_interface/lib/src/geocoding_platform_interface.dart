@@ -42,12 +42,12 @@ abstract class GeocodingPlatform extends PlatformInterface {
   /// When not supplied the currently active locale of the device will be used.
   /// The `localeIdentifier` should be formatted using the syntax:
   /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
-  Future<List<Location>> placemarkFromAddress(
+  Future<List<Location>> locationFromAddress(
     String address, {
     String localeIdentifier,
   }) {
     throw UnimplementedError(
-        'placemarkFromAddress() has not been implementated.');
+        'locationFromAddress() has not been implementated.');
   }
 
   /// Returns a list of [Placemark] instances found for the supplied

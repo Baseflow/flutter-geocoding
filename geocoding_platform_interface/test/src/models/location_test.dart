@@ -16,8 +16,8 @@ void main() {
       );
     });
 
-    test(
-      'hashCode should not match when the latitude property is different', () {
+    test('hashCode should not match when the latitude property is different',
+        () {
       // Arrange
       final firstLocation = Location(
         latitude: 0,
@@ -37,8 +37,8 @@ void main() {
       );
     });
 
-    test(
-      'hashCode should not match when the longitude property is different', () {
+    test('hashCode should not match when the longitude property is different',
+        () {
       // Arrange
       final firstLocation = Location(
         latitude: 0,
@@ -58,8 +58,8 @@ void main() {
       );
     });
 
-    test(
-      'hashCode should not match when the timestamp property is different', () {
+    test('hashCode should not match when the timestamp property is different',
+        () {
       // Arrange
       final firstLocation = Location(
         latitude: 0,
@@ -92,14 +92,14 @@ void main() {
     });
   });
 
-  group('toString tests:', (){
-    test('toString should list the contents of all properties', () { 
+  group('toString tests:', () {
+    test('toString should list the contents of all properties', () {
       final mockLocation = Location(
         latitude: 52.2165157,
         longitude: 6.9437819,
         timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),
       );
-      
+
       final expected = '''
       Latitude: ${mockLocation.latitude},
       Longitude: ${mockLocation.longitude},

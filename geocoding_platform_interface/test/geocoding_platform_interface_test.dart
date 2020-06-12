@@ -33,14 +33,14 @@ void main() {
 
     test(
         // ignore: lines_longer_than_80_chars
-        'Default implementation of placemarkFromAddress should throw unimplemented error',
+        'Default implementation of locationFromAddress should throw unimplemented error',
         () {
       // Arrange
       final geocodingPlatform = ExtendsGeocodingPlatform();
 
       // Act & Assert
       expect(
-        () => geocodingPlatform.placemarkFromAddress('address'),
+        () => geocodingPlatform.locationFromAddress('address'),
         throwsUnimplementedError,
       );
     });

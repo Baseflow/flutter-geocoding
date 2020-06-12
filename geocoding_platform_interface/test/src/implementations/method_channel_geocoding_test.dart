@@ -37,7 +37,7 @@ void main() {
         log.add(call);
 
         switch (call.method) {
-          case 'placemarkFromAddress':
+          case 'locationFromAddress':
             return [_mockLocation.toJson()];
           case 'placemarkFromCoordinates':
             return [_mockPlacemark.toJson()];
@@ -58,7 +58,7 @@ void main() {
 
           // Act
           final locations =
-              await methodChannelgeocoding.placemarkFromAddress(address);
+              await methodChannelgeocoding.locationFromAddress(address);
 
           // Assert
           expect(locations.length, 1);
@@ -71,12 +71,12 @@ void main() {
           final address = 'Gronausestraat, Enschede';
 
           // Act
-          await methodChannelgeocoding.placemarkFromAddress(address);
+          await methodChannelgeocoding.locationFromAddress(address);
 
           // Assert
           expect(log, <Matcher>[
             isMethodCall(
-              'placemarkFromAddress',
+              'locationFromAddress',
               arguments: <String, String>{'address': address},
             ),
           ]);
@@ -89,7 +89,7 @@ void main() {
           final address = 'Gronausestraat, Enschede';
 
           // Act
-          final locations = await methodChannelgeocoding.placemarkFromAddress(
+          final locations = await methodChannelgeocoding.locationFromAddress(
             address,
             localeIdentifier: 'nl-NL',
           );
@@ -104,7 +104,7 @@ void main() {
           final address = 'Gronausestraat, Enschede';
 
           // Act
-          await methodChannelgeocoding.placemarkFromAddress(
+          await methodChannelgeocoding.locationFromAddress(
             address,
             localeIdentifier: 'nl-NL',
           );
@@ -112,7 +112,7 @@ void main() {
           // Assert
           expect(log, <Matcher>[
             isMethodCall(
-              'placemarkFromAddress',
+              'locationFromAddress',
               arguments: <String, dynamic>{
                 'address': address,
                 'localeIdentifier': 'nl-NL',

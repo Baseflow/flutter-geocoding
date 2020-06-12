@@ -33,8 +33,8 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
     @Override
     public void onMethodCall(MethodCall call, Result result) {
         switch (call.method) {
-            case "placemarkFromAddress":
-                onPlacemarkFromAddress(call, result);
+            case "locationFromAddress":
+                onLocationFromAddress(call, result);
                 break;
             case "placemarkFromCoordinates":
                 onPlacemarkFromCoordinates(call, result);
@@ -77,7 +77,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         channel = null;
     }
 
-    private void onPlacemarkFromAddress(MethodCall call, Result result) {
+    private void onLocationFromAddress(MethodCall call, Result result) {
         final String address = call.argument("address");
         final String languageTag = call.argument("locale");
 

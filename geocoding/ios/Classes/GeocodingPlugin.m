@@ -19,7 +19,7 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    if ([@"placemarkFromAddress" isEqualToString:call.method]) {
+    if ([@"locationFromAddress" isEqualToString:call.method]) {
         NSString* address = call.arguments[@"address"];
         
         GeocodingHandler* handler = [[GeocodingHandler alloc] init];

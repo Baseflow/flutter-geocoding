@@ -36,9 +36,7 @@ class Location {
 
   @override
   int get hashCode =>
-      latitude.hashCode ^
-      longitude.hashCode ^
-      timestamp.hashCode;
+      latitude.hashCode ^ longitude.hashCode ^ timestamp.hashCode;
 
   /// Converts a list of [Map] instances to a list of [Location] instances.
   static List<Location> fromMaps(dynamic message) {
