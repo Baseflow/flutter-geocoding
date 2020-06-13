@@ -29,7 +29,7 @@ void main() {
       GeocodingPlatform.instance = MockGeocodingPlatform();
     });
 
-    test('placemarkFromAddress', () async {
+    test('locationFromAddress', () async {
       final locations = await locationFromAddress('');
       expect(locations.single, mockLocation);
     });
@@ -44,7 +44,7 @@ void main() {
 class MockGeocodingPlatform extends Mock
     with MockPlatformInterfaceMixin
     implements GeocodingPlatform {
-  Future<List<Location>> placemarkFromAddress(
+  Future<List<Location>> locationFromAddress(
     String address, {
     String localeIdentifier,
   }) async {
