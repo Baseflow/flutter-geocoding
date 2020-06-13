@@ -1,8 +1,8 @@
-# Flutter geocoding Plugin  
+# Flutter Geocoding Plugin  
 
-[![pub package](https://img.shields.io/pub/v/geocoding.svg)](https://pub.dartlang.org/packages/geocoding) [![Build Status](https://app.bitrise.io/app/b0e244f2c82e1678/status.svg?token=x6sBRHLW05ymIpW-dVJlgQ&branch=master)](https://app.bitrise.io/app/b0e244f2c82e1678) [![codecov](https://codecov.io/gh/Baseflow/flutter-geocoding/branch/master/graph/badge.svg)](https://codecov.io/gh/Baseflow/flutter-geodocder)
+[![pub package](https://img.shields.io/pub/v/geocoding.svg)](https://pub.dartlang.org/packages/geocoding) [![Build Status](https://app.bitrise.io/app/9b65bb23ab8807cf/status.svg?token=j1lrARLTbIIC6YpmiFPHCg)](https://app.bitrise.io/app/9b65bb23ab8807cf) [![codecov](https://codecov.io/gh/Baseflow/flutter-geocoding/branch/master/graph/badge.svg)](https://codecov.io/gh/Baseflow/flutter-geocoding) [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
 
-A Flutter geocoding plugin which provides easy geocoding and reverse-geocoding features.
+A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding features.
 
 **Note**: The availability of the Google Play Services depends on your country. If your country doesn't support a connection with the Google Play Services, you'll need to try a VPN to establish a connection. For more information about how to work with Google Play Services visit the following link: https://developers.google.com/android/guides/overview 
 
@@ -43,7 +43,7 @@ To translate an address into latitude and longitude coordinates you can use the 
 ``` dart
 import 'package:geocoding/geocoding.dart';
 
-List<Placemark> placemark = await geocoding().placemarkFromAddress("Gronausestraat 710, Enschede");
+List<Location> locations = await locationFromAddress("Gronausestraat 710, Enschede");
 ```
 
 If you want to translate latitude and longitude coordinates into an address you can use the `placemarkFromCoordinates` method:
@@ -51,10 +51,10 @@ If you want to translate latitude and longitude coordinates into an address you 
 ``` dart
 import 'package:geocoding/geocoding.dart';
 
-List<Placemark> placemark = await geocoding().placemarkFromCoordinates(52.2165157, 6.9437819);
+List<Placemark> placemarks = await placemarkFromCoordinates(52.2165157, 6.9437819);
 ```
 
-Both the `placemarkFromAddress` and `placemarkFromCoordinates` accept an optional `localeIdentifier` parameter. This parameter can be used to enforce the resulting placemark to be formatted (and translated) according to the specified locale. The `localeIdentifier` should be formatted using the syntax: [languageCode]_[countryCode]. Use the [ISO 639-1 or ISO 639-2](http://www.loc.gov/standards/iso639-2/php/English_list.php) standard for the language code and the 2 letter [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard for the country code. Some examples are:
+Both the `locationFromAddress` and `placemarkFromCoordinates` accept an optional `localeIdentifier` parameter. This parameter can be used to enforce the results to be formatted (and translated) according to the specified locale. The `localeIdentifier` should be formatted using the syntax: [languageCode]_[countryCode]. Use the [ISO 639-1 or ISO 639-2](http://www.loc.gov/standards/iso639-2/php/English_list.php) standard for the language code and the 2 letter [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard for the country code. Some examples are:
 
 Locale identifier | Description
 ----------------- | -----------
