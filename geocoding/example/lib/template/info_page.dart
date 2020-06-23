@@ -7,7 +7,7 @@ import 'globals.dart';
 class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox.expand(
       child: Align(
         alignment: Alignment.bottomCenter,
         child: SingleChildScrollView(
