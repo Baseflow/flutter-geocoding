@@ -32,7 +32,7 @@ class InfoPage extends StatelessWidget {
                 Text(
                   'This app showcases the possibilities of the ${Globals.pluginName} plugin, powered by Baseflow. '
                   'This plugin is available as open source project on Github. \n\n'
-                  'Need help with integrading functionalities within your own apps? Contact us at hello@baseflow.com',
+                  'Need help with integrating functionalities within your own apps? Contact us at hello@baseflow.com',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 const Padding(
