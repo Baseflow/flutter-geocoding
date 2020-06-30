@@ -26,7 +26,7 @@ class InfoPage extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(vertical: 24),
                 ),
                 Text(
@@ -35,7 +35,7 @@ class InfoPage extends StatelessWidget {
                   'Need help with integrading functionalities within your own apps? Contact us at hello@baseflow.com',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
                 ),
                 _launcherRaisedButton(
@@ -53,7 +53,7 @@ class InfoPage extends StatelessWidget {
                   Globals.baseflowURL,
                   context,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 30),
                 ),
               ],
@@ -75,7 +75,7 @@ class InfoPage extends StatelessWidget {
           textTheme: Theme.of(context).buttonTheme.textTheme,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Text(text),
           onPressed: () => _launchURL(url),
         ),
@@ -83,7 +83,7 @@ class InfoPage extends StatelessWidget {
     );
   }
 
-  _launchURL(String url) async {
+  Future<void> _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {

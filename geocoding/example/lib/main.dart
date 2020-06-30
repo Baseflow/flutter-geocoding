@@ -138,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _animateToPage(int page) {
     _pageController.animateToPage(page,
-        duration: Duration(milliseconds: 200), curve: Curves.linear);
+        duration: const Duration(milliseconds: 200), curve: Curves.linear);
   }
 
   Color _bottomAppBarIconColor(int page) {
