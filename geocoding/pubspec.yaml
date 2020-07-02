@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   geocoding_platform_interface: ^1.0.0
+  url_launcher: ^5.4.11
 
 dev_dependencies:
   effective_dart: ^1.2.1

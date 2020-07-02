@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'globals.dart';
 
+/// [StatelessWidget] displaying information about Baseflow
 class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -12,8 +13,7 @@ class InfoPage extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: SingleChildScrollView(
           child: Padding(
-            padding: Globals.defaultHorizontalPadding +
-                Globals.defaultVerticalPadding,
+            padding: defaultHorizontalPadding + defaultVerticalPadding,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -26,34 +26,37 @@ class InfoPage extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(vertical: 24),
                 ),
                 Text(
-                  'This app showcases the possibilities of the ${Globals.pluginName} plugin, powered by Baseflow. '
-                  'This plugin is available as open source project on Github. \n\n'
-                  'Need help with integrading functionalities within your own apps? Contact us at hello@baseflow.com',
+                  'This app showcases the possibilities of the $pluginName '
+                  'plugin, powered by Baseflow. '
+                  'This plugin is available as open source project on Github. '
+                  '\n\n'
+                  'Need help with integrating functionalities within your own '
+                  'apps? Contact us at hello@baseflow.com',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
                 ),
                 _launcherRaisedButton(
                   'Find us on Github',
-                  Globals.githubURL,
+                  githubURL,
                   context,
                 ),
                 _launcherRaisedButton(
                   'Find us on pub.dev',
-                  Globals.pubDevURL,
+                  pubDevURL,
                   context,
                 ),
                 _launcherRaisedButton(
                   'Visit baseflow.com',
-                  Globals.baseflowURL,
+                  baseflowURL,
                   context,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 30),
                 ),
               ],
@@ -75,7 +78,7 @@ class InfoPage extends StatelessWidget {
           textTheme: Theme.of(context).buttonTheme.textTheme,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Text(text),
           onPressed: () => _launchURL(url),
         ),
@@ -83,7 +86,7 @@ class InfoPage extends StatelessWidget {
     );
   }
 
-  _launchURL(String url) async {
+  Future<void> _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
