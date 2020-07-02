@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding_example/plugin_example/geocode_page.dart';
 
 import 'info_page.dart';
 
@@ -23,12 +24,14 @@ const EdgeInsets defaultHorizontalPadding =
 /// [EdgeInsets] to define vertical padding throughout the application.
 const EdgeInsets defaultVerticalPadding = EdgeInsets.symmetric(vertical: 24);
 
-/// Returns [List] with [IconData] to show in the [AppHome] [AppBar].
+/// Returns a [List] with [IconData] to show in the [AppHome] [AppBar].
 final List<IconData> icons = [
+  Icons.location_on,
   Icons.info_outline,
 ];
 
-/// Returns [List] with [Widget]s to construct pages in the [AppBar].
+/// Returns a [List] with [Widget]s to construct pages in the [AppBar].
 final List<Widget> pages = [
+  GeocodeWidget(),
   InfoPage(),
 ];
