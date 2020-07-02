@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geocoding_example/template/globals.dart';
+import '../template/globals.dart';
 
+/// Geocode example widget
 class GeocodeWidget extends StatefulWidget {
   @override
   _GeocodeWidgetState createState() => _GeocodeWidgetState();
 }
 
+/// Geocode example widget
 class _GeocodeWidgetState extends State<GeocodeWidget> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _latitudeController = TextEditingController();
@@ -15,7 +17,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
 
   @override
   void initState() {
-    _addressController.text = "Gronausestraat 710, Enschede";
+    _addressController.text = 'Gronausestraat 710, Enschede';
     _latitudeController.text = '52.2165157';
     _longitudeController.text = '6.9437819';
 
@@ -25,13 +27,12 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding:
-            Globals.defaultHorizontalPadding + Globals.defaultVerticalPadding,
+        padding: defaultHorizontalPadding + defaultVerticalPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 32),
             ),
             Row(
@@ -63,7 +64,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                 ),
               ],
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 8),
             ),
             Center(
@@ -84,7 +85,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                     });
                   }),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 32),
             ),
             TextField(
@@ -96,7 +97,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
               ),
               keyboardType: TextInputType.text,
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 8),
             ),
             Center(
