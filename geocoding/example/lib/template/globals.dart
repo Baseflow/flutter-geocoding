@@ -2,36 +2,33 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 
-import '../plugin_example/geocode_page.dart';
 import 'info_page.dart';
 
-/// Constant plugin name
+/// The name of the plugin, which will be displayed throughout the example App.
 const String pluginName = 'Geocoding';
 
-/// Constant GitHub URL to flutter package
+/// Returns Github URL, which is shown in the [InfoPage].
 const String githubURL = 'https://github.com/Baseflow/flutter-geocoding';
 
-/// Constant Baseflow URL
+/// Returns Baseflow URL, which is shown in the [InfoPage].
 const String baseflowURL = 'https://baseflow.com';
 
-/// Constant pub.dev URL to flutter package
+/// Returns pub.dev URL, which is shown in the [InfoPage].
 const String pubDevURL = 'https://pub.dev/packages/geocoding';
 
-/// Constant application-wide horizontal padding
+/// [EdgeInsets] to define horizontal padding throughout the application.
 const EdgeInsets defaultHorizontalPadding =
     EdgeInsets.symmetric(horizontal: 24);
 
-/// Constant application-wide vertical padding
+/// [EdgeInsets] to define vertical padding throughout the application.
 const EdgeInsets defaultVerticalPadding = EdgeInsets.symmetric(vertical: 24);
 
-/// Constant list of AppBar Icons
+/// Returns [List] with [IconData] to show in the [AppHome] [AppBar].
 final List<IconData> icons = [
-  Icons.location_on,
   Icons.info_outline,
 ];
 
-/// Constant list of application widgets
+/// Returns [List] with [Widget]s to construct pages in the [AppBar].
 final List<Widget> pages = [
-  GeocodeWidget(),
   InfoPage(),
 ];

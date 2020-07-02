@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import '../template/globals.dart';
 
-/// Geocode example widget
+/// Example [Widget] showing the use of the Geocode plugin
 class GeocodeWidget extends StatefulWidget {
   @override
   _GeocodeWidgetState createState() => _GeocodeWidgetState();
 }
 
-/// Geocode example widget
 class _GeocodeWidgetState extends State<GeocodeWidget> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _latitudeController = TextEditingController();
