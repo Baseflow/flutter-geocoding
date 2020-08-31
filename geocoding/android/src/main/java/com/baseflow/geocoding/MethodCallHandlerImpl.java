@@ -125,7 +125,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
             if (addresses == null || addresses.isEmpty()) {
                 result.error(
                         "NOT_FOUND",
-                        String.format("No address information found for supplied coordinates (latitude: %d, longitude: %d).", latitude, longitude),
+                        String.format("No address information found for supplied coordinates (latitude: %f, longitude: %f).", latitude, longitude),
                         null);
                 return;
             }
@@ -134,7 +134,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         } catch (IOException ex) {
             result.error(
                     "IO_ERROR",
-                    String.format("A network error occurred trying to lookup the supplied coordinates (latitude: %d, longitude: %d).", latitude, longitude),
+                    String.format("A network error occurred trying to lookup the supplied coordinates (latitude: %f, longitude: %f).", latitude, longitude),
                     null
             );
         }
