@@ -16,7 +16,7 @@ To use this plugin, add `geocoding` as a [dependency in your pubspec.yaml file](
 
 ```yaml
 dependencies:
-  geocoding: ^1.0.1
+  geocoding: ^1.0.2
 ```
 
 > **NOTE:** This plugin relies on the AndroidX version of the Android Support Libraries. This means you need to make sure your Android project is also upgraded to support AndroidX. Detailed instructions can be found [here](https://flutter.dev/docs/development/packages-and-plugins/androidx-compatibility). 
