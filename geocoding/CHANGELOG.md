@@ -1,3 +1,7 @@
+## 1.0.3+1
+
+* Make sure the supplied locale is respected (see issue [#10](https://github.com/Baseflow/flutter-geocoding/issues/10))
+
 ## 1.0.3
 
 * Make sure public types defined in the geocoding_platform_interface are also available from the geocoding package (see [#6](https://github.com/Baseflow/flutter-geocoding/issues/6)).
