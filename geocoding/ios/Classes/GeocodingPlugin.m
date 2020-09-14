@@ -56,11 +56,11 @@
 }
 
 + (NSLocale*) parseLocale:(NSDictionary*)arguments {
-    if (arguments[@"locale"] == nil) {
+    if (arguments[@"localeIdentifier"] == nil) {
         return nil;
     }
     
-    return [[NSLocale alloc] initWithLocaleIdentifier:(NSString*) arguments[@"locale"]];
+    return [[NSLocale alloc] initWithLocaleIdentifier:(NSString*) arguments[@"localeIdentifier"]];
 }
 
 + (NSArray<NSDictionary *> *) toLocationResult:(NSArray<CLPlacemark *> *)placemarks {

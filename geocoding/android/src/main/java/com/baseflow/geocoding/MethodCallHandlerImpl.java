@@ -79,7 +79,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
 
     private void onLocationFromAddress(MethodCall call, Result result) {
         final String address = call.argument("address");
-        final String languageTag = call.argument("locale");
+        final String languageTag = call.argument("localeIdentifier");
 
         if (address == null || address.isEmpty()) {
             result.error(
@@ -114,7 +114,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
     private void onPlacemarkFromCoordinates(MethodCall call, Result result) {
         final double latitude = call.argument("latitude");
         final double longitude = call.argument("longitude");
-        final String languageTag = call.argument("locale");
+        final String languageTag = call.argument("localeIdentifier");
 
         try {
             final List<Address> addresses = geocoding.placemarkFromCoordinates(

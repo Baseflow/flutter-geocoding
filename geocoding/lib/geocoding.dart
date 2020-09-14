@@ -44,4 +44,5 @@ Future<List<Placemark>> placemarkFromCoordinates(
     GeocodingPlatform.instance.placemarkFromCoordinates(
       latitude,
       longitude,
+      localeIdentifier: localeIdentifier,
     );
