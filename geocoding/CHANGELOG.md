@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Added NoResultsFoundException
+
 ## 1.0.3+1
 
 * Make sure the supplied locale is respected (see issue [#10](https://github.com/Baseflow/flutter-geocoding/issues/10))

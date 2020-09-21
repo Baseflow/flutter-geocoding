@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Added NoResultsFoundException
+
 ## 1.0.0+3
 
 - Renamed the method `placemarkFromAddress` to `locationFromAddress`.
