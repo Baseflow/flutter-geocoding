@@ -1,6 +1,6 @@
 ## 1.0.4
 
-- Added NoResultsFoundException to indicate when no results are found, instead of PlatformException
+- Added NoResultFoundException to indicate when no results are found, instead of PlatformException
 
 ## 1.0.3+1
 
