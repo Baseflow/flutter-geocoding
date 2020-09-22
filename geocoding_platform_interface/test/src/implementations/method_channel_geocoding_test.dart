@@ -1,6 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
+import 'package:geocoding_platform_interface/src/errors/no_result_found_exception.dart';
 import 'package:geocoding_platform_interface/src/implementations/method_channel_geocoding.dart';
 
 void main() {
@@ -28,6 +29,7 @@ void main() {
   group('$MethodChannelGeocoding()', () {
     final log = <MethodCall>[];
     MethodChannelGeocoding methodChannelgeocoding;
+    var _mockCoordinatesNotFound = false;
 
     setUp(() async {
       methodChannelgeocoding = MethodChannelGeocoding();
@@ -38,7 +40,12 @@ void main() {
 
         switch (call.method) {
           case 'locationFromAddress':
-            return [_mockLocation.toJson()];
+            if (_mockCoordinatesNotFound) {
+              throw PlatformException(code: 'NOT_FOUND');
+            } else {
+              return [_mockLocation.toJson()];
+            }
+            break;
           case 'placemarkFromCoordinates':
             return [_mockPlacemark.toJson()];
           default:
@@ -80,6 +87,23 @@ void main() {
               arguments: <String, String>{'address': address},
             ),
           ]);
+        });
+        test('Should throw NoResultException when no results are found',
+            () async {
+          // Arrange
+          final address = 'Gronausestraat, Enschede';
+          _mockCoordinatesNotFound = true;
+
+          // Assert
+          expect(
+              methodChannelgeocoding.locationFromAddress(address),
+              throwsA(isInstanceOf<NoResultFoundException>().having(
+                  (e) => e.toString(),
+                  'message',
+                  // ignore: lines_longer_than_80_chars
+                  'Could not find any result for the supplied address or coordinates.')));
+
+          _mockCoordinatesNotFound = false;
         });
       });
 

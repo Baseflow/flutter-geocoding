@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
+import '../errors/errors.dart';
 import '../geocoding_platform_interface.dart';
 import '../models/models.dart';
 
@@ -24,13 +25,17 @@ class MethodChannelGeocoding extends GeocodingPlatform {
     if (localeIdentifier != null) {
       parameters['localeIdentifier'] = localeIdentifier;
     }
+    try {
+      final placemarks = await methodChannel.invokeMethod(
+        'locationFromAddress',
+        parameters,
+      );
 
-    final placemarks = await methodChannel.invokeMethod(
-      'locationFromAddress',
-      parameters,
-    );
-
-    return Location.fromMaps(placemarks);
+      return Location.fromMaps(placemarks);
+    } on PlatformException catch (e) {
+      _handlePlatformException(e);
+      rethrow;
+    }
   }
 
   @override
@@ -50,7 +55,13 @@ class MethodChannelGeocoding extends GeocodingPlatform {
 
     final placemarks = await methodChannel.invokeMethod(
         'placemarkFromCoordinates', parameters);
-
     return Placemark.fromMaps(placemarks);
+  }
+
+  void _handlePlatformException(PlatformException platformException) {
+    switch (platformException.code) {
+      case 'NOT_FOUND':
+        throw NoResultFoundException();
+    }
   }
 }

@@ -114,7 +114,11 @@
                        success: (GeocodingSuccess)successHandler
                        failure: (GeocodingFailure) failureHandler {
     if (error != nil) {
-        failureHandler(@"IO_ERROR", error.description);
+        if(error.code == kCLErrorGeocodeFoundNoResult){
+            failureHandler(@"NOT_FOUND", @"Could not find any result for the supplied address or coordinates.");
+        } else {
+            failureHandler(@"IO_ERROR", error.description);
+        }
     } else if (placemarks == nil) {
         failureHandler(@"NOT_FOUND", @"Could not find any result for the supplied address or coordinates.");
     } else {

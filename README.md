@@ -47,7 +47,12 @@ To translate an address into latitude and longitude coordinates you can use the 
 ``` dart
 import 'package:geocoding/geocoding.dart';
 
-List<Location> locations = await locationFromAddress("Gronausestraat 710, Enschede");
+try {
+    List<Location> locations = await locationFromAddress("Gronausestraat 710, Enschede");
+} on NoResultFoundException {
+    // Implement behaviour on no results
+    rethrow;
+}
 ```
 
 If you want to translate latitude and longitude coordinates into an address you can use the `placemarkFromCoordinates` method:
@@ -55,7 +60,12 @@ If you want to translate latitude and longitude coordinates into an address you 
 ``` dart
 import 'package:geocoding/geocoding.dart';
 
-List<Placemark> placemarks = await placemarkFromCoordinates(52.2165157, 6.9437819);
+try{
+    List<Placemark> placemarks = await placemarkFromCoordinates(52.2165157, 6.9437819);
+} on NoResultFoundException {
+    // Implement behaviour on no results
+    rethrow;
+}
 ```
 
 Both the `locationFromAddress` and `placemarkFromCoordinates` accept an optional `localeIdentifier` parameter. This parameter can be used to enforce the results to be formatted (and translated) according to the specified locale. The `localeIdentifier` should be formatted using the syntax: [languageCode]_[countryCode]. Use the [ISO 639-1 or ISO 639-2](http://www.loc.gov/standards/iso639-2/php/English_list.php) standard for the language code and the 2 letter [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard for the country code. Some examples are:
