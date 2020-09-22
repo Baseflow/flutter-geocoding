@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
-import '../errors/no_result_found_exception.dart';
+import '../errors/errors.dart';
 import '../geocoding_platform_interface.dart';
 import '../models/models.dart';
 
