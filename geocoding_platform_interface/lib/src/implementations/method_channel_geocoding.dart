@@ -34,7 +34,6 @@ class MethodChannelGeocoding extends GeocodingPlatform {
       return Location.fromMaps(placemarks);
     } on PlatformException catch (e) {
       _handlePlatformException(e);
-
       rethrow;
     }
   }
@@ -53,15 +52,10 @@ class MethodChannelGeocoding extends GeocodingPlatform {
     if (localeIdentifier != null) {
       parameters['localeIdentifier'] = localeIdentifier;
     }
-    try {
-      final placemarks = await methodChannel.invokeMethod(
-          'placemarkFromCoordinates', parameters);
-      return Placemark.fromMaps(placemarks);
-    } on PlatformException catch (e) {
-      _handlePlatformException(e);
 
-      rethrow;
-    }
+    final placemarks = await methodChannel.invokeMethod(
+        'placemarkFromCoordinates', parameters);
+    return Placemark.fromMaps(placemarks);
   }
 
   void _handlePlatformException(PlatformException platformException) {
