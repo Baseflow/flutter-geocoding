@@ -1,7 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:geocoding_example/plugin_example/geocode_page.dart';
+import '../plugin_example/geocode_page.dart';
 
 import 'info_page.dart';
 
