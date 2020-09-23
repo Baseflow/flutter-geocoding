@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Added NoResultFoundException to indicate when no results are found, instead of PlatformException
+
 ## 1.0.0+3
 
 - Renamed the method `placemarkFromAddress` to `locationFromAddress`.

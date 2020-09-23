@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Added NoResultFoundException to indicate when no results are found, instead of PlatformException
+
 ## 1.0.3+1
 
 * Make sure the supplied locale is respected (see issue [#10](https://github.com/Baseflow/flutter-geocoding/issues/10))
