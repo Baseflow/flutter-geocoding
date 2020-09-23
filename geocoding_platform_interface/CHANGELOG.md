@@ -1,3 +1,7 @@
+## 1.0.1+1
+
+- Make sure the README.md mentions the correct version number.
+
 ## 1.0.1
 
 - Added NoResultFoundException to indicate when no results are found, instead of PlatformException
