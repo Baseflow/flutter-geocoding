@@ -3,12 +3,16 @@
 [![pub package](https://img.shields.io/pub/v/geocoding.svg)](https://pub.dartlang.org/packages/geocoding)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
-[![Build Status](https://app.bitrise.io/app/9b65bb23ab8807cf/status.svg?token=j1lrARLTbIIC6YpmiFPHCg)](https://app.bitrise.io/app/9b65bb23ab8807cf)
+[![Buid status](https://github.com/Baseflow/flutter-geocoding/workflows/Geocoding/badge.svg)](https://github.com/Baseflow/flutter-geocoding/actions?query=workflow%3AGeocoding)
 [![codecov](https://codecov.io/gh/Baseflow/flutter-geocoding/branch/master/graph/badge.svg)](https://codecov.io/gh/Baseflow/flutter-geocoding)
 
 A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding features.
 
-**Note**: The availability of the Google Play Services depends on your country. If your country doesn't support a connection with the Google Play Services, you'll need to try a VPN to establish a connection. For more information about how to work with Google Play Services visit the following link: https://developers.google.com/android/guides/overview 
+**Important**: 
+
+1. This plugin uses the free Geocoding services provided by the iOS and Android platforms. This means that there are restrictions to their use. More information can be found in the [Apple documentation for iOS](https://developer.apple.com/documentation/corelocation/clgeocoder) and the [Google documentation for Android](https://developer.android.com/reference/android/location/Geocoder).
+
+2. The availability of the Google Play Services depends on your country. If your country doesn't support a connection with the Google Play Services, you'll need to try a VPN to establish a connection. For more information about how to work with Google Play Services visit the following link: https://developers.google.com/android/guides/overview 
 
 ## Usage
 
@@ -16,7 +20,7 @@ To use this plugin, add `geocoding` as a [dependency in your pubspec.yaml file](
 
 ```yaml
 dependencies:
-  geocoding: ^1.0.4
+  geocoding: ^1.0.5
 ```
 
 > **NOTE:** This plugin relies on the AndroidX version of the Android Support Libraries. This means you need to make sure your Android project is also upgraded to support AndroidX. Detailed instructions can be found [here](https://flutter.dev/docs/development/packages-and-plugins/androidx-compatibility). 
@@ -42,17 +46,12 @@ dependencies:
 
 ## API
 
-To translate an address into latitude and longitude coordinates you can use the `locationFromAddress` method:
+To translate an address into latitude and longitude coordinates you can use the `placemarkFromAddress` method:
 
 ``` dart
 import 'package:geocoding/geocoding.dart';
 
-try {
-    List<Location> locations = await locationFromAddress("Gronausestraat 710, Enschede");
-} on NoResultFoundException {
-    // Implement behaviour on no results
-    rethrow;
-}
+List<Location> locations = await locationFromAddress("Gronausestraat 710, Enschede");
 ```
 
 If you want to translate latitude and longitude coordinates into an address you can use the `placemarkFromCoordinates` method:
@@ -60,12 +59,7 @@ If you want to translate latitude and longitude coordinates into an address you 
 ``` dart
 import 'package:geocoding/geocoding.dart';
 
-try{
-    List<Placemark> placemarks = await placemarkFromCoordinates(52.2165157, 6.9437819);
-} on NoResultFoundException {
-    // Implement behaviour on no results
-    rethrow;
-}
+List<Placemark> placemarks = await placemarkFromCoordinates(52.2165157, 6.9437819);
 ```
 
 Both the `locationFromAddress` and `placemarkFromCoordinates` accept an optional `localeIdentifier` parameter. This parameter can be used to enforce the results to be formatted (and translated) according to the specified locale. The `localeIdentifier` should be formatted using the syntax: [languageCode]_[countryCode]. Use the [ISO 639-1 or ISO 639-2](http://www.loc.gov/standards/iso639-2/php/English_list.php) standard for the language code and the 2 letter [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard for the country code. Some examples are:
