@@ -42,7 +42,7 @@ dependencies:
 
 ## API
 
-To translate an address into latitude and longitude coordinates you can use the `placemarkFromAddress` method:
+To translate an address into latitude and longitude coordinates you can use the `locationFromAddress` method:
 
 ``` dart
 import 'package:geocoding/geocoding.dart';
