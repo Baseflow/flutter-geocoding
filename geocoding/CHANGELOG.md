@@ -1,3 +1,8 @@
+## 1.0.5
+
+- Make sure the README.md specifies the correct links to Apple's CLGeocoder and Android's Geocoder APIs (see [#20](https://github.com/baseflow/flutter-geocoding/pull/20));
+- Update the documentation to mention correct usage for the `locationFromAddress` feature (see [#21](https://github.com/baseflow/flutter-geocoding/pull/21))
+
 ## 1.0.4+1
 
 - Make sure the README.md mentions the correct version number.
