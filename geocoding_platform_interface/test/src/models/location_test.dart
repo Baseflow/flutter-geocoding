@@ -38,7 +38,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstLocation.hashCode != secondLocation,
+        firstLocation.hashCode != secondLocation.hashCode,
         true,
       );
     });
@@ -59,7 +59,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstLocation.hashCode != secondLocation,
+        firstLocation.hashCode != secondLocation.hashCode,
         true,
       );
     });
@@ -80,7 +80,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstLocation.hashCode != secondLocation,
+        firstLocation.hashCode != secondLocation.hashCode,
         true,
       );
     });
