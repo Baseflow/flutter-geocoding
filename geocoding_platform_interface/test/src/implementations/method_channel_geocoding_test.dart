@@ -28,7 +28,7 @@ void main() {
 
   group('$MethodChannelGeocoding()', () {
     final log = <MethodCall>[];
-    MethodChannelGeocoding methodChannelgeocoding;
+    late MethodChannelGeocoding methodChannelgeocoding;
     var _mockCoordinatesNotFound = false;
 
     setUp(() async {
@@ -45,7 +45,6 @@ void main() {
             } else {
               return [_mockLocation.toJson()];
             }
-            break;
           case 'placemarkFromCoordinates':
             return [_mockPlacemark.toJson()];
           default:

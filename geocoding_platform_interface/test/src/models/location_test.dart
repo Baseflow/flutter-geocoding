@@ -6,8 +6,14 @@ void main() {
     test('hashCode hould be the same for two instances with the same values',
         () {
       // Arrange
-      final firstLocation = Location();
-      final secondLocation = Location();
+      final firstLocation = Location(
+          latitude: 0,
+          longitude: 0,
+          timestamp: DateTime.fromMillisecondsSinceEpoch((0)));
+      final secondLocation = Location(
+          latitude: 0,
+          longitude: 0,
+          timestamp: DateTime.fromMillisecondsSinceEpoch((0)));
 
       // Act & Assert
       expect(

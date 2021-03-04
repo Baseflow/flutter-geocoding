@@ -16,7 +16,7 @@ class MethodChannelGeocoding extends GeocodingPlatform {
   @override
   Future<List<Location>> locationFromAddress(
     String address, {
-    String localeIdentifier,
+    String? localeIdentifier,
   }) async {
     final parameters = <String, String>{
       'address': address,
@@ -26,12 +26,15 @@ class MethodChannelGeocoding extends GeocodingPlatform {
       parameters['localeIdentifier'] = localeIdentifier;
     }
     try {
-      final placemarks = await methodChannel.invokeMethod(
+      final locations = await methodChannel.invokeMethod(
         'locationFromAddress',
         parameters,
       );
+      if (locations == null) {
+        return [];
+      }
 
-      return Location.fromMaps(placemarks);
+      return Location.fromMaps(locations);
     } on PlatformException catch (e) {
       _handlePlatformException(e);
       rethrow;
@@ -42,7 +45,7 @@ class MethodChannelGeocoding extends GeocodingPlatform {
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
     double longitude, {
-    String localeIdentifier,
+    String? localeIdentifier,
   }) async {
     final parameters = <String, dynamic>{
       'latitude': latitude,
@@ -55,6 +58,10 @@ class MethodChannelGeocoding extends GeocodingPlatform {
 
     final placemarks = await methodChannel.invokeMethod(
         'placemarkFromCoordinates', parameters);
+    if (placemarks == null) {
+      return [];
+    }
+
     return Placemark.fromMaps(placemarks);
   }
 

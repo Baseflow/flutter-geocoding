@@ -7,15 +7,15 @@ class Location {
   /// instances constructed this way won't actually reflect any real information
   /// from the platform, just whatever was passed in at construction time.
   Location({
-    this.latitude,
-    this.longitude,
-    this.timestamp,
+    required this.latitude,
+    required this.longitude,
+    required this.timestamp,
   });
 
   Location._({
-    this.latitude,
-    this.longitude,
-    this.timestamp,
+    required this.latitude,
+    required this.longitude,
+    required this.timestamp,
   });
 
   /// The latitude associated with the placemark.
@@ -55,10 +55,9 @@ class Location {
     }
 
     final Map<dynamic, dynamic> locationMap = message;
-    final timestamp = locationMap['timestamp'] != null
-        ? DateTime.fromMillisecondsSinceEpoch(locationMap['timestamp'].toInt(),
-            isUtc: true)
-        : null;
+    final timestamp = DateTime.fromMillisecondsSinceEpoch(
+        locationMap['timestamp'].toInt(),
+        isUtc: true);
 
     return Location._(
       latitude: locationMap['latitude'] ?? null,
@@ -72,7 +71,7 @@ class Location {
   Map<String, dynamic> toJson() => {
         'latitude': latitude,
         'longitude': longitude,
-        'timestamp': timestamp?.millisecondsSinceEpoch ?? null,
+        'timestamp': timestamp.millisecondsSinceEpoch,
       };
 
   @override

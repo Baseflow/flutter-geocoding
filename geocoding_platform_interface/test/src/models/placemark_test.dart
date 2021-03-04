@@ -438,18 +438,6 @@ void main() {
     });
   });
 
-  group('fromMaps tests:', () {
-    test('fromMaps should throw argument error when message is null', () {
-      expect(() => Placemark.fromMaps(null), throwsArgumentError);
-    });
-  });
-
-  group('fromMap tests:', () {
-    test('fromMap should throw argument error when message is null', () {
-      expect(() => Placemark.fromMap(null), throwsArgumentError);
-    });
-  });
-
   group('toString tests:', () {
     test('toString should list the contents of all properties', () {
       final mockPlacemark = Placemark(
