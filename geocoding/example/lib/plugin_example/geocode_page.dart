@@ -67,7 +67,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
               padding: EdgeInsets.only(top: 8),
             ),
             Center(
-              child: RaisedButton(
+              child: ElevatedButton(
                   child: Text('Look up address'),
                   onPressed: () {
                     final latitude = double.parse(_latitudeController.text);
@@ -100,7 +100,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
               padding: EdgeInsets.only(top: 8),
             ),
             Center(
-              child: RaisedButton(
+              child: ElevatedButton(
                   child: Text('Look up location'),
                   onPressed: () {
                     locationFromAddress(_addressController.text)
