@@ -60,8 +60,8 @@ class Location {
         isUtc: true);
 
     return Location._(
-      latitude: locationMap['latitude'] ?? null,
-      longitude: locationMap['longitude'] ?? null,
+      latitude: locationMap['latitude'],
+      longitude: locationMap['longitude'],
       timestamp: timestamp,
     );
   }
