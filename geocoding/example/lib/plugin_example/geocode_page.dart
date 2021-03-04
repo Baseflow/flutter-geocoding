@@ -75,9 +75,11 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
 
                     placemarkFromCoordinates(latitude, longitude)
                         .then((placemarks) {
-                      final output = placemarks[0].toString();
+                      var output = 'No results found.';
+                      if (placemarks != null && placemarks.isNotEmpty) {
+                        output = placemarks[0].toString();
+                      }
 
-                      print(placemarks[0].toString());
                       setState(() {
                         _output = output;
                       });
@@ -105,9 +107,11 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   onPressed: () {
                     locationFromAddress(_addressController.text)
                         .then((locations) {
-                      final output = locations[0].toString();
+                      var output = 'No results found.';
+                      if (locations != null && locations.isNotEmpty) {
+                        output = locations[0].toString();
+                      }
 
-                      print(locations[0].toString());
                       setState(() {
                         _output = output;
                       });
