@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
@@ -28,7 +30,7 @@ void main() {
 
   group('$MethodChannelGeocoding()', () {
     final log = <MethodCall>[];
-    MethodChannelGeocoding methodChannelgeocoding;
+    late MethodChannelGeocoding methodChannelgeocoding;
     var _mockCoordinatesNotFound = false;
 
     setUp(() async {
@@ -45,7 +47,6 @@ void main() {
             } else {
               return [_mockLocation.toJson()];
             }
-            break;
           case 'placemarkFromCoordinates':
             return [_mockPlacemark.toJson()];
           default:
@@ -64,8 +65,8 @@ void main() {
           final address = 'Gronausestraat, Enschede';
 
           // Act
-          final locations =
-              await methodChannelgeocoding.locationFromAddress(address);
+          final locations = await (methodChannelgeocoding
+              .locationFromAddress(address) as FutureOr<List<Location>>);
 
           // Assert
           expect(locations.length, 1);
@@ -113,10 +114,10 @@ void main() {
           final address = 'Gronausestraat, Enschede';
 
           // Act
-          final locations = await methodChannelgeocoding.locationFromAddress(
+          final locations = await (methodChannelgeocoding.locationFromAddress(
             address,
             localeIdentifier: 'nl-NL',
-          );
+          ) as FutureOr<List<Location>>);
 
           // Assert
           expect(locations.length, 1);
@@ -157,10 +158,10 @@ void main() {
 
           // Act
           final placemarks =
-              await methodChannelgeocoding.placemarkFromCoordinates(
+              await (methodChannelgeocoding.placemarkFromCoordinates(
             latitude,
             longitude,
-          );
+          ) as FutureOr<List<Placemark>>);
 
           expect(placemarks.length, 1);
           expect(placemarks.first, _mockPlacemark);
@@ -199,11 +200,11 @@ void main() {
 
           // Act
           final placemarks =
-              await methodChannelgeocoding.placemarkFromCoordinates(
+              await (methodChannelgeocoding.placemarkFromCoordinates(
             latitude,
             longitude,
             localeIdentifier: 'nl-NL',
-          );
+          ) as FutureOr<List<Placemark>>);
 
           expect(placemarks.length, 1);
           expect(placemarks.first, _mockPlacemark);
