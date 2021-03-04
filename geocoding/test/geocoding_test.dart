@@ -44,17 +44,19 @@ void main() {
 class MockGeocodingPlatform extends Mock
     with MockPlatformInterfaceMixin
     implements GeocodingPlatform {
+  @override
   Future<List<Location>> locationFromAddress(
     String address, {
-    String localeIdentifier,
+    String? localeIdentifier,
   }) async {
     return [mockLocation];
   }
 
+  @override
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
     double longitude, {
-    String localeIdentifier,
+    String? localeIdentifier,
   }) async {
     return [mockPlacemark];
   }

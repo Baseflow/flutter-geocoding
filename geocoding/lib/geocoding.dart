@@ -17,7 +17,7 @@ export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
 Future<List<Location>> locationFromAddress(
   String address, {
-  String localeIdentifier,
+  String? localeIdentifier,
 }) =>
     GeocodingPlatform.instance.locationFromAddress(
       address,
@@ -39,7 +39,7 @@ Future<List<Location>> locationFromAddress(
 Future<List<Placemark>> placemarkFromCoordinates(
   double latitude,
   double longitude, {
-  String localeIdentifier,
+  String? localeIdentifier,
 }) =>
     GeocodingPlatform.instance.placemarkFromCoordinates(
       latitude,
