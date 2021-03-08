@@ -32,22 +32,23 @@ void main() {
     });
 
     test('locationFromAddress', () async {
-      final locations =
-          await (locationFromAddress('') as FutureOr<List<Location>>);
+      final locations = await (locationFromAddress(''));
       expect(locations.single, mockLocation);
     });
 
     test('placemarkFromCoordinates', () async {
-      final placemarks =
-          await (placemarkFromCoordinates(0, 0) as FutureOr<List<Placemark>>);
+      final placemarks = await (placemarkFromCoordinates(0, 0));
       expect(placemarks.single, mockPlacemark);
     });
   });
 }
 
 class MockGeocodingPlatform extends Mock
-    with MockPlatformInterfaceMixin
-    implements GeocodingPlatform {
+    // ignore: prefer_mixin
+    with
+        MockPlatformInterfaceMixin
+    implements
+        GeocodingPlatform {
   @override
   Future<List<Location>> locationFromAddress(
     String address, {

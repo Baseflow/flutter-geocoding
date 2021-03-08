@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
@@ -65,8 +63,8 @@ void main() {
           final address = 'Gronausestraat, Enschede';
 
           // Act
-          final locations = await (methodChannelgeocoding
-              .locationFromAddress(address) as FutureOr<List<Location>>);
+          final locations =
+              await (methodChannelgeocoding.locationFromAddress(address));
 
           // Assert
           expect(locations.length, 1);
@@ -117,7 +115,7 @@ void main() {
           final locations = await (methodChannelgeocoding.locationFromAddress(
             address,
             localeIdentifier: 'nl-NL',
-          ) as FutureOr<List<Location>>);
+          ));
 
           // Assert
           expect(locations.length, 1);
@@ -161,7 +159,7 @@ void main() {
               await (methodChannelgeocoding.placemarkFromCoordinates(
             latitude,
             longitude,
-          ) as FutureOr<List<Placemark>>);
+          ));
 
           expect(placemarks.length, 1);
           expect(placemarks.first, _mockPlacemark);
@@ -204,7 +202,7 @@ void main() {
             latitude,
             longitude,
             localeIdentifier: 'nl-NL',
-          ) as FutureOr<List<Placemark>>);
+          ));
 
           expect(placemarks.length, 1);
           expect(placemarks.first, _mockPlacemark);

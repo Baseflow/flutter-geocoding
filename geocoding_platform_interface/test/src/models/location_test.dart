@@ -90,6 +90,16 @@ void main() {
     test('fromMap should throw argument error when message is null', () {
       expect(() => Location.fromMap(null), throwsArgumentError);
     });
+
+    test('fromMap throws argument error when latitude or longitude are null',
+        () {
+      final location = <dynamic, dynamic>{
+        'latitude': null,
+        'longitude': null,
+        'timestamp': 1615216821218,
+      };
+      expect(() => Location.fromMap(location), throwsArgumentError);
+    });
   });
 
   group('toString tests:', () {
