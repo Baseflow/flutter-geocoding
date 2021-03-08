@@ -59,6 +59,11 @@ class Location {
         locationMap['timestamp'].toInt(),
         isUtc: true);
 
+    if (locationMap['latitude'] == null && locationMap['longitude'] == null) {
+      throw ArgumentError(
+          'The parameters latitude and longitude should not be null.');
+    }
+
     return Location._(
       latitude: locationMap['latitude'],
       longitude: locationMap['longitude'],

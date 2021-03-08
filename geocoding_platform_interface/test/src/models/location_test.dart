@@ -86,12 +86,6 @@ void main() {
     });
   });
 
-  group('fromMaps tests:', () {
-    test('fromMaps should throw argument error when message is null', () {
-      expect(() => Location.fromMaps(null), throwsArgumentError);
-    });
-  });
-
   group('fromMap tests:', () {
     test('fromMap should throw argument error when message is null', () {
       expect(() => Location.fromMap(null), throwsArgumentError);
