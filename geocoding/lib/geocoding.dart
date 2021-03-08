@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 
 export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
