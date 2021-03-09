@@ -44,8 +44,8 @@ void main() {
 }
 
 class MockGeocodingPlatform extends Mock
-    // ignore: prefer_mixin
     with
+        // ignore: prefer_mixin
         MockPlatformInterfaceMixin
     implements
         GeocodingPlatform {

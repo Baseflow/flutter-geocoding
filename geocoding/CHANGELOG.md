@@ -1,3 +1,7 @@
+## 2.0.0
+
+- Migrate to null safety.
+
 ## 1.0.5
 
 - Make sure the README.md specifies the correct links to Apple's CLGeocoder and Android's Geocoder APIs (see [#20](https://github.com/baseflow/flutter-geocoding/pull/20));
