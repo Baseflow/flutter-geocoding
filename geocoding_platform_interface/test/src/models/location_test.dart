@@ -6,8 +6,14 @@ void main() {
     test('hashCode hould be the same for two instances with the same values',
         () {
       // Arrange
-      final firstLocation = Location();
-      final secondLocation = Location();
+      final firstLocation = Location(
+          latitude: 0,
+          longitude: 0,
+          timestamp: DateTime.fromMillisecondsSinceEpoch((0)));
+      final secondLocation = Location(
+          latitude: 0,
+          longitude: 0,
+          timestamp: DateTime.fromMillisecondsSinceEpoch((0)));
 
       // Act & Assert
       expect(
@@ -32,7 +38,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstLocation.hashCode != secondLocation,
+        firstLocation.hashCode != secondLocation.hashCode,
         true,
       );
     });
@@ -53,7 +59,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstLocation.hashCode != secondLocation,
+        firstLocation.hashCode != secondLocation.hashCode,
         true,
       );
     });
@@ -74,21 +80,25 @@ void main() {
 
       // Act & Assert
       expect(
-        firstLocation.hashCode != secondLocation,
+        firstLocation.hashCode != secondLocation.hashCode,
         true,
       );
-    });
-  });
-
-  group('fromMaps tests:', () {
-    test('fromMaps should throw argument error when message is null', () {
-      expect(() => Location.fromMaps(null), throwsArgumentError);
     });
   });
 
   group('fromMap tests:', () {
     test('fromMap should throw argument error when message is null', () {
       expect(() => Location.fromMap(null), throwsArgumentError);
+    });
+
+    test('fromMap throws argument error when latitude or longitude are null',
+        () {
+      final location = <dynamic, dynamic>{
+        'latitude': null,
+        'longitude': null,
+        'timestamp': 1615216821218,
+      };
+      expect(() => Location.fromMap(location), throwsArgumentError);
     });
   });
 

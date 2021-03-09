@@ -16,7 +16,7 @@ class MethodChannelGeocoding extends GeocodingPlatform {
   @override
   Future<List<Location>> locationFromAddress(
     String address, {
-    String localeIdentifier,
+    String? localeIdentifier,
   }) async {
     final parameters = <String, String>{
       'address': address,
@@ -42,7 +42,7 @@ class MethodChannelGeocoding extends GeocodingPlatform {
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
     double longitude, {
-    String localeIdentifier,
+    String? localeIdentifier,
   }) async {
     final parameters = <String, dynamic>{
       'latitude': latitude,

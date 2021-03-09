@@ -1,24 +1,25 @@
 name: geocoding
 description: A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding features.
-version: 1.0.5
+version: 2.0.0
 homepage: https://github.com/baseflow/flutter-geocoding/tree/master/geocoding
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.10.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  geocoding_platform_interface: ^1.0.1
-  url_launcher: ^5.4.11
+
+  geocoding_platform_interface: ^2.0.0
 
 dev_dependencies:
-  effective_dart: ^1.2.1
   flutter_test:
     sdk: flutter
-  mockito: ^4.1.1
-  plugin_platform_interface: ^1.0.2
+
+  effective_dart: ^1.3.0
+  mockito: ^5.0.0
+  plugin_platform_interface: ^2.0.0
   
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

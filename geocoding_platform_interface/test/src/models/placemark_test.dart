@@ -47,7 +47,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -85,7 +85,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -124,7 +124,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -161,7 +161,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -198,7 +198,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -237,7 +237,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -276,7 +276,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -315,7 +315,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -354,7 +354,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -393,7 +393,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
@@ -432,7 +432,7 @@ void main() {
 
       // Act & Assert
       expect(
-        firstPlacemark.hashCode != secondPlacemark,
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
         true,
       );
     });
