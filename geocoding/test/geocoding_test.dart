@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
@@ -30,31 +32,36 @@ void main() {
     });
 
     test('locationFromAddress', () async {
-      final locations = await locationFromAddress('');
+      final locations = await (locationFromAddress(''));
       expect(locations.single, mockLocation);
     });
 
     test('placemarkFromCoordinates', () async {
-      final placemarks = await placemarkFromCoordinates(0, 0);
+      final placemarks = await (placemarkFromCoordinates(0, 0));
       expect(placemarks.single, mockPlacemark);
     });
   });
 }
 
 class MockGeocodingPlatform extends Mock
-    with MockPlatformInterfaceMixin
-    implements GeocodingPlatform {
+    // ignore: prefer_mixin
+    with
+        MockPlatformInterfaceMixin
+    implements
+        GeocodingPlatform {
+  @override
   Future<List<Location>> locationFromAddress(
     String address, {
-    String localeIdentifier,
+    String? localeIdentifier,
   }) async {
     return [mockLocation];
   }
 
+  @override
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
     double longitude, {
-    String localeIdentifier,
+    String? localeIdentifier,
   }) async {
     return [mockPlacemark];
   }

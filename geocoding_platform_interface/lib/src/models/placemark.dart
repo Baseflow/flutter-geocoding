@@ -35,37 +35,37 @@ class Placemark {
   });
 
   /// The name associated with the placemark.
-  final String name;
+  final String? name;
 
   /// The street associated with the placemark.
-  final String street;
+  final String? street;
 
   /// The abbreviated country name, according to the two letter (alpha-2) [ISO standard](https://www.iso.org/iso-3166-country-codes.html).
-  final String isoCountryCode;
+  final String? isoCountryCode;
 
   /// The name of the country associated with the placemark.
-  final String country;
+  final String? country;
 
   /// The postal code associated with the placemark.
-  final String postalCode;
+  final String? postalCode;
 
   /// The name of the state or province associated with the placemark.
-  final String administrativeArea;
+  final String? administrativeArea;
 
   /// Additional administrative area information for the placemark.
-  final String subAdministrativeArea;
+  final String? subAdministrativeArea;
 
   /// The name of the city associated with the placemark.
-  final String locality;
+  final String? locality;
 
   /// Additional city-level information for the placemark.
-  final String subLocality;
+  final String? subLocality;
 
   /// The street address associated with the placemark.
-  final String thoroughfare;
+  final String? thoroughfare;
 
   /// Additional street address information for the placemark.
-  final String subThoroughfare;
+  final String? subThoroughfare;
 
   @override
   bool operator ==(dynamic o) =>
