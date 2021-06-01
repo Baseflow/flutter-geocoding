@@ -36,6 +36,7 @@
         @"subAdministrativeArea": self.subAdministrativeArea == nil ? @"" : self.subAdministrativeArea,
         @"locality": self.locality == nil ? @"" : self.locality,
         @"subLocality": self.subLocality == nil ? @"" : self.subLocality,
+        @"formattedAddress": self.postalAddress == nil ? @"" : CNPostalAddressFormatter().string(from:self.postalAddress),
     }];
     
     return dict;

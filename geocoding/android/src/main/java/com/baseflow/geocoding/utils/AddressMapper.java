@@ -37,6 +37,19 @@ public class AddressMapper {
         placemark.put("subAdministrativeArea", address.getSubAdminArea());
         placemark.put("locality", address.getLocality());
         placemark.put("subLocality", address.getSubLocality());
+        placemark.put("locale", address.getLocale().toString());
+        placemark.put("phone", address.getPhone());
+        placemark.put("url", address.getUrl());
+        placemark.put("premises", address.getPremises());
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+            if (i > 0) {
+                sb.append("\n");
+            }
+            sb.append(address.getAddressLine(i));
+        }
+        placemark.put("formattedAddress", sb.toString());
 
         return placemark;
     }
