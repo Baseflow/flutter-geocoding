@@ -51,6 +51,13 @@ public class AddressMapper {
         }
         placemark.put("formattedAddress", sb.toString());
 
+        if (address.hasLatitude() && address.hasLongitude()) {
+            Map<String, Double> locationMap = new HashMap<>();
+            locationMap.put("latitude", address.getLatitude());
+            locationMap.put("longitude", address.getLongitude());
+            placemark.put("location", locationMap);
+          }
+
         return placemark;
     }
 

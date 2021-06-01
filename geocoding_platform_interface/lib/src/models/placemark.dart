@@ -1,3 +1,4 @@
+import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 import 'package:meta/meta.dart';
 
 /// Contains detailed placemark information.
@@ -19,6 +20,7 @@ class Placemark {
     this.thoroughfare,
     this.subThoroughfare,
     this.formattedAddress,
+    this.location
   });
 
   Placemark._({
@@ -34,6 +36,7 @@ class Placemark {
     this.thoroughfare,
     this.subThoroughfare,
     this.formattedAddress,
+    this.location
   });
 
   /// The name associated with the placemark.
@@ -72,6 +75,9 @@ class Placemark {
   /// The formated address
   final String? formattedAddress;
 
+  /// The location of this placemark
+  final Location? location;
+
   @override
   bool operator ==(dynamic o) =>
       o is Placemark &&
@@ -86,7 +92,8 @@ class Placemark {
       o.subLocality == subLocality &&
       o.subThoroughfare == subThoroughfare &&
       o.thoroughfare == thoroughfare &&
-      o.formattedAddress == formattedAddress;
+      o.formattedAddress == formattedAddress &&
+      o.location == location;
 
   @override
   int get hashCode =>
@@ -101,7 +108,8 @@ class Placemark {
       subLocality.hashCode ^
       subThoroughfare.hashCode ^
       thoroughfare.hashCode ^
-      formattedAddress.hashCode;
+      formattedAddress.hashCode ^
+      location.hashCode;
 
   /// Converts a list of [Map] instances to a list of [Placemark] instances.
   static List<Placemark> fromMaps(dynamic message) {
@@ -134,6 +142,9 @@ class Placemark {
       thoroughfare: placemarkMap['thoroughfare'] ?? '',
       subThoroughfare: placemarkMap['subThoroughfare'] ?? '',
       formattedAddress: placemarkMap['formattedAddress'] ?? '',
+      location: (placemarkMap['location']!=null)
+        ? Location.fromMap(placemarkMap['location'])
+        : null,
     );
   }
 
@@ -152,6 +163,7 @@ class Placemark {
         'thoroughfare': thoroughfare,
         'subThoroughfare': subThoroughfare,
         'formattedAddress': formattedAddress,
+        'location': location?.toJson()
       };
 
   @override
@@ -168,7 +180,9 @@ class Placemark {
       Sublocality: $subLocality,
       Thoroughfare: $thoroughfare,
       Subthoroughfare: $subThoroughfare,
-      FormattedAddress: $formattedAddress''';
+      FormattedAddress: $formattedAddress,
+      location: $location,
+    ''';
   }
 
   /// allows automatic deserialization with the json_serializable lib
@@ -188,7 +202,8 @@ class Placemark {
       subLocality: subLocality,
       thoroughfare: thoroughfare,
       subThoroughfare: subThoroughfare,
-      formattedAddress: formattedAddress
+      formattedAddress: formattedAddress,
+      location: location?.copy()
     );
   }
 
