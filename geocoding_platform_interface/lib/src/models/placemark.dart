@@ -170,4 +170,26 @@ class Placemark {
       Subthoroughfare: $subThoroughfare,
       FormattedAddress: $formattedAddress''';
   }
+
+  /// allows automatic deserialization with the json_serializable lib
+  factory Placemark.fromJson(Map<String, dynamic> json) => fromMap(json);
+
+  /// create a copy of the Placemark
+  Placemark copy() {
+    return Placemark(
+      name: name,
+      street: street,
+      isoCountryCode: isoCountryCode,
+      country: country,
+      postalCode: postalCode,
+      administrativeArea: administrativeArea,
+      subAdministrativeArea: subAdministrativeArea,
+      locality: locality,
+      subLocality: subLocality,
+      thoroughfare: thoroughfare,
+      subThoroughfare: subThoroughfare,
+      formattedAddress: formattedAddress
+    );
+  }
+
 }
