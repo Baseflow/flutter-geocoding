@@ -1,6 +1,7 @@
 ## 2.0.1
 
-- Update the plugin version number in the README file to the newest version.
+- Update the plugin version number in the README file to the newest version;
+- Update the example app to use `compileSdkversion 30` and `targetSdkversion 30`.
 
 ## 2.0.0
 
