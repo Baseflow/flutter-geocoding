@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Updated the plugin version number in the README file to the newest version.
+
 ## 2.0.0
 
 - Migrate to null safety.
