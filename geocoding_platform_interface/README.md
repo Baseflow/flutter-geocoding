@@ -16,12 +16,7 @@ A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding f
 
 ## Usage
 
-To use this plugin, add `geocoding` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/). For example:
-
-```yaml
-dependencies:
-  geocoding: ^2.0.1
-```
+To use this plugin, please follow the installation guide on the [official geocoding plugin page](https://pub.dev/packages/geocoding/install).
 
 > **NOTE:** This plugin relies on the AndroidX version of the Android Support Libraries. This means you need to make sure your Android project is also upgraded to support AndroidX. Detailed instructions can be found [here](https://flutter.dev/docs/development/packages-and-plugins/androidx-compatibility). 
 >
