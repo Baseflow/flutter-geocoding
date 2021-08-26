@@ -1,6 +1,6 @@
 ## 2.0.1
 
-- Updated the plugin version number in the README file to the newest version.
+- Updated the installation instructions in the README.md file.
 
 ## 2.0.0
 
