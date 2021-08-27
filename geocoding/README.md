@@ -11,17 +11,12 @@ A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding f
 **Important**: 
 
 1. This plugin uses the free Geocoding services provided by the iOS and Android platforms. This means that there are restrictions to their use. More information can be found in the [Apple documentation for iOS](https://developer.apple.com/documentation/corelocation/clgeocoder) and the [Google documentation for Android](https://developer.android.com/reference/android/location/Geocoder).
-
+   When a `PlatformException(IO_ERROR, ...)` gets thrown, most of the times it means that the rate limit has been reached.
 2. The availability of the Google Play Services depends on your country. If your country doesn't support a connection with the Google Play Services, you'll need to try a VPN to establish a connection. For more information about how to work with Google Play Services visit the following link: https://developers.google.com/android/guides/overview 
 
 ## Usage
 
-To use this plugin, add `geocoding` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/). For example:
-
-```yaml
-dependencies:
-  geocoding: ^1.0.5
-```
+To use this plugin, please follow the installation guide on the [official geocoding plugin page](https://pub.dev/packages/geocoding/install).
 
 > **NOTE:** This plugin relies on the AndroidX version of the Android Support Libraries. This means you need to make sure your Android project is also upgraded to support AndroidX. Detailed instructions can be found [here](https://flutter.dev/docs/development/packages-and-plugins/androidx-compatibility). 
 >
@@ -33,11 +28,11 @@ dependencies:
 >android.useAndroidX=true
 >android.enableJetifier=true
 >```
->2. Make sure you set the `compileSdkVersion` in your "android/app/build.gradle" file to 28:
+>2. Make sure you set the `compileSdkVersion` in your "android/app/build.gradle" file to 30:
 >
 >```
 >android {
->  compileSdkVersion 28
+>  compileSdkVersion 30
 >
 >  ...
 >}
