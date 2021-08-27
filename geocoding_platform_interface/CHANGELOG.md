@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Updated the installation instructions in the README.md file.
+
 ## 2.0.0
 
 - Migrate to null safety.
