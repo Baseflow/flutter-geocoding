@@ -1,3 +1,6 @@
+## 2.0.2
+- Migrate maven repository from jcenter to mavenCentral
+
 ## 2.0.1
 
 - Update the plugin version number in the README file to the newest version;
