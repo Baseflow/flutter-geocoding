@@ -1,3 +1,6 @@
+## 2.0.3
+- Upgrade compileSdkVersion to 31
+
 ## 2.0.2
 - Migrate maven repository from jcenter to mavenCentral
 
