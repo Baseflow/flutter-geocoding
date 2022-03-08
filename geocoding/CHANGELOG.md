@@ -1,8 +1,11 @@
 ## 2.0.3
-- Upgrade compileSdkVersion to 31
+
+- Upgrades `compileSdkVersion` to `31` on Android.
+- Resolves Android embedding deprecation warning.
 
 ## 2.0.2
-- Migrate maven repository from jcenter to mavenCentral
+
+- Migrate maven repository from jcenter to mavenCentral.
 
 ## 2.0.1
 

@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 import 'package:mockito/mockito.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
