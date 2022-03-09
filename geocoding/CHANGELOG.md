@@ -1,3 +1,7 @@
+## 2.0.4
+
+- Fixes link to the Android migration guide in README.
+
 ## 2.0.3
 
 - Upgrades `compileSdkVersion` to `31` on Android.
