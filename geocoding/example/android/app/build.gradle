@@ -27,6 +27,10 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
     compileSdkVersion 31
 
+    // Temporary add ndkVersion because GitHub CI is failing
+    // TODO (mvanbeusekom): Remove once NDK version 23 is supported
+    ndkVersion "22.1.7171670"
+
     lintOptions {
         disable 'InvalidPackage'
     }

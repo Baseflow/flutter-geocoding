@@ -4,7 +4,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 /**
  * Plugin implementation that uses the new {@code io.flutter.embedding} package.
@@ -20,10 +19,11 @@ public final class GeocodingPlugin implements FlutterPlugin {
    * Registers a plugin implementation that uses the stable {@code io.flutter.plugin.common}
    * package.
    *
-   * <p>Calling this automatically initializes the plugin. However plugins initialized this way
+   * <p>Calling this automatically initializes the plugin. However, plugins initialized this way
    * won't react to changes in activity or context, unlike {@link GeocodingPlugin}.
    */
-  public static void registerWith(Registrar registrar) {
+  @SuppressWarnings("deprecation")
+  public static void registerWith(io.flutter.plugin.common.PluginRegistry.Registrar registrar) {
     MethodCallHandlerImpl handler =
             new MethodCallHandlerImpl(new Geocoding(registrar.activeContext()));
     handler.startListening(registrar.messenger());
