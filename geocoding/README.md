@@ -37,7 +37,7 @@ To use this plugin, please follow the installation guide on the [official geocod
 >  ...
 >}
 >```
->3. Make sure you replace all the `android.` dependencies to their AndroidX counterparts (a full list can be found here: https://developer.android.com/jetpack/androidx/migrate).
+>3. Make sure you replace all the `android.` dependencies to their AndroidX counterparts (a full list can be found [Android migration guide](https://developer.android.com/jetpack/androidx/migrate)).
 
 ## API
 
