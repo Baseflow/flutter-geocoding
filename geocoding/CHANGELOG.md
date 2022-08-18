@@ -1,3 +1,6 @@
+## 2.0.5
+
+- Fixed [#58](https://github.com/Baseflow/flutter-geocoding/issues/58) getting locationFromAddress freezes main thread.
 ## 2.0.4
 
 - Fixes link to the Android migration guide in README.
