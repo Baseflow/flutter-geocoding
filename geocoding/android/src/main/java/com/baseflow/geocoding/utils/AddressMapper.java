@@ -26,6 +26,7 @@ public class AddressMapper {
         Map<String, Object> placemark = new HashMap<>();
         final String street = AddressLineParser.getStreet(address.getAddressLine(0));
 
+        placemark.put("address", address.getAddressLine(address.getMaxAddressLineIndex()));
         placemark.put("name", address.getFeatureName());
         placemark.put("street", street);
         placemark.put("isoCountryCode", address.getCountryCode());
