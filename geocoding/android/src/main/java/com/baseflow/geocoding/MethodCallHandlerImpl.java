@@ -1,8 +1,6 @@
 package com.baseflow.geocoding;
 
 import android.location.Address;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -12,8 +10,6 @@ import com.baseflow.geocoding.utils.LocaleConverter;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
