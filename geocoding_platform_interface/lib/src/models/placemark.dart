@@ -7,7 +7,6 @@ class Placemark {
   /// instances constructed this way won't actually reflect any real information
   /// from the platform, just whatever was passed in at construction time.
   Placemark({
-    this.address,
     this.name,
     this.street,
     this.isoCountryCode,
@@ -22,7 +21,6 @@ class Placemark {
   });
 
   Placemark._({
-    this.address,
     this.name,
     this.street,
     this.isoCountryCode,
@@ -35,9 +33,6 @@ class Placemark {
     this.thoroughfare,
     this.subThoroughfare,
   });
-
-  /// The full address associated with the placemark.
-  final String? address;
 
   /// The name associated with the placemark.
   final String? name;
@@ -75,7 +70,6 @@ class Placemark {
   @override
   bool operator ==(dynamic o) =>
       o is Placemark &&
-      o.address == address &&
       o.administrativeArea == administrativeArea &&
       o.country == country &&
       o.isoCountryCode == isoCountryCode &&
@@ -90,7 +84,6 @@ class Placemark {
 
   @override
   int get hashCode =>
-      address.hashCode ^
       administrativeArea.hashCode ^
       country.hashCode ^
       isoCountryCode.hashCode ^
@@ -122,7 +115,6 @@ class Placemark {
     final Map<dynamic, dynamic> placemarkMap = message;
 
     return Placemark._(
-      address: placemarkMap['address'] ?? '',
       name: placemarkMap['name'] ?? '',
       street: placemarkMap['street'] ?? '',
       isoCountryCode: placemarkMap['isoCountryCode'] ?? '',
@@ -140,7 +132,6 @@ class Placemark {
   /// Converts the [Placemark] instance into a [Map] instance that can be
   /// serialized to JSON.
   Map<String, dynamic> toJson() => {
-        'address': address,
         'name': name,
         'street': street,
         'isoCountryCode': isoCountryCode,
@@ -157,7 +148,6 @@ class Placemark {
   @override
   String toString() {
     return '''
-      Address: $address,
       Name: $name, 
       Street: $street, 
       ISO Country Code: $isoCountryCode, 
