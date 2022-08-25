@@ -2,19 +2,21 @@ package com.baseflow.geocoding;
 
 import android.location.Address;
 import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 import com.baseflow.geocoding.utils.AddressMapper;
 import com.baseflow.geocoding.utils.LocaleConverter;
+
+import java.io.IOException;
+import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-
-import java.io.IOException;
-import java.util.List;
+import io.flutter.plugin.common.StandardMethodCodec;
 
 /**
  * Translates incoming Geocoding MethodCalls into well formed Java function calls for {@link
@@ -23,15 +25,18 @@ import java.util.List;
 final class MethodCallHandlerImpl implements MethodCallHandler {
     private static final String TAG = "MethodCallHandlerImpl";
     private final Geocoding geocoding;
-    @Nullable private MethodChannel channel;
+    @Nullable
+    private MethodChannel channel;
 
-    /** Forwards all incoming MethodChannel calls to the given {@code geocoding}. */
+    /**
+     * Forwards all incoming MethodChannel calls to the given {@code geocoding}.
+     */
     MethodCallHandlerImpl(Geocoding geocoding) {
         this.geocoding = geocoding;
     }
 
     @Override
-    public void onMethodCall(MethodCall call, Result result) {
+    public void onMethodCall(final MethodCall call, final Result result) {
         switch (call.method) {
             case "locationFromAddress":
                 onLocationFromAddress(call, result);
@@ -57,8 +62,8 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
             Log.wtf(TAG, "Setting a method call handler before the last was disposed.");
             stopListening();
         }
-
-        channel = new MethodChannel(messenger, "flutter.baseflow.com/geocoding");
+        final BinaryMessenger.TaskQueue taskQueue = messenger.makeBackgroundTaskQueue();
+        channel = new MethodChannel(messenger, "flutter.baseflow.com/geocoding", StandardMethodCodec.INSTANCE, taskQueue);
         channel.setMethodCallHandler(this);
     }
 
@@ -111,7 +116,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         }
     }
 
-    private void onPlacemarkFromCoordinates(MethodCall call, Result result) {
+    private void onPlacemarkFromCoordinates(final MethodCall call, final Result result) {
         final double latitude = call.argument("latitude");
         final double longitude = call.argument("longitude");
         final String languageTag = call.argument("localeIdentifier");
@@ -121,7 +126,6 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                     latitude,
                     longitude,
                     LocaleConverter.fromLanguageTag(languageTag));
-
             if (addresses == null || addresses.isEmpty()) {
                 result.error(
                         "NOT_FOUND",
@@ -129,7 +133,6 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                         null);
                 return;
             }
-
             result.success(AddressMapper.toAddressHashMapList(addresses));
         } catch (IOException ex) {
             result.error(
