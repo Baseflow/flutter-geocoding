@@ -1,3 +1,7 @@
+## 2.0.5+1
+
+- Update pub.dev links
+
 ## 2.0.5
 
 - Fixed [#58](https://github.com/Baseflow/flutter-geocoding/issues/58) getting locationFromAddress freezes main thread.
