@@ -1,3 +1,6 @@
+## 2.1.0
+
+- Added Formatted Address Function
 ## 2.0.5+1
 
 - Update pub.dev links
