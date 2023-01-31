@@ -58,6 +58,26 @@ class MethodChannelGeocoding extends GeocodingPlatform {
     return Placemark.fromMaps(placemarks);
   }
 
+  @override
+  Future<String> formattedAddressFromCoordinates(
+    double latitude,
+    double longitude, {
+    String? localeIdentifier,
+  }) async {
+    final parameters = <String, dynamic>{
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+
+    if (localeIdentifier != null) {
+      parameters['localeIdentifier'] = localeIdentifier;
+    }
+
+    String placemarks = await methodChannel.invokeMethod(
+        'formattedAddressFromCoordinates', parameters);
+    return placemarks;
+  }
+
   void _handlePlatformException(PlatformException platformException) {
     switch (platformException.code) {
       case 'NOT_FOUND':

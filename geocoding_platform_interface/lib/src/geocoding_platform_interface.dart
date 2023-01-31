@@ -70,4 +70,20 @@ abstract class GeocodingPlatform extends PlatformInterface {
     throw UnimplementedError(
         'placemarkFromCoordinates() has not been implementated.');
   }
+
+  /// Returns formated address found for the supplied
+  /// coordinates.
+  ///
+  /// Optionally you can specify a locale in which the results are returned.
+  /// When not supplied the currently active locale of the device will be used.
+  /// The `localeIdentifier` should be formatted using the syntax:
+  /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
+  Future<String> formattedAddressFromCoordinates(
+    double latitude,
+    double longitude, {
+    String? localeIdentifier,
+  }) {
+    throw UnimplementedError(
+        'placemarkFromCoordinates() has not been implementated.');
+  }
 }
