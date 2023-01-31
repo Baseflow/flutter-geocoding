@@ -86,6 +86,27 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                     });
                   }),
             ),
+            Center(
+              child: ElevatedButton(
+                  child: Text('Look up address for formatted address'),
+                  onPressed: () {
+                    final latitude = double.parse(_latitudeController.text);
+                    final longitude = double.parse(_longitudeController.text);
+                    formattedAddressFromCoordinates(latitude, longitude)
+                        .then((placemarks) {
+                      var output = 'No results found.';
+
+                      print(placemarks);
+                      if (placemarks.isNotEmpty) {
+                        output = placemarks;
+                      }
+
+                      setState(() {
+                        _output = output;
+                      });
+                    });
+                  }),
+            ),
             const Padding(
               padding: EdgeInsets.only(top: 32),
             ),

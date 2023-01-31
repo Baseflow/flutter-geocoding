@@ -1,15 +1,18 @@
 package com.baseflow.geocoding;
 
-import androidx.annotation.Nullable;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+
+import androidx.annotation.Nullable;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-/** Geocoding components to lookup address or coordinates. */
+/**
+ * Geocoding components to lookup address or coordinates.
+ */
 class Geocoding {
     private final Context androidContext;
 
@@ -26,7 +29,7 @@ class Geocoding {
      * Returns a list of Address objects matching the supplied address string.
      *
      * @param address the address string for the search
-     * @param locale the desired Locale for the query results
+     * @param locale  the desired Locale for the query results
      * @return a list of Address objects. Returns null or empty list if no matches were found or there is no backend service available.
      * @throws java.io.IOException if the network is unavailable or any other I/O problem occurs.
      */
@@ -39,9 +42,9 @@ class Geocoding {
     /**
      * Returns a list of Address objects matching the supplied coordinates.
      *
-     * @param latitude the latitude point for the search
+     * @param latitude  the latitude point for the search
      * @param longitude the longitude point for the search
-     * @param locale the desired Locale for the query results
+     * @param locale    the desired Locale for the query results
      * @return a list of Address objects. Returns null or empty list if no matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
@@ -52,6 +55,21 @@ class Geocoding {
 
         final Geocoder geocoder = createGeocoder(androidContext, locale);
         return geocoder.getFromLocation(latitude, longitude, 5);
+    }
+
+    String getFirstAddressFormatted(
+            double latitude,
+            double longitude,
+            Locale locale) throws IOException {
+
+        final Geocoder geocoder = createGeocoder(androidContext, locale);
+        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 5);
+        if (addresses.isEmpty()) {
+            return "";
+        } else {
+            return addresses.get(0).getAddressLine(0);
+        }
+
     }
 
     private static Geocoder createGeocoder(Context androidContext, @Nullable Locale locale) {

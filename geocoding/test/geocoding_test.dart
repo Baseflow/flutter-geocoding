@@ -22,6 +22,8 @@ final mockPlacemark = Placemark(
     subThoroughfare: '',
     thoroughfare: 'Gronausestraat');
 
+final mockFormattedAddress = 'Waterlelielaan 24, 7534 KK Enschede, Netherlands';
+
 void main() {
   group('Geocoding', () {
     setUp(() {
@@ -36,6 +38,10 @@ void main() {
     test('placemarkFromCoordinates', () async {
       final placemarks = await (placemarkFromCoordinates(0, 0));
       expect(placemarks.single, mockPlacemark);
+    });
+    test('formattedAddressFromCoordinates', () async {
+      final placemarks = await (formattedAddressFromCoordinates(0, 0));
+      expect(placemarks, mockFormattedAddress);
     });
   });
 }
@@ -61,5 +67,14 @@ class MockGeocodingPlatform extends Mock
     String? localeIdentifier,
   }) async {
     return [mockPlacemark];
+  }
+
+  @override
+  Future<String> formattedAddressFromCoordinates(
+    double latitude,
+    double longitude, {
+    String? localeIdentifier,
+  }) async {
+    return mockFormattedAddress;
   }
 }

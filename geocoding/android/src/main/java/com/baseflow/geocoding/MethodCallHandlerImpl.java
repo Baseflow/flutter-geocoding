@@ -10,6 +10,7 @@ import com.baseflow.geocoding.utils.LocaleConverter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
@@ -43,6 +44,9 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                 break;
             case "placemarkFromCoordinates":
                 onPlacemarkFromCoordinates(call, result);
+                break;
+            case "formattedAddressFromCoordinates":
+                onFormattedAddressFromCoordinates(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -116,6 +120,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         }
     }
 
+
     private void onPlacemarkFromCoordinates(final MethodCall call, final Result result) {
         final double latitude = call.argument("latitude");
         final double longitude = call.argument("longitude");
@@ -138,6 +143,33 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
             result.error(
                     "IO_ERROR",
                     String.format("A network error occurred trying to lookup the supplied coordinates (latitude: %f, longitude: %f).", latitude, longitude),
+                    null
+            );
+        }
+    }
+
+    private void onFormattedAddressFromCoordinates(final MethodCall call, final Result result) {
+        final double latitude = call.argument("latitude");
+        final double longitude = call.argument("longitude");
+        final String languageTag = call.argument("localeIdentifier");
+
+        try {
+            final String address = geocoding.getFirstAddressFormatted(
+                    latitude,
+                    longitude,
+                    LocaleConverter.fromLanguageTag(languageTag));
+            if (address == null || address.equals("")) {
+                result.error(
+                        "NOT_FOUND",
+                        String.format(Locale.getDefault(), "No address information found for supplied coordinates (latitude: %f, longitude: %f).", latitude, longitude),
+                        null);
+                return;
+            }
+            result.success(address);
+        } catch (IOException ex) {
+            result.error(
+                    "IO_ERROR",
+                    String.format(Locale.getDefault(), "A network error occurred trying to lookup the supplied coordinates (latitude: %f, longitude: %f).", latitude, longitude),
                     null
             );
         }
