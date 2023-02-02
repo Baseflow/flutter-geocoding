@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
-import 'package:geocoding_platform_interface/src/errors/no_result_found_exception.dart';
 import 'package:geocoding_platform_interface/src/implementations/method_channel_geocoding.dart';
 
 void main() {
