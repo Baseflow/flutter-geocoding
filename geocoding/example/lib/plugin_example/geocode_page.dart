@@ -92,13 +92,11 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   onPressed: () {
                     final latitude = double.parse(_latitudeController.text);
                     final longitude = double.parse(_longitudeController.text);
-                    formattedAddressFromCoordinates(latitude, longitude)
+                    placemarkFromCoordinates(latitude, longitude)
                         .then((placemarks) {
                       var output = 'No results found.';
-
-                      print(placemarks);
                       if (placemarks.isNotEmpty) {
-                        output = placemarks;
+                        output = placemarks.first.formattedAddress ?? '';
                       }
 
                       setState(() {

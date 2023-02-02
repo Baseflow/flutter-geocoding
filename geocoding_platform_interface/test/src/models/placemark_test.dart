@@ -30,6 +30,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'different test value',
@@ -43,6 +44,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
 
       // Act & Assert
@@ -68,6 +70,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -81,6 +84,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
 
       // Act & Assert
@@ -107,6 +111,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -120,6 +125,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
 
       // Act & Assert
@@ -144,6 +150,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -157,6 +164,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
 
       // Act & Assert
@@ -181,6 +189,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -194,6 +203,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
 
       // Act & Assert
@@ -220,6 +230,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -259,6 +270,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -272,6 +284,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
 
       // Act & Assert
@@ -298,6 +311,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -311,6 +325,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
 
       // Act & Assert
@@ -337,6 +352,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -350,6 +366,7 @@ void main() {
         subLocality: 'different test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
 
       // Act & Assert
@@ -376,6 +393,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -389,6 +407,47 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'different test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
+      );
+
+      // Act & Assert
+      expect(
+        firstPlacemark.hashCode != secondPlacemark.hashCode,
+        true,
+      );
+    });
+    test(
+        // ignore: lines_longer_than_80_chars
+        'hashCode should not match when the formatted address property is different',
+        () {
+      // Arrange
+      final firstPlacemark = Placemark(
+        name: 'test value',
+        street: 'test value',
+        isoCountryCode: 'test value',
+        country: 'test value',
+        postalCode: 'test value',
+        administrativeArea: 'test value',
+        subAdministrativeArea: 'test value',
+        locality: 'test value',
+        subLocality: 'test value',
+        thoroughfare: 'test value',
+        subThoroughfare: 'test value',
+        formattedAddress: 'test value',
+      );
+      final secondPlacemark = Placemark(
+        name: 'test value',
+        street: 'test value',
+        isoCountryCode: 'test value',
+        country: 'test value',
+        postalCode: 'test value',
+        administrativeArea: 'test value',
+        subAdministrativeArea: 'test value',
+        locality: 'test value',
+        subLocality: 'test value',
+        thoroughfare: 'different test value',
+        subThoroughfare: 'test value',
+        formattedAddress: 'different test value',
       );
 
       // Act & Assert
@@ -415,6 +474,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
+        formattedAddress: 'test value',
       );
       final secondPlacemark = Placemark(
         name: 'test value',
@@ -428,6 +488,7 @@ void main() {
         subLocality: 'test value',
         thoroughfare: 'test value',
         subThoroughfare: 'different test value',
+        formattedAddress: 'test value',
       );
 
       // Act & Assert
@@ -453,17 +514,19 @@ void main() {
   group('toString tests:', () {
     test('toString should list the contents of all properties', () {
       final mockPlacemark = Placemark(
-          administrativeArea: 'Overijssel',
-          country: 'Netherlands',
-          isoCountryCode: 'NL',
-          locality: 'Enschede',
-          name: 'Gronausestraat',
-          postalCode: '',
-          street: 'Gronausestraat 710',
-          subAdministrativeArea: 'Enschede',
-          subLocality: 'Enschmarke',
-          subThoroughfare: '',
-          thoroughfare: 'Gronausestraat');
+        administrativeArea: 'Overijssel',
+        country: 'Netherlands',
+        isoCountryCode: 'NL',
+        locality: 'Enschede',
+        name: 'Gronausestraat',
+        postalCode: '',
+        street: 'Gronausestraat 710',
+        subAdministrativeArea: 'Enschede',
+        subLocality: 'Enschmarke',
+        subThoroughfare: '',
+        thoroughfare: 'Gronausestraat',
+        formattedAddress: 'Waterlelielaan 24, 7534 KK Enschede, Netherlands',
+      );
 
       final expected = '''
       Name: ${mockPlacemark.name}, 
@@ -476,7 +539,9 @@ void main() {
       Locality: ${mockPlacemark.locality},
       Sublocality: ${mockPlacemark.subLocality},
       Thoroughfare: ${mockPlacemark.thoroughfare},
-      Subthoroughfare: ${mockPlacemark.subThoroughfare}''';
+      Subthoroughfare: ${mockPlacemark.subThoroughfare},
+      Formatted Address: ${mockPlacemark.formattedAddress}
+      ''';
 
       expect(mockPlacemark.toString(), expected);
     });

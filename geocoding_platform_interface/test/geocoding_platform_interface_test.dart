@@ -65,20 +65,6 @@ void main() {
         throwsUnimplementedError,
       );
     });
-
-    test(
-        // ignore: lines_longer_than_80_chars
-        'Default implementation of formattedAddress should throw unimplemented error',
-        () {
-      // Arrange
-      final geocodingPlatform = ExtendsGeocodingPlatform();
-
-      // Act & Assert
-      expect(
-        () => geocodingPlatform.formattedAddressFromCoordinates(0, 0),
-        throwsUnimplementedError,
-      );
-    });
   });
 }
 

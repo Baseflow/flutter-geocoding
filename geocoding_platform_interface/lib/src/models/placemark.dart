@@ -17,6 +17,7 @@ class Placemark {
     this.locality,
     this.subLocality,
     this.thoroughfare,
+    this.formattedAddress,
     this.subThoroughfare,
   });
 
@@ -32,6 +33,7 @@ class Placemark {
     this.subLocality,
     this.thoroughfare,
     this.subThoroughfare,
+    this.formattedAddress,
   });
 
   /// The name associated with the placemark.
@@ -67,6 +69,9 @@ class Placemark {
   /// Additional street address information for the placemark.
   final String? subThoroughfare;
 
+  /// Formatted address information for the placemark.
+  final String? formattedAddress;
+
   @override
   bool operator ==(dynamic o) =>
       o is Placemark &&
@@ -80,6 +85,7 @@ class Placemark {
       o.subAdministrativeArea == subAdministrativeArea &&
       o.subLocality == subLocality &&
       o.subThoroughfare == subThoroughfare &&
+      o.formattedAddress == formattedAddress &&
       o.thoroughfare == thoroughfare;
 
   @override
@@ -126,6 +132,7 @@ class Placemark {
       subLocality: placemarkMap['subLocality'] ?? '',
       thoroughfare: placemarkMap['thoroughfare'] ?? '',
       subThoroughfare: placemarkMap['subThoroughfare'] ?? '',
+      formattedAddress: placemarkMap['formattedAddress'] ?? '',
     );
   }
 
@@ -143,6 +150,7 @@ class Placemark {
         'subLocality': subLocality,
         'thoroughfare': thoroughfare,
         'subThoroughfare': subThoroughfare,
+        'formattedAddress': formattedAddress,
       };
 
   @override
@@ -158,6 +166,8 @@ class Placemark {
       Locality: $locality,
       Sublocality: $subLocality,
       Thoroughfare: $thoroughfare,
-      Subthoroughfare: $subThoroughfare''';
+      Subthoroughfare: $subThoroughfare,
+      Formatted Address: $formattedAddress
+      ''';
   }
 }

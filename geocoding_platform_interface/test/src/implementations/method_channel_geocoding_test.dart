@@ -24,10 +24,8 @@ void main() {
       subAdministrativeArea: 'Enschede',
       subLocality: 'Enschmarke',
       subThoroughfare: '',
+      formattedAddress: 'Waterlelielaan 24, 7534 KK Enschede, Netherlands',
       thoroughfare: 'Gronausestraat');
-
-  final _mockFormattedAddress =
-      'Waterlelielaan 24, 7534 KK Enschede, Netherlands';
 
   group('$MethodChannelGeocoding()', () {
     final log = <MethodCall>[];
@@ -50,8 +48,6 @@ void main() {
             }
           case 'placemarkFromCoordinates':
             return [_mockPlacemark.toJson()];
-          case 'formattedAddressFromCoordinates':
-            return _mockFormattedAddress;
           default:
             return null;
         }
@@ -143,98 +139,6 @@ void main() {
               'locationFromAddress',
               arguments: <String, dynamic>{
                 'address': address,
-                'localeIdentifier': 'nl-NL',
-              },
-            ),
-          ]);
-        });
-      });
-    });
-
-    group(
-        'formattedAddressFromLatLng: When requesting formatted address based on'
-        ' Latitude & Longitude', () {
-      group('And not specifying a locale', () {
-        test('Should receive a formatted address from latitude longitude',
-            () async {
-          // Arrange
-          final latitude = 52.561270;
-          final longitude = 5.639382;
-
-          // Act
-          var placemarks =
-              await (methodChannelgeocoding.formattedAddressFromCoordinates(
-            latitude,
-            longitude,
-          ));
-
-          // expect(placemarks != '', true);
-          expect(placemarks, _mockFormattedAddress);
-        });
-
-        test('Should not send the localeIdentifier parameter to the platform',
-            () async {
-          // Assert
-          final latitude = 52.561270;
-          final longitude = 5.639382;
-
-          // Act
-          await methodChannelgeocoding.formattedAddressFromCoordinates(
-            latitude,
-            longitude,
-          );
-
-          // Assert
-          expect(log, <Matcher>[
-            isMethodCall(
-              'formattedAddressFromCoordinates',
-              arguments: <String, dynamic>{
-                'latitude': latitude,
-                'longitude': longitude,
-              },
-            ),
-          ]);
-        });
-      });
-
-      group('And specifying a locale', () {
-        test('Should receive a formatted address from latitude longitude',
-            () async {
-          // Arrange
-          final latitude = 52.561270;
-          final longitude = 5.639382;
-
-          // Act
-          final placemarks =
-              await (methodChannelgeocoding.formattedAddressFromCoordinates(
-            latitude,
-            longitude,
-            localeIdentifier: 'nl-NL',
-          ));
-
-          // expect(placemarks != '', true);
-          expect(placemarks, _mockFormattedAddress);
-        });
-
-        test('Should send the localeIdentifier to the platform', () async {
-          // Assert
-          final latitude = 52.561270;
-          final longitude = 5.639382;
-
-          // Act
-          await methodChannelgeocoding.formattedAddressFromCoordinates(
-            latitude,
-            longitude,
-            localeIdentifier: 'nl-NL',
-          );
-
-          // Assert
-          expect(log, <Matcher>[
-            isMethodCall(
-              'formattedAddressFromCoordinates',
-              arguments: <String, dynamic>{
-                'latitude': latitude,
-                'longitude': longitude,
                 'localeIdentifier': 'nl-NL',
               },
             ),

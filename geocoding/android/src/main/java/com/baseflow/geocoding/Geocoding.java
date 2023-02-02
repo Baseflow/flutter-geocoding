@@ -57,21 +57,6 @@ class Geocoding {
         return geocoder.getFromLocation(latitude, longitude, 5);
     }
 
-    String getFirstAddressFormatted(
-            double latitude,
-            double longitude,
-            Locale locale) throws IOException {
-
-        final Geocoder geocoder = createGeocoder(androidContext, locale);
-        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 5);
-        if (addresses.isEmpty()) {
-            return "";
-        } else {
-            return addresses.get(0).getAddressLine(0);
-        }
-
-    }
-
     private static Geocoder createGeocoder(Context androidContext, @Nullable Locale locale) {
         return (locale != null)
                 ? new Geocoder(androidContext, locale)
