@@ -18,6 +18,7 @@ class Placemark {
     this.subLocality,
     this.thoroughfare,
     this.subThoroughfare,
+    this.formattedAddress,
   });
 
   Placemark._({
@@ -32,6 +33,7 @@ class Placemark {
     this.subLocality,
     this.thoroughfare,
     this.subThoroughfare,
+    this.formattedAddress,
   });
 
   /// The name associated with the placemark.
@@ -67,6 +69,9 @@ class Placemark {
   /// Additional street address information for the placemark.
   final String? subThoroughfare;
 
+  /// Formatted address for this placemark. Returns empty string in case of iOS.
+  final String? formattedAddress;
+
   @override
   bool operator ==(dynamic o) =>
       o is Placemark &&
@@ -80,6 +85,7 @@ class Placemark {
       o.subAdministrativeArea == subAdministrativeArea &&
       o.subLocality == subLocality &&
       o.subThoroughfare == subThoroughfare &&
+      o.formattedAddress == formattedAddress &&
       o.thoroughfare == thoroughfare;
 
   @override
@@ -94,7 +100,8 @@ class Placemark {
       subAdministrativeArea.hashCode ^
       subLocality.hashCode ^
       subThoroughfare.hashCode ^
-      thoroughfare.hashCode;
+      thoroughfare.hashCode ^
+      formattedAddress.hashCode;
 
   /// Converts a list of [Map] instances to a list of [Placemark] instances.
   static List<Placemark> fromMaps(dynamic message) {
@@ -126,6 +133,7 @@ class Placemark {
       subLocality: placemarkMap['subLocality'] ?? '',
       thoroughfare: placemarkMap['thoroughfare'] ?? '',
       subThoroughfare: placemarkMap['subThoroughfare'] ?? '',
+      formattedAddress: placemarkMap['formattedAddress'] ?? '',
     );
   }
 
@@ -143,6 +151,7 @@ class Placemark {
         'subLocality': subLocality,
         'thoroughfare': thoroughfare,
         'subThoroughfare': subThoroughfare,
+        'formattedAddress': formattedAddress,
       };
 
   @override
@@ -158,6 +167,7 @@ class Placemark {
       Locality: $locality,
       Sublocality: $subLocality,
       Thoroughfare: $thoroughfare,
-      Subthoroughfare: $subThoroughfare''';
+      Subthoroughfare: $subThoroughfare,
+      Formatted Address: $formattedAddress''';
   }
 }

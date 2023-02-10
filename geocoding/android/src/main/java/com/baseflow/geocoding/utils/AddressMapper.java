@@ -37,6 +37,7 @@ public class AddressMapper {
         placemark.put("subAdministrativeArea", address.getSubAdminArea());
         placemark.put("locality", address.getLocality());
         placemark.put("subLocality", address.getSubLocality());
+        placemark.put("formattedAddress", address.getAddressLine(0));
 
         return placemark;
     }

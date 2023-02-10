@@ -12,7 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  geocoding_platform_interface: ^2.0.0
+  geocoding_platform_interface: 
+    path: ../geocoding_platform_interface #^2.0.0
 
 dev_dependencies:
   flutter_test:
