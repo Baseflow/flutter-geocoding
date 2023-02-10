@@ -69,7 +69,7 @@ class Placemark {
   /// Additional street address information for the placemark.
   final String? subThoroughfare;
 
-  /// Formatted address information for the placemark.
+  /// Formatted address for this placemark. Returns empty string in case of iOS.
   final String? formattedAddress;
 
   @override
@@ -100,7 +100,8 @@ class Placemark {
       subAdministrativeArea.hashCode ^
       subLocality.hashCode ^
       subThoroughfare.hashCode ^
-      thoroughfare.hashCode;
+      thoroughfare.hashCode ^
+      formattedAddress.hashCode;
 
   /// Converts a list of [Map] instances to a list of [Placemark] instances.
   static List<Placemark> fromMaps(dynamic message) {
@@ -167,7 +168,6 @@ class Placemark {
       Sublocality: $subLocality,
       Thoroughfare: $thoroughfare,
       Subthoroughfare: $subThoroughfare,
-      Formatted Address: $formattedAddress
-      ''';
+      Formatted Address: $formattedAddress''';
   }
 }

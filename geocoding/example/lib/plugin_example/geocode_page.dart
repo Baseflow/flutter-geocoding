@@ -106,6 +106,28 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   }),
             ),
             const Padding(
+              padding: EdgeInsets.only(top: 8),
+            ),
+            Center(
+              child: ElevatedButton(
+                  child: Text('Look up formatted address'),
+                  onPressed: () {
+                    final latitude = double.parse(_latitudeController.text);
+                    final longitude = double.parse(_longitudeController.text);
+                    placemarkFromCoordinates(latitude, longitude)
+                        .then((placemarks) {
+                      var output = 'No results found.';
+                      if (placemarks.isNotEmpty) {
+                        output = placemarks[0].formattedAddress ?? '';
+                      }
+
+                      setState(() {
+                        _output = output;
+                      });
+                    });
+                  }),
+            ),
+            const Padding(
               padding: EdgeInsets.only(top: 32),
             ),
             TextField(
