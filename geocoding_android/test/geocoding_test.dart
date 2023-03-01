@@ -1,8 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding_android/geocoding_android.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
-import 'package:mockito/mockito.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 final mockLocation = Location(
   latitude: 52.2165157,
@@ -24,45 +23,83 @@ final mockPlacemark = Placemark(
     thoroughfare: 'Gronausestraat');
 
 void main() {
-  group('Geocoding', () {
-    setUp(() {
-      GeocodingPlatform.instance = MockGeocodingPlatform();
-    });
+  TestWidgetsFlutterBinding.ensureInitialized();
 
+  const channel = MethodChannel('flutter.baseflow.com/geocoding');
+  late List<MethodCall> log;
+
+  setUp(() {
+    log = <MethodCall>[];
+    _ambiguate(TestDefaultBinaryMessengerBinding.instance)!
+        .defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+      log.add(methodCall);
+
+      return null;
+    });
+  });
+
+  test('registers instance', () {
+    GeocodingAndroid.registerWith();
+    expect(GeocodingPlatform.instance, isA<GeocodingAndroid>());
+  });
+
+  group('GeocodingAndroid', () {
     test('locationFromAddress', () async {
+      _ambiguate(TestDefaultBinaryMessengerBinding.instance)!
+          .defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+        log.add(methodCall);
+        return Future<List<Map<dynamic, dynamic>>>.value([
+          mockLocation.toJson(),
+        ]);
+      });
+
       final geocoding = GeocodingAndroid();
       final locations = await (geocoding.locationFromAddress(''));
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall('locationFromAddress', arguments: <String, String>{
+            'address': '',
+          })
+        ],
+      );
+
       expect(locations.single, mockLocation);
     });
 
     test('placemarkFromCoordinates', () async {
+      _ambiguate(TestDefaultBinaryMessengerBinding.instance)!
+          .defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+        log.add(methodCall);
+        return Future<List<Map<dynamic, dynamic>>>.value([
+          mockPlacemark.toJson(),
+        ]);
+      });
+
       final geocoding = GeocodingAndroid();
-      final placemarks = await (geocoding.placemarkFromCoordinates(0, 0));
-      expect(placemarks.single, mockPlacemark);
+      final locations = await (geocoding.placemarkFromCoordinates(0, 0));
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall('placemarkFromCoordinates', arguments: <String, Object?>{
+            'latitude': 0.0,
+            'longitude': 0.0,
+          })
+        ],
+      );
+
+      expect(locations.single, mockPlacemark);
     });
   });
 }
 
-class MockGeocodingPlatform extends Mock
-    with
-        // ignore: prefer_mixin
-        MockPlatformInterfaceMixin
-    implements
-        GeocodingPlatform {
-  @override
-  Future<List<Location>> locationFromAddress(
-    String address, {
-    String? localeIdentifier,
-  }) async {
-    return [mockLocation];
-  }
-
-  @override
-  Future<List<Placemark>> placemarkFromCoordinates(
-    double latitude,
-    double longitude, {
-    String? localeIdentifier,
-  }) async {
-    return [mockPlacemark];
-  }
-}
+/// This allows a value of type T or T? to be treated as a value of type T?.
+///
+/// We use this so that APIs that have become non-nullable can still be used
+/// with `!` and `?` on the stable branch.
+T? _ambiguate<T>(T? value) => value;
