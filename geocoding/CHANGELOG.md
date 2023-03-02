@@ -1,7 +1,3 @@
-## 2.1.0
-
-* Splits `geocoding` into a federated plugin.
-
 ## 2.0.5+1
 
 - Update pub.dev links
