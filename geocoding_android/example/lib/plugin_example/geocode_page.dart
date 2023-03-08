@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:geocoding_android/geocoding_android.dart';
+
 import '../template/globals.dart';
 
 /// Example [Widget] showing the use of the Geocode plugin
@@ -73,7 +74,8 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                     final latitude = double.parse(_latitudeController.text);
                     final longitude = double.parse(_longitudeController.text);
 
-                    placemarkFromCoordinates(latitude, longitude)
+                    GeocodingAndroid()
+                        .placemarkFromCoordinates(latitude, longitude)
                         .then((placemarks) {
                       var output = 'No results found.';
                       if (placemarks.isNotEmpty) {
@@ -105,7 +107,8 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
               child: ElevatedButton(
                   child: Text('Look up location'),
                   onPressed: () {
-                    locationFromAddress(_addressController.text)
+                    GeocodingAndroid()
+                        .locationFromAddress(_addressController.text)
                         .then((locations) {
                       var output = 'No results found.';
                       if (locations.isNotEmpty) {
