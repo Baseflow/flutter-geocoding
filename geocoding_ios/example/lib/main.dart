@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'template/globals.dart';
 
@@ -15,10 +14,14 @@ class BaseflowPluginExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = ThemeData();
     return MaterialApp(
       title: 'Baseflow $pluginName',
-      theme: ThemeData(
-        accentColor: Colors.white60,
+      theme: theme.copyWith(
+        colorScheme: theme.colorScheme.copyWith(
+          secondary: Colors.white60,
+          primary: createMaterialColor(const Color.fromRGBO(48, 49, 60, 1)),
+        ),
         backgroundColor: const Color.fromRGBO(48, 49, 60, 0.8),
         buttonTheme: ButtonThemeData(
           buttonColor: themeMaterialColor.shade500,
@@ -28,7 +31,6 @@ class BaseflowPluginExample extends StatelessWidget {
         ),
         bottomAppBarColor: const Color.fromRGBO(57, 58, 71, 1),
         hintColor: themeMaterialColor.shade500,
-        primarySwatch: createMaterialColor(const Color.fromRGBO(48, 49, 60, 1)),
         textTheme: TextTheme(
           bodyText1: TextStyle(
             color: Colors.white,
@@ -150,6 +152,8 @@ class _AppHomeState extends State<AppHome> {
   }
 
   Color _bottomAppBarIconColor(int page) {
-    return _currentPage == page ? Colors.white : Theme.of(context).accentColor;
+    return _currentPage == page
+        ? Colors.white
+        : Theme.of(context).colorScheme.secondary;
   }
 }
