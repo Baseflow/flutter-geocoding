@@ -1,9 +1,9 @@
 # This is a basic workflow to help you get started with Actions
 
-name: platform_interface_package
+name: geocoding_platform_interface
 
 # Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the develop branch
+# events but only for the master branch
 on:
   push:
     branches: [ master ]
@@ -16,33 +16,35 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # Job configuration for the geocoding_platform_interface (Platform Interface Package)
-  geocoding_platform_interface:
+  build:
+    name: Format
+
     # The type of runner that the job will run on
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+
     env:
       source-directory: ./geocoding_platform_interface 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       
       # Make sure the stable version of Flutter is available
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
-          channel: 'beta'
+          channel: 'stable'
 
-      # Download all Flutter packages the geolocator depends on
+      # Download all Flutter packages
       - name: Download dependencies
         run: flutter pub get
         working-directory: ${{env.source-directory}}
 
       # Run Flutter Format to ensure formatting is valid
       - name: Run Flutter Format
-        run: flutter format --set-exit-if-changed lib
+        run: flutter format --set-exit-if-changed .
         working-directory: ${{env.source-directory}}
-      
+   
       # Run Flutter Analyzer
       - name: Run Flutter Analyzer
         run: flutter analyze
@@ -57,5 +59,5 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           file: ${{env.source-directory}}/coverage/lcov.info # optional
-          name: Geolocator (Platform Interface Package) # optional
-          fail_ci_if_error: true 
+          name: geocoding_platform_interface (Platform Interface Package) # optional
+          fail_ci_if_error: true
