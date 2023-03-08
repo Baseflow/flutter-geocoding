@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: geocoding
+name: geocoding_android
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the develop branch
@@ -8,11 +8,11 @@ on:
   push:
     branches: [ master, develop ]
     paths:
-    - 'geocoding/**'
+    - 'geocoding_android/**'
   pull_request:
     branches: [ master, develop ]
     paths:
-    - 'geocoding/**'
+    - 'geocoding_android/**'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      source-directory: ./geocoding 
+      source-directory: ./geocoding_android 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      source-directory: ./geocoding
+      source-directory: ./geocoding_android
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -81,8 +81,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      source-directory: ./geocoding 
-      example-directory: ./geocoding/example
+      source-directory: ./geocoding_android 
+      example-directory: ./geocoding_android/example
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -108,36 +108,6 @@ jobs:
       - name: Run Android build
         run: flutter build apk --release
         working-directory: ${{env.example-directory}}
-        
-  build_ios:
-    name: Build iOS App
-    
-    # The type of runner that the job will run on
-    runs-on: macos-latest
-
-    env:
-      source-directory: ./geocoding 
-      example-directory: ./geocoding/example
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      
-      # Make sure the stable version of Flutter is available
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      # Download all Flutter packages
-      - name: Download dependencies
-        run: flutter pub get
-        working-directory: ${{env.source-directory}}
-
-      # Build iOS version of the example App
-      - name: Run iOS build
-        run: flutter build ios --release --no-codesign
-        working-directory: ${{env.example-directory}}
 
   tests:
     name: Unit-tests
@@ -145,7 +115,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      source-directory: ./geocoding 
+      source-directory: ./geocoding_android
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -171,5 +141,5 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           file: ${{env.source-directory}}/coverage/lcov.info # optional
-          name: Geocoding (App Facing Package) # optional
+          name: Geocoding Android # optional
           fail_ci_if_error: true
