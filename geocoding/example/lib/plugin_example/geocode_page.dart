@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding_ios/geocoding_ios.dart';
+import 'package:geocoding/geocoding.dart';
 
 import '../template/globals.dart';
 
@@ -74,8 +74,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   final latitude = double.parse(_latitudeController.text);
                   final longitude = double.parse(_longitudeController.text);
 
-                  GeocodingIOS()
-                      .placemarkFromCoordinates(latitude, longitude)
+                  placemarkFromCoordinates(latitude, longitude)
                       .then((placemarks) {
                     var output = 'No results found.';
                     if (placemarks.isNotEmpty) {
@@ -107,8 +106,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
             child: ElevatedButton(
                 child: Text('Look up location'),
                 onPressed: () {
-                  GeocodingIOS()
-                      .locationFromAddress(_addressController.text)
+                  locationFromAddress(_addressController.text)
                       .then((locations) {
                     var output = 'No results found.';
                     if (locations.isNotEmpty) {

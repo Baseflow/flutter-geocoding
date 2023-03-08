@@ -127,7 +127,7 @@ class _AppHomeState extends State<AppHome> {
   BottomAppBar _bottomAppBar() {
     return BottomAppBar(
       elevation: 5,
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).bottomAppBarTheme.color,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
