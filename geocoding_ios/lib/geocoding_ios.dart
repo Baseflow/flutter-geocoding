@@ -60,7 +60,7 @@ class GeocodingIOS extends GeocodingPlatform {
   void _handlePlatformException(PlatformException platformException) {
     switch (platformException.code) {
       case 'NOT_FOUND':
-        throw NoResultFoundException();
+        throw const NoResultFoundException();
     }
   }
 }

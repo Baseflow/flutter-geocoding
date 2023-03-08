@@ -1,8 +1,8 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import '../plugin_example/geocode_page.dart';
 
+import '../plugin_example/geocode_page.dart';
 import 'info_page.dart';
 
 /// The name of the plugin, which will be displayed throughout the example App.

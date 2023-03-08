@@ -41,7 +41,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   child: TextField(
                     autocorrect: false,
                     controller: _latitudeController,
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     decoration: InputDecoration(
                       hintText: 'Latitude',
                     ),
@@ -55,7 +55,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   child: TextField(
                     autocorrect: false,
                     controller: _longitudeController,
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     decoration: InputDecoration(
                       hintText: 'Longitude',
                     ),
@@ -94,7 +94,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
             TextField(
               autocorrect: false,
               controller: _addressController,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
               decoration: InputDecoration(
                 hintText: 'Address',
               ),

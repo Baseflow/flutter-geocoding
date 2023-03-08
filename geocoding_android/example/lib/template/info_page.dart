@@ -35,7 +35,7 @@ class InfoPage extends StatelessWidget {
                   '\n\n'
                   'Need help with integrating functionalities within your own '
                   'apps? Contact us at hello@baseflow.com',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
@@ -67,7 +67,7 @@ class InfoPage extends StatelessWidget {
   }
 
   Widget _launcherRaisedButton(String text, String url, BuildContext context) {
-    final uri = Uri(path: url);
+    final uri = Uri.parse(url);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 50,
