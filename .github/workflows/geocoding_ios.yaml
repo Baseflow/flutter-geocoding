@@ -6,11 +6,11 @@ name: geocoding_ios
 # events but only for the develop branch
 on:
   push:
-    branches: [ main ]
+    branches: [ master, develop ]
     paths:
     - 'geocoding_ios/**'
   pull_request:
-    branches: [ main ]
+    branches: [ master, develop ]
     paths:
     - 'geocoding_ios/**'
 
