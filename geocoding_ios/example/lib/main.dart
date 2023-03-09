@@ -18,6 +18,7 @@ class BaseflowPluginExample extends StatelessWidget {
     return MaterialApp(
       title: 'Baseflow $pluginName',
       theme: theme.copyWith(
+        scaffoldBackgroundColor: const Color.fromRGBO(48, 49, 60, 0.8),
         colorScheme: theme.colorScheme.copyWith(
           secondary: Colors.white60,
           primary: createMaterialColor(const Color.fromRGBO(48, 49, 60, 1)),
