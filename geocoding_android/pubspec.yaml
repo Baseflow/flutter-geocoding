@@ -1,7 +1,7 @@
 name: geocoding_android
 description: A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding features.
 version: 2.1.0
-repository: https://github.com/baseflow/flutter-geocoding/tree/master/geocoding/geocoding_android
+repository: https://github.com/baseflow/flutter-geocoding/tree/main/geocoding/geocoding_android
 issue_tracker: https://github.com/Baseflow/flutter-geocoding/issues
 
 environment:
