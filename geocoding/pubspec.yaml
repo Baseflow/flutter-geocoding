@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
 
   geocoding_platform_interface: ^2.0.0
+  geocoding_android: 2.1.0
+  geocoding_ios: 2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -34,10 +36,9 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.baseflow.geocoding
-        pluginClass: GeocodingPlugin
+        default_package: geocoding_android
       ios:
-        pluginClass: GeocodingPlugin
+        default_package: geocoding_ios
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
