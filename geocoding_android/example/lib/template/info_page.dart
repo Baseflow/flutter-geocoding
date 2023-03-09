@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'globals.dart';
@@ -36,7 +35,7 @@ class InfoPage extends StatelessWidget {
                   '\n\n'
                   'Need help with integrating functionalities within your own '
                   'apps? Contact us at hello@baseflow.com',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
@@ -68,6 +67,7 @@ class InfoPage extends StatelessWidget {
   }
 
   Widget _launcherRaisedButton(String text, String url, BuildContext context) {
+    final uri = Uri.parse(url);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 50,
@@ -82,17 +82,17 @@ class InfoPage extends StatelessWidget {
             ),
           ),
           child: Text(text),
-          onPressed: () => _launchURL(url),
+          onPressed: () => _launchURL(uri),
         ),
       ),
     );
   }
 
-  Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+  Future<void> _launchURL(Uri uri) async {
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
-      throw 'Could not launch $url';
+      throw 'Could not launch ${uri.path}';
     }
   }
 }
