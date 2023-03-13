@@ -21,6 +21,6 @@
 - [ ] I made sure all projects build.
 - [ ] I updated pubspec.yaml with an appropriate new version according to the [pub versioning philosophy](https://dart.dev/tools/pub/versioning).
 - [ ] I updated CHANGELOG.md to add a description of the change.
-- [ ] I followed the style guide lines ([code style guide](https://github.com/Baseflow/flutter-geocoding/blob/master/CONTRIBUTING.md)).
+- [ ] I followed the style guide lines ([code style guide](https://github.com/Baseflow/flutter-geocoding/blob/main/CONTRIBUTING.md)).
 - [ ] I updated the relevant documentation.
-- [ ] I rebased onto current `master`.
+- [ ] I rebased onto current `main`.

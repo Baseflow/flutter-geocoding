@@ -1,11 +1,15 @@
+## 2.1.0
+
+- Upgrades the app-facing package to use the federated architecture.
+
 ## 2.0.6
 
 - Upgrades `compileSdkVersion` to `33` on Android.
-- Fix issues in example project
+- Fix issues in example project.
 
 ## 2.0.5+1
 
-- Update pub.dev links
+- Update pub.dev links.
 
 ## 2.0.5
 
