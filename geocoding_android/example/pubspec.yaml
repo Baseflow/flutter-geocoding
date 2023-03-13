@@ -1,4 +1,4 @@
-name: geocoding_example
+name: geocoding_android_example
 description: Demonstrates how to use the geocoding plugin.
 
 # The following line prevents the package from being accidentally published to
