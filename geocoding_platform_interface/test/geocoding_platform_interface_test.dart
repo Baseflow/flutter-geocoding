@@ -4,7 +4,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
-import 'package:geocoding_platform_interface/src/implementations/method_channel_geocoding.dart';
 import 'package:mockito/mockito.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -12,8 +11,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('$GeocodingPlatform', () {
-    test('$MethodChannelGeocoding is the default instance', () {
-      expect(GeocodingPlatform.instance, isA<MethodChannelGeocoding>());
+    test('Default instance equals null', () {
+      expect(GeocodingPlatform.instance, isNull);
     });
 
     test('Cannot be implemented with `implements`', () {
@@ -62,6 +61,20 @@ void main() {
       // Act & Assert
       expect(
         () => geocodingPlatform.placemarkFromCoordinates(0, 0),
+        throwsUnimplementedError,
+      );
+    });
+
+    test(
+        // ignore: lines_longer_than_80_chars
+        'Default implementation of setLocale should throw unimplemented error',
+        () {
+      // Arrange
+      final geocodingPlatform = ExtendsGeocodingPlatform();
+
+      // Act & Assert
+      expect(
+        () => geocodingPlatform.setLocaleIdentifier('en_US'),
         throwsUnimplementedError,
       );
     });
