@@ -1,3 +1,8 @@
+## 3.0.0
+
+- **Breaking Change** Changes to the platform interface calls, the locale is now set in a separate call.
+- Removes the default method channel implementation.
+
 ## 2.0.1
 
 - Updated the installation instructions in the README.md file.

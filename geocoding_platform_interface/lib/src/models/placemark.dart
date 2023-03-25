@@ -6,7 +6,7 @@ class Placemark {
   /// Constructs an instance with the given values for testing. [Placemark]
   /// instances constructed this way won't actually reflect any real information
   /// from the platform, just whatever was passed in at construction time.
-  Placemark({
+  const Placemark({
     this.name,
     this.street,
     this.isoCountryCode,
@@ -20,7 +20,7 @@ class Placemark {
     this.subThoroughfare,
   });
 
-  Placemark._({
+  const Placemark._({
     this.name,
     this.street,
     this.isoCountryCode,
@@ -68,19 +68,19 @@ class Placemark {
   final String? subThoroughfare;
 
   @override
-  bool operator ==(dynamic o) =>
-      o is Placemark &&
-      o.administrativeArea == administrativeArea &&
-      o.country == country &&
-      o.isoCountryCode == isoCountryCode &&
-      o.locality == locality &&
-      o.name == name &&
-      o.postalCode == postalCode &&
-      o.street == street &&
-      o.subAdministrativeArea == subAdministrativeArea &&
-      o.subLocality == subLocality &&
-      o.subThoroughfare == subThoroughfare &&
-      o.thoroughfare == thoroughfare;
+  bool operator ==(dynamic other) =>
+      other is Placemark &&
+      other.administrativeArea == administrativeArea &&
+      other.country == country &&
+      other.isoCountryCode == isoCountryCode &&
+      other.locality == locality &&
+      other.name == name &&
+      other.postalCode == postalCode &&
+      other.street == street &&
+      other.subAdministrativeArea == subAdministrativeArea &&
+      other.subLocality == subLocality &&
+      other.subThoroughfare == subThoroughfare &&
+      other.thoroughfare == thoroughfare;
 
   @override
   int get hashCode =>
