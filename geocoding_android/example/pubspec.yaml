@@ -19,7 +19,7 @@ dependencies:
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version. 
     path: ../
-  geocoding_platform_interface: ^2.0.0
+  geocoding_platform_interface: ^3.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
