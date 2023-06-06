@@ -236,7 +236,7 @@ class Address {
     );
   }
 
-  /// Get the placemark-data for an address
+  /// Get the placemark-data for an address.
   Location toLocation() {
     return Location(
       latitude: latitude,
