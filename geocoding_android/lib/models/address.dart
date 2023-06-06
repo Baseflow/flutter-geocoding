@@ -219,7 +219,7 @@ class Address {
       Subthoroughfare: $subThoroughfare''';
   }
 
-  /// Get the placemark-data for an address
+  /// Get the placemark-data for an address.
   Placemark toPlacemark() {
     return Placemark(
       name: featureName,
