@@ -26,7 +26,7 @@ jobs:
           closeComment: >
             Without additional information, we are unfortunately not sure how to
             resolve this issue. We are therefore reluctantly going to close this
-            bug for now.
+            issue for now.
             If you find this problem please file a new issue with the same description,
             what happens, logs and the output of 'flutter doctor -v'. All system setups
             can be slightly different so it's always better to open new issues and reference
