@@ -71,7 +71,7 @@ class GeocodingAndroid extends GeocodingPlatform {
         .toList();
   }
 
-  /// Returns the result of the getFromLocation function in Android
+  /// Returns the result of the getFromLocation function in Android.
   Future<List<Address>> getFromLocation(
     double latitude,
     double longitude, {
