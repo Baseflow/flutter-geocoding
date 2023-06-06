@@ -22,7 +22,7 @@ class GeocodingAndroid extends GeocodingPlatform {
         .toList();
   }
 
-  /// Returns the result of the fromLocationName function in Android
+  /// Returns the result of the fromLocationName function in Android.
   Future<List<Address>> getFromLocationName(
     String address, {
     int? maxResults,
