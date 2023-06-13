@@ -1,6 +1,7 @@
 package com.baseflow.geocoding.utils;
 
 import android.location.Address;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,42 +24,31 @@ public class AddressMapper {
     }
 
     private static Map<String, Object> toAddressHashMap(Address address) {
-        Map<String, Object> placemark = new HashMap<>();
-        final String street = AddressLineParser.getStreet(address.getAddressLine(0));
+        Map<String, Object> mappedAddress = new HashMap<>();
 
-        placemark.put("name", address.getFeatureName());
-        placemark.put("street", street);
-        placemark.put("isoCountryCode", address.getCountryCode());
-        placemark.put("country", address.getCountryName());
-        placemark.put("thoroughfare", address.getThoroughfare());
-        placemark.put("subThoroughfare", address.getSubThoroughfare());
-        placemark.put("postalCode", address.getPostalCode());
-        placemark.put("administrativeArea", address.getAdminArea());
-        placemark.put("subAdministrativeArea", address.getSubAdminArea());
-        placemark.put("locality", address.getLocality());
-        placemark.put("subLocality", address.getSubLocality());
-
-        return placemark;
-    }
-
-    public static List<Map<String, Object>> toLocationHashMapList(List<Address> addresses) {
-        List<Map<String, Object>> hashMaps = new ArrayList<>(addresses.size());
-
-        for (Address address : addresses) {
-            Map<String, Object> hashMap = AddressMapper.toLocationHashmap(address);
-            hashMaps.add(hashMap);
+        final List<String> addressLineArray = new ArrayList<>(address.getMaxAddressLineIndex());
+        for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+            addressLineArray.add(address.getAddressLine(i));
+            Log.w("APP", address.getAddressLine(i));
         }
+        mappedAddress.put("addressLine", addressLineArray);
+        mappedAddress.put("adminArea", address.getAdminArea());
+        mappedAddress.put("countryCode", address.getCountryCode());
+        mappedAddress.put("countryName", address.getCountryName());
+        mappedAddress.put("featureName", address.getFeatureName());
+        mappedAddress.put("latitude", address.getLatitude());
+        mappedAddress.put("locale", address.getLocale().toLanguageTag());
+        mappedAddress.put("locality", address.getLocality());
+        mappedAddress.put("longitude", address.getLongitude());
+        mappedAddress.put("phone", address.getPhone());
+        mappedAddress.put("postalCode", address.getPostalCode());
+        mappedAddress.put("premises", address.getPremises());
+        mappedAddress.put("subAdminArea", address.getSubAdminArea());
+        mappedAddress.put("subLocality", address.getSubLocality());
+        mappedAddress.put("subThoroughfare", address.getSubThoroughfare());
+        mappedAddress.put("thoroughfare", address.getThoroughfare());
+        mappedAddress.put("url", address.getUrl());
 
-        return hashMaps;
+        return mappedAddress;
     }
-
-    private static Map<String, Object> toLocationHashmap(Address address) {
-        Map<String, Object> location = new HashMap<>();
-
-        location.put("latitude", address.getLatitude());
-        location.put("longitude", address.getLongitude());
-        location.put("timestamp", Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis());
-
-        return location;
-     }
 }

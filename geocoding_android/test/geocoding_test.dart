@@ -1,31 +1,32 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding_android/geocoding_android.dart';
+import 'package:geocoding_android/models/address.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 
-final mockLocation = Location(
-  latitude: 52.2165157,
-  longitude: 6.9437819,
-  timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),
-);
-
-final mockPlacemark = Placemark(
-    administrativeArea: 'Overijssel',
-    country: 'Netherlands',
-    isoCountryCode: 'NL',
+const mockAddress = Address(
+    addressLine: ['Gronausestraat 710'],
+    adminArea: 'Overijssel',
+    countryName: 'Netherlands',
+    countryCode: 'NL',
     locality: 'Enschede',
-    name: 'Gronausestraat',
+    featureName: 'Gronausestraat',
     postalCode: '',
-    street: 'Gronausestraat 710',
-    subAdministrativeArea: 'Enschede',
+    subAdminArea: 'Enschede',
     subLocality: 'Enschmarke',
     subThoroughfare: '',
-    thoroughfare: 'Gronausestraat');
+    thoroughfare: 'Gronausestraat',
+    latitude: 52.2165157,
+    longitude: 6.9437819,
+    locale: 'en_US',
+    phone: '',
+    premises: '',
+    url: '');
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  const channel = MethodChannel('flutter.baseflow.com/geocoding');
+  const channel = MethodChannel('flutter.baseflow.com/geocoding_android');
   late List<MethodCall> log;
 
   setUp(() {
@@ -51,7 +52,7 @@ void main() {
           .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
         log.add(methodCall);
         return Future<List<Map<dynamic, dynamic>>>.value([
-          mockLocation.toJson(),
+          mockAddress.toJson(),
         ]);
       });
 
@@ -61,13 +62,15 @@ void main() {
       expect(
         log,
         <Matcher>[
-          isMethodCall('locationFromAddress', arguments: <String, String>{
+          isMethodCall('getFromLocationName', arguments: <String, Object?>{
             'address': '',
+            'maxResults': 5,
           })
         ],
       );
 
-      expect(locations.single, mockLocation);
+      expect(locations.single.latitude, mockAddress.toLocation().latitude);
+      expect(locations.single.longitude, mockAddress.toLocation().longitude);
     });
 
     test('placemarkFromCoordinates', () async {
@@ -76,7 +79,7 @@ void main() {
           .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
         log.add(methodCall);
         return Future<List<Map<dynamic, dynamic>>>.value([
-          mockPlacemark.toJson(),
+          mockAddress.toJson(),
         ]);
       });
 
@@ -86,14 +89,98 @@ void main() {
       expect(
         log,
         <Matcher>[
-          isMethodCall('placemarkFromCoordinates', arguments: <String, Object?>{
+          isMethodCall('getFromLocation', arguments: <String, Object?>{
             'latitude': 0.0,
             'longitude': 0.0,
+            'maxResults': 5
           })
         ],
       );
 
-      expect(locations.single, mockPlacemark);
+      expect(locations.single, mockAddress.toPlacemark());
+    });
+
+    test('getFromLocationName', () async {
+      _ambiguate(TestDefaultBinaryMessengerBinding.instance)!
+          .defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+        log.add(methodCall);
+        return Future<List<Map<dynamic, dynamic>>>.value([
+          mockAddress.toJson(),
+        ]);
+      });
+
+      final geocoding = GeocodingAndroid();
+      final locations =
+          await (geocoding.getFromLocationName('', maxResults: 10));
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall('getFromLocationName', arguments: <String, Object?>{
+            'address': '',
+            'maxResults': 10,
+          })
+        ],
+      );
+
+      expect(locations.single, mockAddress);
+    });
+
+    test('getFromLocationName with boundaries', () async {
+      _ambiguate(TestDefaultBinaryMessengerBinding.instance)!
+          .defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+        log.add(methodCall);
+        return Future<List<Map<dynamic, dynamic>>>.value([
+          mockAddress.toJson(),
+        ]);
+      });
+
+      final geocoding = GeocodingAndroid();
+      final locations = await (geocoding.getFromLocationName('',
+          maxResults: 10,
+          lowerLeftLatitude: 20,
+          lowerLeftLongitude: 30,
+          upperRightLatitude: 40,
+          upperRightLongitude: 50));
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall('getFromLocationName', arguments: <String, Object?>{
+            'address': '',
+            'maxResults': 10,
+            'lowerLeftLatitude': 20,
+            'lowerLeftLongitude': 30,
+            'upperRightLatitude': 40,
+            'upperRightLongitude': 50,
+          })
+        ],
+      );
+
+      expect(locations.single, mockAddress);
+    });
+
+    test('setLocaleIdentifier', () async {
+      _ambiguate(TestDefaultBinaryMessengerBinding.instance)!
+          .defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+        log.add(methodCall);
+        return;
+      });
+
+      final geocoding = GeocodingAndroid();
+      await (geocoding.setLocaleIdentifier('en_US'));
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall('setLocale', arguments: <String, Object?>{
+            'languageTag': 'en_US',
+          })
+        ],
+      );
     });
   });
 }

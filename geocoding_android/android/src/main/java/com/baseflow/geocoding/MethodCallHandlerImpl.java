@@ -10,6 +10,7 @@ import com.baseflow.geocoding.utils.LocaleConverter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
@@ -38,11 +39,14 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
     @Override
     public void onMethodCall(final MethodCall call, final Result result) {
         switch (call.method) {
-            case "locationFromAddress":
-                onLocationFromAddress(call, result);
+            case "getFromLocation":
+                getFromLocation(call, result);
                 break;
-            case "placemarkFromCoordinates":
-                onPlacemarkFromCoordinates(call, result);
+            case "getFromLocationName":
+                getFromLocationName(call, result);
+                break;
+            case "setLocale":
+                setLocale(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -63,7 +67,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
             stopListening();
         }
         final BinaryMessenger.TaskQueue taskQueue = messenger.makeBackgroundTaskQueue();
-        channel = new MethodChannel(messenger, "flutter.baseflow.com/geocoding", StandardMethodCodec.INSTANCE, taskQueue);
+        channel = new MethodChannel(messenger, "flutter.baseflow.com/geocoding_android", StandardMethodCodec.INSTANCE, taskQueue);
         channel.setMethodCallHandler(this);
     }
 
@@ -82,50 +86,16 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         channel = null;
     }
 
-    private void onLocationFromAddress(MethodCall call, Result result) {
-        final String address = call.argument("address");
-        final String languageTag = call.argument("localeIdentifier");
-
-        if (address == null || address.isEmpty()) {
-            result.error(
-                    "ARGUMENT_ERROR",
-                    "Supply a valid value for the 'address' parameter.",
-                    null);
-        }
-
-        try {
-            final List<Address> addresses = geocoding.placemarkFromAddress(
-                    address,
-                    LocaleConverter.fromLanguageTag(languageTag));
-
-            if (addresses == null || addresses.isEmpty()) {
-                result.error(
-                        "NOT_FOUND",
-                        String.format("No coordinates found for '%s'", address),
-                        null);
-                return;
-            }
-
-            result.success(AddressMapper.toLocationHashMapList(addresses));
-        } catch (IOException ex) {
-            result.error(
-                    "IO_ERROR",
-                    String.format("A network error occurred trying to lookup the address ''.", address),
-                    null
-            );
-        }
-    }
-
-    private void onPlacemarkFromCoordinates(final MethodCall call, final Result result) {
+    private void getFromLocation(final MethodCall call, final Result result) {
         final double latitude = call.argument("latitude");
         final double longitude = call.argument("longitude");
-        final String languageTag = call.argument("localeIdentifier");
+        final int maxResults = call.argument("maxResults");
 
         try {
-            final List<Address> addresses = geocoding.placemarkFromCoordinates(
+            final List<Address> addresses = geocoding.getFromLocation(
                     latitude,
                     longitude,
-                    LocaleConverter.fromLanguageTag(languageTag));
+                    maxResults);
             if (addresses == null || addresses.isEmpty()) {
                 result.error(
                         "NOT_FOUND",
@@ -141,5 +111,107 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                     null
             );
         }
+    }
+
+    private void getFromLocationName(MethodCall call, Result result) {
+        final String address = call.argument("address");
+        final int maxResults = call.argument("maxResults");
+
+        Double lowerLeftLatitude = null;
+        if (call.hasArgument("lowerLeftLatitude")) {
+            lowerLeftLatitude = call.argument("lowerLeftLatitude");
+        }
+
+        Double lowerLeftLongitude = null;
+        if (call.hasArgument("lowerLeftLongitude")) {
+            lowerLeftLongitude = call.argument("lowerLeftLongitude");
+        }
+
+        Double upperRightLatitude = null;
+        if (call.hasArgument("upperRightLatitude")) {
+            upperRightLatitude = call.argument("upperRightLatitude");
+        }
+
+        Double upperRightLongitude = null;
+        if (call.hasArgument("upperRightLongitude")) {
+            upperRightLongitude = call.argument("upperRightLongitude");
+        }
+
+        if (address == null || address.isEmpty()) {
+            result.error(
+                    "ARGUMENT_ERROR",
+                    "Supply a valid value for the 'address' parameter.",
+                    null);
+        }
+
+        try {
+            List<Address> addresses = null;
+
+            if (lowerLeftLatitude == null) {
+                addresses = geocoding.getFromLocationName(
+                        address,
+                        maxResults);
+            } else {
+                addresses = geocoding.getFromLocationName(
+                        address,
+                        maxResults,
+                        lowerLeftLatitude,
+                        lowerLeftLongitude,
+                        upperRightLatitude,
+                        upperRightLongitude);
+            }
+
+            if (addresses == null || addresses.isEmpty()) {
+                result.error(
+                        "NOT_FOUND",
+                        String.format("No coordinates found for '%s'", address),
+                        null);
+                return;
+            }
+
+            result.success(AddressMapper.toAddressHashMapList(addresses));
+        } catch (IOException ex) {
+            result.error(
+                    "IO_ERROR",
+                    String.format("A network error occurred trying to lookup the address ''.", address),
+                    null
+            );
+        }
+    }
+    
+    private void setLocale(MethodCall call, Result result) {
+        final String languageTag = call.argument("languageTag");
+
+        if (languageTag == null) {
+            result.error(
+                "ARGUMENT_ERROR",
+                "Supply a valid value for the 'languageTag' parameter.",
+                null);
+        }
+        final Locale locale = LocaleConverter.fromLanguageTag(languageTag);
+        if (locale == null) {
+            result.error(
+                "ARGUMENT_ERROR",
+                "Supply a valid value for the 'languageTag' parameter.",
+                null);
+        }
+
+        try {
+            geocoding.setLocale(locale);
+
+            result.success(null);
+        } catch (IOException ex) {
+            result.error(
+                    "IO_ERROR",
+                    String.format("A network error occurred trying to set the locale '%f'.", languageTag),
+                    null
+            );
+        }
+    }
+
+    private void isPresent(MethodCall call, Result result) {
+        final boolean present = geocoding.isPresent();
+
+        result.success(present);
     }
 }
