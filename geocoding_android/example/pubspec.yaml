@@ -17,7 +17,7 @@ dependencies:
     #   geocoding: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints
     # The example app is bundled with the plugin so we use a path dependency on
-    # the parent directory to use the current plugin's version. 
+    # the parent directory to use the current plugin's version.
     path: ../
   geocoding_platform_interface: ^2.0.0
 
@@ -31,6 +31,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+dependency_overrides:
+  # Limiting to 6.0.34, since 6.0.35 introduced compatibility issues with
+  # AGP 8.0. See https://github.com/flutter/flutter/issues/128204.
+  url_launcher_android: 6.0.34
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
