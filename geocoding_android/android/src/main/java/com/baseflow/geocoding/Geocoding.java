@@ -86,7 +86,7 @@ class Geocoding {
      * @return a bool indicating the status.
      */
     boolean isPresent() {
-        return geocoder.isPresent();
+        return Geocoder.isPresent();
     }
 
     /**
