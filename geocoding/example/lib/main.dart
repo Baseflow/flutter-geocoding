@@ -76,14 +76,14 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                 onPressed: () {
                   final latitude = double.parse(_latitudeController.text);
                   final longitude = double.parse(_longitudeController.text);
-    
+
                   placemarkFromCoordinates(latitude, longitude)
                       .then((placemarks) {
                     var output = 'No results found.';
                     if (placemarks.isNotEmpty) {
                       output = placemarks[0].toString();
                     }
-    
+
                     setState(() {
                       _output = output;
                     });
@@ -109,12 +109,13 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
             child: ElevatedButton(
                 child: Text('Look up location'),
                 onPressed: () {
-                  locationFromAddress(_addressController.text).then((locations) {
+                  locationFromAddress(_addressController.text)
+                      .then((locations) {
                     var output = 'No results found.';
                     if (locations.isNotEmpty) {
                       output = locations[0].toString();
                     }
-    
+
                     setState(() {
                       _output = output;
                     });
