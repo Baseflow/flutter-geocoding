@@ -29,11 +29,6 @@ android {
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-
     defaultConfig {
         applicationId "com.baseflow.geocoding_example"
         // You can update the following values to match your application needs.
