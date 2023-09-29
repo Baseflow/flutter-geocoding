@@ -38,6 +38,12 @@ jobs:
         with:
           channel: 'stable'
 
+      # Make sure JAVA version 17 is installed on build agent.
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
+
       # Download all Flutter packages
       - name: Download dependencies
         run: flutter pub get
