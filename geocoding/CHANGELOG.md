@@ -1,3 +1,10 @@
+## 2.1.1
+
+- Updates the example app, so the `example/lib/main.dart` contains clear example
+code on how to use the geocoding plugin. Mean reason for doing so is that the 
+`example/lib/main.dart` is shown in the "Example" tab on pub.dev.
+  
+
 ## 2.1.0
 
 - Upgrades the app-facing package to use the federated architecture.
