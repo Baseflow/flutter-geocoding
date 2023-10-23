@@ -13,15 +13,9 @@
 
 - (NSDictionary *)toPlacemarkDictionary {
     NSString* street = @"";
-
-    if (@available(iOS 11.0, *)) {
-        if (self.postalAddress != nil) {
-            street = self.postalAddress.street;
-        }
-    } else if (@available(iOS 5.0, *)) {
-        if (self.addressDictionary != nil) {
-            street = [[self addressDictionary] objectForKey:(NSString *)kABPersonAddressStreetKey];
-        }
+    
+    if (self.postalAddress != nil) {
+        street = self.postalAddress.street;
     }
     
     NSMutableDictionary<NSString *, NSObject *> *dict = [[NSMutableDictionary alloc] initWithDictionary:@{
