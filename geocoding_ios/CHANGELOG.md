@@ -1,6 +1,6 @@
 ## 2.1.1
 
-* Removes deprecation warnings.
+* Removes obsolete version check in `toPlacemarkDictionary`. This removes [insert deprecation warning instance] from occurring.
 
 ## 2.1.0
 
