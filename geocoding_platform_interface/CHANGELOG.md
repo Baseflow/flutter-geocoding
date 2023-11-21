@@ -1,3 +1,7 @@
+## 3.1.0
+
+- Adds `placemarkFromAddress` method to the platform interface.
+
 ## 3.0.0
 
 - **Breaking Change** Changes to the platform interface calls, the locale is now set in a separate call.

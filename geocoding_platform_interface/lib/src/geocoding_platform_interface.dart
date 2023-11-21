@@ -72,4 +72,17 @@ abstract class GeocodingPlatform extends PlatformInterface {
     throw UnimplementedError(
         'placemarkFromCoordinates() has not been implementated.');
   }
+
+  /// Returns a list of [Placemark] instances found for the supplied address.
+  ///
+  /// In most situations the returned list should only contain one entry.
+  /// However in some situations where the supplied address could not be
+  /// resolved into a single [Placemark], multiple [Placemark] instances may be
+  /// returned.
+  Future<List<Placemark>> placemarkFromAddress(
+    String address,
+  ) {
+    throw UnimplementedError(
+        'placemarkFromAddress() has not been implementated.');
+  }
 }
