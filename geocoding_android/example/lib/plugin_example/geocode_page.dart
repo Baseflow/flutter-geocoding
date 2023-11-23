@@ -105,6 +105,39 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
           ),
           Center(
             child: ElevatedButton(
+                child: Text('Look up address'),
+                onPressed: () {
+                  GeocodingAndroid()
+                      .placemarkFromAddress(_addressController.text)
+                      .then((locations) {
+                    var output = 'No results found.';
+                    if (locations.isNotEmpty) {
+                      output = locations[0].toString();
+                    }
+
+                    setState(() {
+                      _output = output;
+                    });
+                  });
+                }),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 32),
+          ),
+          TextField(
+            autocorrect: false,
+            controller: _addressController,
+            style: Theme.of(context).textTheme.bodyMedium,
+            decoration: InputDecoration(
+              hintText: 'Address',
+            ),
+            keyboardType: TextInputType.text,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
+          ),
+          Center(
+            child: ElevatedButton(
                 child: Text('Look up location'),
                 onPressed: () {
                   GeocodingAndroid()

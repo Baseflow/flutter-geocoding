@@ -3,6 +3,7 @@ package com.baseflow.geocoding;
 import android.location.Address;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.baseflow.geocoding.utils.AddressMapper;
@@ -10,6 +11,7 @@ import com.baseflow.geocoding.utils.LocaleConverter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
@@ -36,10 +38,19 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
     }
 
     @Override
-    public void onMethodCall(final MethodCall call, final Result result) {
+    public void onMethodCall(
+        final MethodCall call,
+        @NonNull final Result result
+    ) {
         switch (call.method) {
+            case "setLocaleIdentifier":
+                setLocaleIdentifier(call, result);
+                break;
             case "locationFromAddress":
                 onLocationFromAddress(call, result);
+                break;
+            case "placemarkFromAddress":
+                onPlacemarkFromAddress(call, result);
                 break;
             case "placemarkFromCoordinates":
                 onPlacemarkFromCoordinates(call, result);
@@ -82,9 +93,16 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         channel = null;
     }
 
+    private void setLocaleIdentifier(MethodCall call, Result result) {
+        final String languageTag = call.argument("localeIdentifier");
+
+        geocoding.setLocaleIdentifier(LocaleConverter.fromLanguageTag(languageTag));
+
+        result.success(true);
+    }
+
     private void onLocationFromAddress(MethodCall call, Result result) {
         final String address = call.argument("address");
-        final String languageTag = call.argument("localeIdentifier");
 
         if (address == null || address.isEmpty()) {
             result.error(
@@ -94,9 +112,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         }
 
         try {
-            final List<Address> addresses = geocoding.placemarkFromAddress(
-                    address,
-                    LocaleConverter.fromLanguageTag(languageTag));
+            final List<Address> addresses = geocoding.placemarkFromAddress(address);
 
             if (addresses == null || addresses.isEmpty()) {
                 result.error(
@@ -110,8 +126,39 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         } catch (IOException ex) {
             result.error(
                     "IO_ERROR",
-                    String.format("A network error occurred trying to lookup the address ''.", address),
+                    String.format("A network error occurred trying to lookup the address '%s'.", address),
                     null
+            );
+        }
+    }
+
+    private void onPlacemarkFromAddress(final MethodCall call, final Result result) {
+        final String address = call.argument("address");
+
+        if (address == null || address.isEmpty()) {
+            result.error(
+                "ARGUMENT_ERROR",
+                "Supply a valid value for the 'address' parameter.",
+                null);
+        }
+
+        try {
+            final List<Address> addresses = geocoding.placemarkFromAddress(address);
+
+            if (addresses == null || addresses.isEmpty()) {
+                result.error(
+                    "NOT_FOUND",
+                    String.format("No coordinates found for '%s'", address),
+                    null);
+                return;
+            }
+
+            result.success(AddressMapper.toAddressHashMapList(addresses));
+        } catch (IOException e) {
+            result.error(
+                "IO_ERROR",
+                String.format("A network error occurred trying to lookup the address '%s'.", address),
+                null
             );
         }
     }
@@ -119,17 +166,21 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
     private void onPlacemarkFromCoordinates(final MethodCall call, final Result result) {
         final double latitude = call.argument("latitude");
         final double longitude = call.argument("longitude");
-        final String languageTag = call.argument("localeIdentifier");
 
         try {
             final List<Address> addresses = geocoding.placemarkFromCoordinates(
                     latitude,
-                    longitude,
-                    LocaleConverter.fromLanguageTag(languageTag));
+                    longitude);
+
             if (addresses == null || addresses.isEmpty()) {
                 result.error(
                         "NOT_FOUND",
-                        String.format("No address information found for supplied coordinates (latitude: %f, longitude: %f).", latitude, longitude),
+                        String.format(
+                            Locale.ENGLISH,
+                            "No address information found for supplied coordinates (latitude: %f, longitude: %f).",
+                            latitude,
+                            longitude
+                        ),
                         null);
                 return;
             }
@@ -137,7 +188,12 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         } catch (IOException ex) {
             result.error(
                     "IO_ERROR",
-                    String.format("A network error occurred trying to lookup the supplied coordinates (latitude: %f, longitude: %f).", latitude, longitude),
+                    String.format(
+                        Locale.ENGLISH,
+                        "A network error occurred trying to lookup the supplied coordinates (latitude: %f, longitude: %f).",
+                        latitude,
+                        longitude
+                    ),
                     null
             );
         }
