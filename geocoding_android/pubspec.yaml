@@ -5,7 +5,7 @@ repository: https://github.com/baseflow/flutter-geocoding/tree/main/geocoding_an
 issue_tracker: https://github.com/Baseflow/flutter-geocoding/issues
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=2.17.0 <4.0.0"
   flutter: ">=3.0.0"
 
 dependencies:
