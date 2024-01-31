@@ -1,3 +1,9 @@
+## 4.0.0
+
+* **BREAKING CHANGES**:
+  * Updates `compileSdk' (compileSdkVersion) from 33 to 34.
+  * Fixes deprecation build warnings. 
+
 ## 3.0.0
 
 * **BREAKING CHANGES**:
