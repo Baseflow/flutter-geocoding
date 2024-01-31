@@ -103,99 +103,44 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
 
     private void onLocationFromAddress(MethodCall call, Result result) {
         final String address = call.argument("address");
-
         if (address == null || address.isEmpty()) {
             result.error(
                     "ARGUMENT_ERROR",
                     "Supply a valid value for the 'address' parameter.",
                     null);
+            return;
         }
 
-        try {
-            final List<Address> addresses = geocoding.placemarkFromAddress(address);
-
-            if (addresses == null || addresses.isEmpty()) {
-                result.error(
-                        "NOT_FOUND",
-                        String.format("No coordinates found for '%s'", address),
-                        null);
-                return;
-            }
-
-            result.success(AddressMapper.toLocationHashMapList(addresses));
-        } catch (IOException ex) {
-            result.error(
-                    "IO_ERROR",
-                    String.format("A network error occurred trying to lookup the address '%s'.", address),
-                    null
-            );
-        }
+        geocoding.placemarkFromAddress(address, AddressMapper::toLocationHashMapList, result);
     }
 
     private void onPlacemarkFromAddress(final MethodCall call, final Result result) {
         final String address = call.argument("address");
-
         if (address == null || address.isEmpty()) {
             result.error(
                 "ARGUMENT_ERROR",
                 "Supply a valid value for the 'address' parameter.",
                 null);
+            return;
         }
 
-        try {
-            final List<Address> addresses = geocoding.placemarkFromAddress(address);
-
-            if (addresses == null || addresses.isEmpty()) {
-                result.error(
-                    "NOT_FOUND",
-                    String.format("No coordinates found for '%s'", address),
-                    null);
-                return;
-            }
-
-            result.success(AddressMapper.toAddressHashMapList(addresses));
-        } catch (IOException e) {
-            result.error(
-                "IO_ERROR",
-                String.format("A network error occurred trying to lookup the address '%s'.", address),
-                null
-            );
-        }
+        geocoding.placemarkFromAddress(address, AddressMapper::toAddressHashMapList, result);
     }
 
     private void onPlacemarkFromCoordinates(final MethodCall call, final Result result) {
-        final double latitude = call.argument("latitude");
-        final double longitude = call.argument("longitude");
-
+        final double latitude;
+        final double longitude;
         try {
-            final List<Address> addresses = geocoding.placemarkFromCoordinates(
-                    latitude,
-                    longitude);
-
-            if (addresses == null || addresses.isEmpty()) {
-                result.error(
-                        "NOT_FOUND",
-                        String.format(
-                            Locale.ENGLISH,
-                            "No address information found for supplied coordinates (latitude: %f, longitude: %f).",
-                            latitude,
-                            longitude
-                        ),
-                        null);
-                return;
-            }
-            result.success(AddressMapper.toAddressHashMapList(addresses));
-        } catch (IOException ex) {
+            latitude = call.argument("latitude");
+            longitude = call.argument("longitude");
+        } catch (Exception e) {
             result.error(
-                    "IO_ERROR",
-                    String.format(
-                        Locale.ENGLISH,
-                        "A network error occurred trying to lookup the supplied coordinates (latitude: %f, longitude: %f).",
-                        latitude,
-                        longitude
-                    ),
-                    null
-            );
+                    "ARGUMENT_ERROR",
+                    "Supply valid values for the 'latitude' and 'longitude' parameters.",
+                    null);
+            return;
         }
+
+        geocoding.placemarkFromCoordinates(latitude, longitude, result);
     }
 }
