@@ -1,22 +1,27 @@
 package com.baseflow.geocoding;
 
 import androidx.annotation.Nullable;
+
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
+
 import androidx.annotation.RequiresApi;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 
-
-/** Geocoding components to lookup address or coordinates. */
+/**
+ * Geocoding components to lookup address or coordinates.
+ */
 class Geocoding {
     private final Context androidContext;
-    @Nullable private Locale locale;
+    @Nullable
+    private Locale locale;
 
     /**
      * Uses the given {@code androidContext} to execute geocoding features
@@ -57,17 +62,18 @@ class Geocoding {
             public void onGeocode(List<Address> geocodedAddresses) {
                 callback.onGeocode(geocodedAddresses);
             }
-             @Override
-             public void onError(@Nullable String errorMessage) {
-                 callback.onError(errorMessage);
-             }
+
+            @Override
+            public void onError(@Nullable String errorMessage) {
+                callback.onError(errorMessage);
+            }
         });
     }
 
     /**
      * Returns a list of Address objects matching the supplied coordinates.
      *
-     * @param latitude the latitude point for the search
+     * @param latitude  the latitude point for the search
      * @param longitude the longitude point for the search
      * @return a list of Address objects. Returns null or empty list if no matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
@@ -93,10 +99,11 @@ class Geocoding {
             public void onGeocode(List<Address> geocodedAddresses) {
                 callback.onGeocode(geocodedAddresses);
             }
-             @Override
-             public void onError(@Nullable String errorMessage) {
-                 callback.onError(errorMessage);
-             }
+
+            @Override
+            public void onError(@Nullable String errorMessage) {
+                callback.onError(errorMessage);
+            }
         });
     }
 

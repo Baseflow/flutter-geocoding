@@ -39,8 +39,8 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
 
     @Override
     public void onMethodCall(
-        final MethodCall call,
-        @NonNull final Result result
+            final MethodCall call,
+            @NonNull final Result result
     ) {
         switch (call.method) {
             case "setLocaleIdentifier":
@@ -116,7 +116,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
 
                 @Override
                 public void onGeocode(List<Address> addresses) {
-                    if(addresses != null && addresses.size() > 0) {
+                    if (addresses != null && addresses.size() > 0) {
                         result.success(AddressMapper.toLocationHashMapList(addresses));
                     } else {
                         result.error(
@@ -159,7 +159,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
 
                 @Override
                 public void onGeocode(List<Address> addresses) {
-                    if(addresses != null && addresses.size() > 0) {
+                    if (addresses != null && addresses.size() > 0) {
                         result.success(AddressMapper.toAddressHashMapList(addresses));
                     } else {
                         result.error(
@@ -226,10 +226,10 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
             result.error(
                     "IO_ERROR",
                     String.format(
-                        Locale.ENGLISH,
-                        "A network error occurred trying to lookup the supplied coordinates (latitude: %f, longitude: %f).",
-                        latitude,
-                        longitude
+                            Locale.ENGLISH,
+                            "A network error occurred trying to lookup the supplied coordinates (latitude: %f, longitude: %f).",
+                            latitude,
+                            longitude
                     ),
                     null
             );
