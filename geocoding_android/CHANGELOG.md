@@ -1,6 +1,7 @@
 ## 3.1.0
 
   * Fixes deprecation build warnings. 
+  * Adds Android API 34 support.
 
 ## 3.0.0
 
