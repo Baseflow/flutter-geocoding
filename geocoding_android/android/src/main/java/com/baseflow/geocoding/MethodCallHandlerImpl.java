@@ -85,7 +85,6 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
      */
     void stopListening() {
         if (channel == null) {
-            Log.d(TAG, "Tried to stop listening when no MethodChannel had been initialized.");
             return;
         }
 
@@ -112,17 +111,29 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         }
 
         try {
-            final List<Address> addresses = geocoding.placemarkFromAddress(address);
+            geocoding.placemarkFromAddress(address, new GeocodeListenerAdapter() {
 
-            if (addresses == null || addresses.isEmpty()) {
-                result.error(
-                        "NOT_FOUND",
-                        String.format("No coordinates found for '%s'", address),
-                        null);
-                return;
-            }
+                @Override
+                public void onGeocode(List<Address> addresses) {
+                    if(addresses != null && addresses.size() > 0) {
+                        result.success(AddressMapper.toLocationHashMapList(addresses));
+                    } else {
+                        result.error(
+                                "NOT_FOUND",
+                                String.format("No coordinates found for '%s'", address),
+                                null);
+                    }
+                }
 
-            result.success(AddressMapper.toLocationHashMapList(addresses));
+                @Override
+                public void onError(String errorMessage) {
+                    result.error(
+                            "NOT_FOUND",
+                            String.format(errorMessage),
+                            null);
+                }
+            });
+
         } catch (IOException ex) {
             result.error(
                     "IO_ERROR",
@@ -137,28 +148,40 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
 
         if (address == null || address.isEmpty()) {
             result.error(
-                "ARGUMENT_ERROR",
-                "Supply a valid value for the 'address' parameter.",
-                null);
+                    "ARGUMENT_ERROR",
+                    "Supply a valid value for the 'address' parameter.",
+                    null);
         }
 
         try {
-            final List<Address> addresses = geocoding.placemarkFromAddress(address);
+            geocoding.placemarkFromAddress(address, new GeocodeListenerAdapter() {
 
-            if (addresses == null || addresses.isEmpty()) {
-                result.error(
-                    "NOT_FOUND",
-                    String.format("No coordinates found for '%s'", address),
-                    null);
-                return;
-            }
+                @Override
+                public void onGeocode(List<Address> addresses) {
+                    if(addresses != null && addresses.size() > 0) {
+                        result.success(AddressMapper.toAddressHashMapList(addresses));
+                    } else {
+                        result.error(
+                                "NOT_FOUND",
+                                String.format("No coordinates found for '%s'", address),
+                                null);
+                    }
+                }
 
-            result.success(AddressMapper.toAddressHashMapList(addresses));
-        } catch (IOException e) {
+                @Override
+                public void onError(String errorMessage) {
+                    result.error(
+                            "NOT_FOUND",
+                            String.format(errorMessage),
+                            null);
+                }
+            });
+
+        } catch (IOException ex) {
             result.error(
-                "IO_ERROR",
-                String.format("A network error occurred trying to lookup the address '%s'.", address),
-                null
+                    "IO_ERROR",
+                    String.format("A network error occurred trying to lookup the address '%s'.", address),
+                    null
             );
         }
     }
@@ -168,23 +191,36 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         final double longitude = call.argument("longitude");
 
         try {
-            final List<Address> addresses = geocoding.placemarkFromCoordinates(
+            geocoding.placemarkFromCoordinates(
                     latitude,
-                    longitude);
+                    longitude, new GeocodeListenerAdapter() {
 
-            if (addresses == null || addresses.isEmpty()) {
-                result.error(
-                        "NOT_FOUND",
-                        String.format(
-                            Locale.ENGLISH,
-                            "No address information found for supplied coordinates (latitude: %f, longitude: %f).",
-                            latitude,
-                            longitude
-                        ),
-                        null);
-                return;
-            }
-            result.success(AddressMapper.toAddressHashMapList(addresses));
+                        @Override
+                        public void onGeocode(List<Address> addresses) {
+                            if (addresses != null && addresses.size() > 0) {
+                                result.success(AddressMapper.toAddressHashMapList(addresses));
+                            } else {
+                                result.error(
+                                        "NOT_FOUND",
+                                        String.format(
+                                                Locale.ENGLISH,
+                                                "No address information found for supplied coordinates (latitude: %f, longitude: %f).",
+                                                latitude,
+                                                longitude
+                                        ),
+                                        null);
+                            }
+                        }
+
+                        @Override
+                        public void onError(String errorMessage) {
+                            result.error(
+                                    "NOT_FOUND",
+                                    String.format(errorMessage),
+                                    null);
+                        }
+                    });
+
         } catch (IOException ex) {
             result.error(
                     "IO_ERROR",

@@ -26,7 +26,7 @@ android {
         namespace("com.baseflow.geocoding")
     }
 
-    compileSdk 34
+    compileSdk 33
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+
+
 /** Geocoding components to lookup address or coordinates. */
 class Geocoding {
     private final Context androidContext;
@@ -37,26 +39,29 @@ class Geocoding {
      * @throws java.io.IOException if the network is unavailable or any other I/O problem occurs.
      */
     @SuppressWarnings("deprecation")
-    List<Address> placemarkFromAddress(String address) throws IOException {
+    void placemarkFromAddress(String address, GeocodeListenerAdapter callback) throws IOException {
         final Geocoder geocoder = createGeocoder(androidContext, locale);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return getAddressesWithGeocodeListener(geocoder, address, 5);
+            getAddressesWithGeocodeListener(geocoder, address, 5, callback);
         } else {
-            return geocoder.getFromLocationName(address, 5);
+            List<Address> addresses = geocoder.getFromLocationName(address, 5);
+            callback.onGeocode(addresses);
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
-    private List<Address> getAddressesWithGeocodeListener(Geocoder geocoder, String address, int maxResults) {
-        List<Address> addresses = new ArrayList<>();
+    private void getAddressesWithGeocodeListener(Geocoder geocoder, String address, int maxResults, GeocodeListenerAdapter callback) {
         geocoder.getFromLocationName(address, maxResults, new Geocoder.GeocodeListener() {
             @Override
             public void onGeocode(List<Address> geocodedAddresses) {
-                addresses.addAll(geocodedAddresses);
+                callback.onGeocode(geocodedAddresses);
             }
+             @Override
+             public void onError(@Nullable String errorMessage) {
+                 callback.onError(errorMessage);
+             }
         });
-        return addresses;
     }
 
     /**
@@ -68,28 +73,31 @@ class Geocoding {
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     @SuppressWarnings("deprecation")
-    List<Address> placemarkFromCoordinates(
+    void placemarkFromCoordinates(
             double latitude,
-            double longitude
+            double longitude,
+            GeocodeListenerAdapter callback
     ) throws IOException {
         final Geocoder geocoder = createGeocoder(androidContext, locale);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return getLocationWithGeocodeListener(geocoder, latitude, longitude, 5);
+            getLocationWithGeocodeListener(geocoder, latitude, longitude, 5, callback);
         } else {
-            return geocoder.getFromLocation(latitude, longitude, 5);
+            callback.onGeocode(geocoder.getFromLocation(latitude, longitude, 5));
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
-    private List<Address> getLocationWithGeocodeListener(Geocoder geocoder, double latitude, double longitude, int maxResults) {
-        List<Address> addresses = new ArrayList<>();
+    private void getLocationWithGeocodeListener(Geocoder geocoder, double latitude, double longitude, int maxResults, GeocodeListenerAdapter callback) {
         geocoder.getFromLocation(latitude, longitude, maxResults, new Geocoder.GeocodeListener() {
             @Override
             public void onGeocode(List<Address> geocodedAddresses) {
-                addresses.addAll(geocodedAddresses);
+                callback.onGeocode(geocodedAddresses);
             }
+             @Override
+             public void onError(@Nullable String errorMessage) {
+                 callback.onError(errorMessage);
+             }
         });
-        return addresses;
     }
 
     private static Geocoder createGeocoder(Context androidContext, @Nullable Locale locale) {
