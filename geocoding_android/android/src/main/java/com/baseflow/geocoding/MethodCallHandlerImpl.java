@@ -39,8 +39,8 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
 
     @Override
     public void onMethodCall(
-        final MethodCall call,
-        @NonNull final Result result
+            final MethodCall call,
+            @NonNull final Result result
     ) {
         switch (call.method) {
             case "setLocaleIdentifier":
@@ -111,37 +111,28 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                     null);
         }
 
-        try {
-            geocoding.placemarkFromAddress(address, new GeocodeListenerAdapter() {
+        geocoding.placemarkFromAddress(address, new GeocodeListenerAdapter() {
 
-                @Override
-                public void onGeocode(List<Address> addresses) {
-                    if (addresses != null && addresses.size() > 0) {
-                        result.success(AddressMapper.toLocationHashMapList(addresses));
-                    } else {
-                        result.error(
-                                "NOT_FOUND",
-                                String.format("No coordinates found for '%s'", address),
-                                null);
-                    }
-                }
-
-                @Override
-                public void onError(String errorMessage) {
+            @Override
+            public void onGeocode(List<Address> addresses) {
+                if (addresses != null && addresses.size() > 0) {
+                    result.success(AddressMapper.toLocationHashMapList(addresses));
+                } else {
                     result.error(
-                            "IO_ERROR",
-                            String.format(errorMessage),
+                            "NOT_FOUND",
+                            String.format("No coordinates found for '%s'", address),
                             null);
                 }
-            });
+            }
 
-        } catch (IOException ex) {
-            result.error(
-                    "IO_ERROR",
-                    String.format("A network error occurred trying to lookup the address '%s'.", address),
-                    null
-            );
-        }
+            @Override
+            public void onError(String errorMessage) {
+                result.error(
+                        "IO_ERROR",
+                        String.format(errorMessage),
+                        null);
+            }
+        });
     }
 
     private void onPlacemarkFromAddress(final MethodCall call, final Result result) {
@@ -154,85 +145,62 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                     null);
         }
 
-        try {
-            geocoding.placemarkFromAddress(address, new GeocodeListenerAdapter() {
+        geocoding.placemarkFromAddress(address, new GeocodeListenerAdapter() {
 
-                @Override
-                public void onGeocode(List<Address> addresses) {
-                    if (addresses != null && addresses.size() > 0) {
-                        result.success(AddressMapper.toAddressHashMapList(addresses));
-                    } else {
-                        result.error(
-                                "NOT_FOUND",
-                                String.format("No coordinates found for '%s'", address),
-                                null);
-                    }
-                }
-
-                @Override
-                public void onError(String errorMessage) {
+            @Override
+            public void onGeocode(List<Address> addresses) {
+                if (addresses != null && addresses.size() > 0) {
+                    result.success(AddressMapper.toAddressHashMapList(addresses));
+                } else {
                     result.error(
-                            "IO_ERROR",
-                            String.format(errorMessage),
+                            "NOT_FOUND",
+                            String.format("No coordinates found for '%s'", address),
                             null);
                 }
-            });
+            }
 
-        } catch (IOException ex) {
-            result.error(
-                    "IO_ERROR",
-                    String.format("A network error occurred trying to lookup the address '%s'.", address),
-                    null
-            );
-        }
+            @Override
+            public void onError(String errorMessage) {
+                result.error(
+                        "IO_ERROR",
+                        String.format(errorMessage),
+                        null);
+            }
+        });
     }
 
     private void onPlacemarkFromCoordinates(final MethodCall call, final Result result) {
         final double latitude = call.argument("latitude");
         final double longitude = call.argument("longitude");
 
-        try {
-            geocoding.placemarkFromCoordinates(
-                    latitude,
-                    longitude, new GeocodeListenerAdapter() {
+        geocoding.placemarkFromCoordinates(
+                latitude,
+                longitude, new GeocodeListenerAdapter() {
 
-                        @Override
-                        public void onGeocode(List<Address> addresses) {
-                            if (addresses != null && addresses.size() > 0) {
-                                result.success(AddressMapper.toAddressHashMapList(addresses));
-                            } else {
-                                result.error(
-                                        "NOT_FOUND",
-                                        String.format(
-                                                Locale.ENGLISH,
-                                                "No address information found for supplied coordinates (latitude: %f, longitude: %f).",
-                                                latitude,
-                                                longitude
-                                        ),
-                                        null);
-                            }
-                        }
-
-                        @Override
-                        public void onError(String errorMessage) {
+                    @Override
+                    public void onGeocode(List<Address> addresses) {
+                        if (addresses != null && addresses.size() > 0) {
+                            result.success(AddressMapper.toAddressHashMapList(addresses));
+                        } else {
                             result.error(
-                            "IO_ERROR",
-                                    String.format(errorMessage),
+                                    "NOT_FOUND",
+                                    String.format(
+                                            Locale.ENGLISH,
+                                            "No address information found for supplied coordinates (latitude: %f, longitude: %f).",
+                                            latitude,
+                                            longitude
+                                    ),
                                     null);
                         }
-                    });
+                    }
 
-        } catch (IOException ex) {
-            result.error(
-                    "IO_ERROR",
-                    String.format(
-                            Locale.ENGLISH,
-                            "A network error occurred trying to lookup the supplied coordinates (latitude: %f, longitude: %f).",
-                            latitude,
-                            longitude
-                    ),
-                    null
-            );
-        }
+                    @Override
+                    public void onError(String errorMessage) {
+                        result.error(
+                                "IO_ERROR",
+                                String.format(errorMessage),
+                                null);
+                    }
+                });
     }
 }

@@ -40,19 +40,27 @@ class Geocoding {
      * Returns a list of Address objects matching the supplied address string.
      *
      * @param address the address string for the search
+     * @param callback the GeocodeListenerAdapter that listens for success or error
      * @return a list of Address objects. Returns null or empty list if no matches were found or there is no backend service available.
-     * @throws java.io.IOException if the network is unavailable or any other I/O problem occurs.
      */
-    @SuppressWarnings("deprecation")
-    void placemarkFromAddress(String address, GeocodeListenerAdapter callback) throws IOException {
+    void placemarkFromAddress(String address, GeocodeListenerAdapter callback) {
         final Geocoder geocoder = createGeocoder(androidContext, locale);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             getAddressesWithGeocodeListener(geocoder, address, 5, callback);
         } else {
-            List<Address> addresses = geocoder.getFromLocationName(address, 5);
-            callback.onGeocode(addresses);
+            try {
+                List<Address> addresses = deprecatedGetFromLocationName(geocoder, address);
+                callback.onGeocode(addresses);
+            } catch (IOException ex) {
+                callback.onError(ex.getMessage());
+            }
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    private List<Address> deprecatedGetFromLocationName(Geocoder geocoder, String address) throws IOException {
+        return geocoder.getFromLocationName(address, 5);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -70,26 +78,37 @@ class Geocoding {
         });
     }
 
+
     /**
      * Returns a list of Address objects matching the supplied coordinates.
      *
      * @param latitude  the latitude point for the search
      * @param longitude the longitude point for the search
+     * @param callback the GeocodeListenerAdapter that listens for success or error
      * @return a list of Address objects. Returns null or empty list if no matches were found or there is no backend service available.
-     * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    @SuppressWarnings("deprecation")
     void placemarkFromCoordinates(
             double latitude,
             double longitude,
             GeocodeListenerAdapter callback
-    ) throws IOException {
+    ) {
         final Geocoder geocoder = createGeocoder(androidContext, locale);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             getLocationWithGeocodeListener(geocoder, latitude, longitude, 5, callback);
         } else {
-            callback.onGeocode(geocoder.getFromLocation(latitude, longitude, 5));
-        }
+            try {
+                List<Address> addresses = deprecatedGetFromLocation(geocoder, latitude, longitude);
+                callback.onGeocode(addresses);
+            } catch (IOException ex) {
+                callback.onError(ex.getMessage());
+            }}
+    }
+
+    @SuppressWarnings("deprecation")
+    private List<Address> deprecatedGetFromLocation(Geocoder geocoder,
+                                                    double latitude,
+                                                    double longitude) throws IOException {
+        return geocoder.getFromLocation(latitude, longitude, 5);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
