@@ -85,6 +85,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
      */
     void stopListening() {
         if (channel == null) {
+            Log.d(TAG, "Tried to stop listening when no MethodChannel had been initialized.");
             return;
         }
 
