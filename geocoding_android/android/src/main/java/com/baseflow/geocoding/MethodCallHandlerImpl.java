@@ -172,7 +172,7 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                 @Override
                 public void onError(String errorMessage) {
                     result.error(
-                            "NOT_FOUND",
+                            "IO_ERROR",
                             String.format(errorMessage),
                             null);
                 }
