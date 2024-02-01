@@ -39,8 +39,8 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
 
     @Override
     public void onMethodCall(
-            final MethodCall call,
-            @NonNull final Result result
+        final MethodCall call,
+        @NonNull final Result result
     ) {
         switch (call.method) {
             case "setLocaleIdentifier":
