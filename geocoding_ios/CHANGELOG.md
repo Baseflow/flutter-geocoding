@@ -1,3 +1,9 @@
+## 3.0.0
+
+* **BREAKING CHANGES**:
+  * Updates `geocoding_platform_interface` to version 3.1.0.
+  * Updates iOS Minimal os version to 12.
+
 ## 2.1.1
 
 * Removes obsolete version check in `toPlacemarkDictionary`. This removes kABPersonAddressStreetKey deprecation warning from occurring.
