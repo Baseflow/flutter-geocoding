@@ -1,6 +1,5 @@
-## 3.0.0
+## 2.2.0
 
-* **BREAKING CHANGES**:
   * Updates `geocoding_platform_interface` to version 3.1.0.
   * Updates iOS Minimal os version to 12.
 
