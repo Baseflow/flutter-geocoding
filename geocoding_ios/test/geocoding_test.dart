@@ -9,7 +9,7 @@ final mockLocation = Location(
   timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),
 );
 
-final mockPlacemark = Placemark(
+const mockPlacemark = Placemark(
     administrativeArea: 'Overijssel',
     country: 'Netherlands',
     isoCountryCode: 'NL',
