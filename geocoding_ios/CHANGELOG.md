@@ -1,7 +1,7 @@
 ## 2.2.0
 
   * Updates `geocoding_platform_interface` to version 3.1.0.
-  * Updates iOS Minimal os version to 12.
+  * Updates minimal iOS version of the example application to 12.
 
 ## 2.1.1
 
