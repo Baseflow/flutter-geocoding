@@ -1,3 +1,7 @@
+## 3.2.0
+
+- Adds `isPresent` method to the platform interface.
+
 ## 3.1.0
 
 - Adds `placemarkFromAddress` method to the platform interface.
