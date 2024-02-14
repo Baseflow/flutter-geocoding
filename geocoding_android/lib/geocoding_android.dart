@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/services.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
@@ -38,6 +39,20 @@ class GeocodingAndroid extends GeocodingPlatform {
       );
 
       return Location.fromMaps(placemarks);
+    } on PlatformException catch (e) {
+      _handlePlatformException(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> isPresent() async {
+    try {
+      final isPresent = await _channel.invokeMethod(
+        'isPresent',
+      );
+
+      return isPresent;
     } on PlatformException catch (e) {
       _handlePlatformException(e);
       rethrow;

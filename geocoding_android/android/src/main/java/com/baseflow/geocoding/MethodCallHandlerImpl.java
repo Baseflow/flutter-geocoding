@@ -55,6 +55,9 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
             case "placemarkFromCoordinates":
                 onPlacemarkFromCoordinates(call, result);
                 break;
+            case "isPresent":
+                onIsPresent(call, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -202,5 +205,10 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                                 null);
                     }
                 });
+    }
+
+    private void onIsPresent(final MethodCall call, final Result result) {
+        boolean isPresent = geocoding.isPresent();
+        result.success(isPresent);
     }
 }

@@ -154,6 +154,23 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   });
                 }),
           ),
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
+          ),
+          Center(
+            child: ElevatedButton(
+                child: Text('Is present'),
+                onPressed: () {
+                  GeocodingAndroid().isPresent().then((isPresent) {
+                    var output = isPresent
+                        ? "Geocoder is present"
+                        : "Geocoder is not present";
+                    setState(() {
+                      _output = output;
+                    });
+                  });
+                }),
+          ),
           Expanded(
             child: SingleChildScrollView(
               child: Container(
