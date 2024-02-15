@@ -53,6 +53,20 @@ void main() {
 
     test(
         // ignore: lines_longer_than_80_chars
+        'Default implementation of isPresent should throw unimplemented error',
+        () {
+      // Arrange
+      final geocodingPlatform = ExtendsGeocodingPlatform();
+
+      // Act & Assert
+      expect(
+        () => geocodingPlatform.isPresent(),
+        throwsUnimplementedError,
+      );
+    });
+
+    test(
+        // ignore: lines_longer_than_80_chars
         'Default implementation of placemarkFromCoordinates should throw unimplemented error',
         () {
       // Arrange
