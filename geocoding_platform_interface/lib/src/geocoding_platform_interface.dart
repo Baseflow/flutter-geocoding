@@ -58,6 +58,16 @@ abstract class GeocodingPlatform extends PlatformInterface {
         'locationFromAddress() has not been implementated.');
   }
 
+  /// Returns true if there is a geocoder implementation present that may return results.
+  /// If true, there is still no guarantee that any individual geocoding attempt will succeed.
+  ///
+  ///
+  /// This method is only implemented on Android, calling this on iOS always
+  /// returns [true].
+  Future<bool> isPresent() {
+    throw UnimplementedError('isPresent() has not been implementated.');
+  }
+
   /// Returns a list of [Placemark] instances found for the supplied
   /// coordinates.
   ///
