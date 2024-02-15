@@ -1,3 +1,7 @@
+## 2.3.0
+
+  * Implements `isPresent` that always returns true.
+
 ## 2.2.0
 
   * Updates `geocoding_platform_interface` to version 3.1.0.

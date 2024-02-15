@@ -62,7 +62,7 @@ abstract class GeocodingPlatform extends PlatformInterface {
   /// If true, there is still no guarantee that any individual geocoding attempt will succeed.
   ///
   ///
-  /// This method is only implemented on Android, calling this on iOS always
+  /// This method is only intended on Android, calling this on iOS always
   /// returns [true].
   Future<bool> isPresent() {
     throw UnimplementedError('isPresent() has not been implementated.');
