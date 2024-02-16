@@ -45,6 +45,20 @@ class GeocodingAndroid extends GeocodingPlatform {
   }
 
   @override
+  Future<bool> isPresent() async {
+    try {
+      final isPresent = await _channel.invokeMethod(
+        'isPresent',
+      );
+
+      return isPresent;
+    } on PlatformException catch (e) {
+      _handlePlatformException(e);
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
     double longitude,

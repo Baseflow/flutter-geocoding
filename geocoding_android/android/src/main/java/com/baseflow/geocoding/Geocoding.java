@@ -36,6 +36,15 @@ class Geocoding {
         this.locale = locale;
     }
 
+     /**
+     * Returns true if there is a geocoder implementation present that may return results. 
+     * If true, there is still no guarantee that any individual geocoding attempt will succeed.
+     *
+     */
+     boolean isPresent() {
+        return Geocoder.isPresent();
+    }
+
     /**
      * Returns a list of Address objects matching the supplied address string.
      *
