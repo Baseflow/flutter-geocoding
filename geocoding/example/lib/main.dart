@@ -78,7 +78,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   final longitude = double.parse(_longitudeController.text);
 
                   placemarkFromCoordinates(latitude, longitude)
-                      .then((placemarks) {
+                      ?.then((placemarks) {
                     var output = 'No results found.';
                     if (placemarks.isNotEmpty) {
                       output = placemarks[0].toString();
@@ -110,12 +110,27 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                 child: Text('Look up location'),
                 onPressed: () {
                   locationFromAddress(_addressController.text)
-                      .then((locations) {
+                      ?.then((locations) {
                     var output = 'No results found.';
                     if (locations.isNotEmpty) {
                       output = locations[0].toString();
                     }
 
+                    setState(() {
+                      _output = output;
+                    });
+                  });
+                }),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
+          ),
+          Center(
+            child: ElevatedButton(
+                child: Text('is Present'),
+                onPressed: () {
+                  isPresent()?.then((isPresent) {
+                    var output = isPresent ? 'Is present' : 'Is not present';
                     setState(() {
                       _output = output;
                     });
