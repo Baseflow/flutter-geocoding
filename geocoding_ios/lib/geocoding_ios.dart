@@ -57,6 +57,9 @@ class GeocodingIOS extends GeocodingPlatform {
     return Placemark.fromMaps(placemarks);
   }
 
+  @override
+  Future<bool> isPresent() => Future<bool>.value(true);
+
   void _handlePlatformException(PlatformException platformException) {
     switch (platformException.code) {
       case 'NOT_FOUND':
