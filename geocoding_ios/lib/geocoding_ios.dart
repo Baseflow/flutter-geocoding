@@ -58,18 +58,7 @@ class GeocodingIOS extends GeocodingPlatform {
   }
 
   @override
-  Future<bool> isPresent() async {
-    try {
-      final isPresent = await _channel.invokeMethod(
-        'isPresent',
-      );
-
-      return isPresent;
-    } on PlatformException catch (e) {
-      _handlePlatformException(e);
-      rethrow;
-    }
-  }
+  Future<bool> isPresent() => Future<bool>.value(true);
 
   void _handlePlatformException(PlatformException platformException) {
     switch (platformException.code) {

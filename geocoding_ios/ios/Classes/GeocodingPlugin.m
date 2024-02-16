@@ -50,9 +50,6 @@
                                        message:errorDescription
                                        details:nil]);
         }];
-    } else if ([@"isPresent" isEqualToString:call.method]) {
-        //There is no equal iOS implementation of the ANDROID Geocoder.isPresent. On iOS we assume that it is always present.
-        result(@YES);
     } else {
         result(FlutterMethodNotImplemented);
     }
