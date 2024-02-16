@@ -9,7 +9,7 @@ final mockLocation = Location(
   timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),
 );
 
-final mockPlacemark = Placemark(
+const mockPlacemark = Placemark(
     administrativeArea: 'Overijssel',
     country: 'Netherlands',
     isoCountryCode: 'NL',
@@ -30,12 +30,12 @@ void main() {
 
     test('locationFromAddress', () async {
       final locations = await (locationFromAddress(''));
-      expect(locations.single, mockLocation);
+      expect(locations?.single, mockLocation);
     });
 
     test('placemarkFromCoordinates', () async {
       final placemarks = await (placemarkFromCoordinates(0, 0));
-      expect(placemarks.single, mockPlacemark);
+      expect(placemarks?.single, mockPlacemark);
     });
   });
 }
