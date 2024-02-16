@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/services.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
