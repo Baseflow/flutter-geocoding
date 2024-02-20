@@ -56,7 +56,7 @@ Future<List<Placemark>> placemarkFromCoordinates(
 /// When not supplied the currently active locale of the device will be used.
 /// The `localeIdentifier` should be formatted using the syntax:
 /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
-Future<bool>? isPresent({
+Future<bool> isPresent({
   String? localeIdentifier,
 }) =>
     GeocodingPlatform.instance!.isPresent();
