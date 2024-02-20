@@ -115,7 +115,21 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                     if (locations.isNotEmpty) {
                       output = locations[0].toString();
                     }
-
+                    setState(() {
+                      _output = output;
+                    });
+                  });
+                }),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
+          ),
+          Center(
+            child: ElevatedButton(
+                child: Text('is Present'),
+                onPressed: () {
+                  isPresent().then((isPresent) {
+                    var output = isPresent ? 'Is present' : 'Is not present';
                     setState(() {
                       _output = output;
                     });
