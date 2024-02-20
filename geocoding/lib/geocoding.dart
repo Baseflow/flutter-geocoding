@@ -59,4 +59,4 @@ Future<List<Placemark>>? placemarkFromCoordinates(
 Future<bool>? isPresent({
   String? localeIdentifier,
 }) =>
-    GeocodingPlatform.instance?.isPresent();
+    GeocodingPlatform.instance!.isPresent();
