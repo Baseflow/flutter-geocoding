@@ -40,7 +40,7 @@ Future<List<Placemark>> placemarkFromCoordinates(
   double longitude, {
   String? localeIdentifier,
 }) =>
-    GeocodingPlatform.instance?.placemarkFromCoordinates(
+    GeocodingPlatform.instance!.placemarkFromCoordinates(
       latitude,
       longitude,
     );
