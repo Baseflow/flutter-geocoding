@@ -19,7 +19,7 @@ Future<List<Location>>? locationFromAddress(
   String address, {
   String? localeIdentifier,
 }) =>
-    GeocodingPlatform.instance?.locationFromAddress(
+    GeocodingPlatform.instance!.locationFromAddress(
       address,
     );
 
