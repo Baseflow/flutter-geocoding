@@ -1,3 +1,9 @@
+## 2.2.0
+
+- Exposes the `isPresent()` method which on Android returns `true` if the 
+geocoding backend service are present on the device, otherwise returns `false`.
+On iOS this method always returns `true`.
+
 ## 2.1.1
 
 - Updates the example app, so the `example/lib/main.dart` contains clear example
