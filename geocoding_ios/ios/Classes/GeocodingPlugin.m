@@ -50,7 +50,7 @@
                                        message:errorDescription
                                        details:nil]);
         }];
-    }else {
+    } else {
         result(FlutterMethodNotImplemented);
     }
 }

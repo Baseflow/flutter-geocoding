@@ -1,3 +1,7 @@
+## 3.2.0
+
+  * Exposes isPresent() call that returns true if there is a geocoder implementation present that may return results.
+
 ## 3.1.0
 
   * Fixes deprecation build warnings. 
