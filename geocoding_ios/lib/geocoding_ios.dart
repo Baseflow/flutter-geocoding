@@ -12,7 +12,6 @@ class GeocodingIOS extends GeocodingPlatform {
     GeocodingPlatform.instance = GeocodingIOS();
   }
 
-  // ignore: public_member_api_docs
   String? _localeIdentifier;
 
   @override
