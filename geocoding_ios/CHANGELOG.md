@@ -1,3 +1,8 @@
+## 2.4.0
+
+  * Fixes to configure the locale.
+  * Removes the `localeIdentifier` argument from all methods. Use method `setLocaleIdentifier` to configure the locale.
+
 ## 2.3.0
 
   * Implements `isPresent` that always returns true.
