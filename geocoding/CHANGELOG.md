@@ -1,3 +1,7 @@
+## 2.2.1
+
+- Updates documentation related to setting the locale.
+
 ## 2.2.0
 
 - Exposes the `isPresent()` method which on Android returns `true` if the 

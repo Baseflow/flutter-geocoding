@@ -47,19 +47,15 @@ class MockGeocodingPlatform extends Mock
     implements
         GeocodingPlatform {
   @override
-  Future<List<Location>> locationFromAddress(
-    String address, {
-    String? localeIdentifier,
-  }) async {
+  Future<List<Location>> locationFromAddress(String address) async {
     return [mockLocation];
   }
 
   @override
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
-    double longitude, {
-    String? localeIdentifier,
-  }) async {
+    double longitude,
+  ) async {
     return [mockPlacemark];
   }
 }
