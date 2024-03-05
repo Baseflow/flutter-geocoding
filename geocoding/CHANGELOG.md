@@ -1,6 +1,7 @@
 ## 2.2.1
 
 - Updates documentation related to setting the locale.
+- Added `setLocaleIdentifier` to the example app.
 
 ## 2.2.0
 
