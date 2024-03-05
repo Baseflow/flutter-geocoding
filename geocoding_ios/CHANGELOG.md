@@ -1,9 +1,11 @@
 ## 3.0.0
 
-  **Breaking Change** 
+  * **BREAKING CHANGES**:
+    * Removes the `localeIdentifier` argument from all methods. Use method `setLocaleIdentifier` to configure the locale.
+    * Removes old iOS version checks and expects iOS 12 and above. (minimal iOS version is 12 per 2.2.0)
   * Fixes to configure the locale.
-  * Removes the `localeIdentifier` argument from all methods. Use method `setLocaleIdentifier` to configure the locale.
-  * Removes old iOS version checks and expects iOS 12 and above. (minimal iOS version is 12 per 2.2.0)
+  * Updated example app with locale example.
+
 
 ## 2.3.0
 
