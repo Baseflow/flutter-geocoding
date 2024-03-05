@@ -6,7 +6,6 @@
 * Fixes to configure the locale.
 * Updated example app with locale example.
 
-
 ## 2.3.0
 
 * Implements `isPresent` that always returns true.
