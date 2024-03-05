@@ -15,6 +15,8 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
   final TextEditingController _longitudeController = TextEditingController();
   String _output = '';
 
+  GeocodingAndroid _geocodingAndroid = GeocodingAndroid();
+
   @override
   void initState() {
     _addressController.text = 'Gronausestraat 710, Enschede';
@@ -74,7 +76,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   final latitude = double.parse(_latitudeController.text);
                   final longitude = double.parse(_longitudeController.text);
 
-                  GeocodingAndroid()
+                  _geocodingAndroid
                       .placemarkFromCoordinates(latitude, longitude)
                       .then((placemarks) {
                     var output = 'No results found.';
@@ -107,7 +109,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
             child: ElevatedButton(
                 child: Text('Look up address'),
                 onPressed: () {
-                  GeocodingAndroid()
+                  _geocodingAndroid
                       .placemarkFromAddress(_addressController.text)
                       .then((locations) {
                     var output = 'No results found.';
@@ -140,7 +142,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
             child: ElevatedButton(
                 child: Text('Look up location'),
                 onPressed: () {
-                  GeocodingAndroid()
+                  _geocodingAndroid
                       .locationFromAddress(_addressController.text)
                       .then((locations) {
                     var output = 'No results found.';
@@ -161,7 +163,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
             child: ElevatedButton(
                 child: Text('Is present'),
                 onPressed: () {
-                  GeocodingAndroid().isPresent().then((isPresent) {
+                  _geocodingAndroid.isPresent().then((isPresent) {
                     var output = isPresent
                         ? "Geocoder is present"
                         : "Geocoder is not present";
@@ -170,6 +172,31 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                     });
                   });
                 }),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
+          ),
+          Center(
+              child: ElevatedButton(
+                  child: Text('Set locale en_US'),
+                  onPressed: () {
+                    _geocodingAndroid.setLocaleIdentifier("en_US").then((_) {
+                      //locale set
+                    });
+                  })),
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
+          ),
+          Center(
+              child: ElevatedButton(
+                  child: Text('Set locale nl_NL'),
+                  onPressed: () {
+                    _geocodingAndroid.setLocaleIdentifier("nl_NL").then((_) {
+                      //locale set
+                    });
+                  })),
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
           ),
           Expanded(
             child: SingleChildScrollView(
