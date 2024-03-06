@@ -12,7 +12,6 @@ class GeocodingIOS extends GeocodingPlatform {
     GeocodingPlatform.instance = GeocodingIOS();
   }
 
-  // ignore: public_member_api_docs
   String? _localeIdentifier;
 
   @override
@@ -23,9 +22,7 @@ class GeocodingIOS extends GeocodingPlatform {
   }
 
   @override
-  Future<List<Location>> locationFromAddress(
-    String address,
-  ) async {
+  Future<List<Location>> locationFromAddress(String address) async {
     final parameters = <String, String>{
       'address': address,
     };

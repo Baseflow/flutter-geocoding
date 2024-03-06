@@ -31,42 +31,16 @@
         return;
     }
     
-    if (@available(iOS 11.0, *)) {
-        [_geocoder geocodeAddressString:address
-                               inRegion:nil
-                        preferredLocale:locale
-                      completionHandler:^(NSArray< CLPlacemark *> *__nullable placemarks, NSError *__nullable error)
-         {
-            [GeocodingHandler completeGeocodingWith:placemarks
-                                              error:error
-                                            success:successHandler
-                                            failure:failureHandler];
-        }];
-    } else {
-        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-        NSArray<NSString * > *defaultLanguages;
-        
-        if (locale != nil) {
-            defaultLanguages = [standardUserDefaults arrayForKey:@"AppleLanguages"];
-            [standardUserDefaults setValue:[GeocodingHandler languageCode:locale]
-                                    forKey:@"AppleLanguages"];
-        }
-        
-        [_geocoder geocodeAddressString:address
-                      completionHandler:^(NSArray< CLPlacemark *> *__nullable placemarks, NSError *__nullable error) {
-            
-            [GeocodingHandler completeGeocodingWith:placemarks
-                                              error:error
-                                            success:successHandler
-                                            failure:failureHandler];
-            
-            if (locale != nil) {
-                [standardUserDefaults setValue:defaultLanguages
-                                        forKey:@"AppleLanguages"];
-            }
-        }];
-    }
-    
+    [_geocoder geocodeAddressString:address
+                           inRegion:nil
+                    preferredLocale:locale
+                  completionHandler:^(NSArray< CLPlacemark *> *__nullable placemarks, NSError *__nullable error)
+     {
+        [GeocodingHandler completeGeocodingWith:placemarks
+                                          error:error
+                                        success:successHandler
+                                        failure:failureHandler];
+    }];
     return;
 }
 
@@ -74,39 +48,14 @@
                    locale: (NSLocale *)locale
                   success: (GeocodingSuccess)successHandler
                   failure: (GeocodingFailure)failureHandler  {
-    
-    if (@available(iOS 11.0, *)) {
-        [_geocoder reverseGeocodeLocation:location
-                          preferredLocale:locale
-                        completionHandler:^(NSArray< CLPlacemark *> *__nullable placemarks, NSError *__nullable error) {
-            [GeocodingHandler completeGeocodingWith:placemarks
-                                              error:error
-                                            success:successHandler
-                                            failure:failureHandler];
-        }];
-        
-    } else {
-        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-        NSArray<NSString * > *defaultLanguages;
-        
-        if (locale != nil) {
-            defaultLanguages = [standardUserDefaults arrayForKey:@"AppleLanguages"];
-            [standardUserDefaults setValue:[GeocodingHandler languageCode:locale]
-                                    forKey:@"AppleLanguages"];
-        }
-        
-        [_geocoder reverseGeocodeLocation:location
-                        completionHandler:^(NSArray< CLPlacemark *> *__nullable placemarks, NSError *__nullable error) {
-            [GeocodingHandler completeGeocodingWith:placemarks
-                                              error:error
-                                            success:successHandler
-                                            failure:failureHandler];
-            
-            if (locale != nil) {
-                [standardUserDefaults setValue:defaultLanguages forKey:@"AppleLanguages"];
-            }
-        }];
-    }
+    [_geocoder reverseGeocodeLocation:location
+                      preferredLocale:locale
+                    completionHandler:^(NSArray< CLPlacemark *> *__nullable placemarks, NSError *__nullable error) {
+        [GeocodingHandler completeGeocodingWith:placemarks
+                                          error:error
+                                        success:successHandler
+                                        failure:failureHandler];
+    }];
 }
 
 + (void) completeGeocodingWith: (NSArray<CLPlacemark *> *) placemarks
@@ -128,10 +77,6 @@
 
 
 + (NSString *) languageCode:(NSLocale *)locale {
-    if (@available(iOS 10.0, *)) {
-        return [locale languageCode];
-    } else {
-        return [[locale localeIdentifier] substringToIndex:2];
-    }
+    return [locale languageCode];
 }
 @end

@@ -14,6 +14,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
   final TextEditingController _latitudeController = TextEditingController();
   final TextEditingController _longitudeController = TextEditingController();
   String _output = '';
+  GeocodingIOS _geocodingIOS = GeocodingIOS();
 
   @override
   void initState() {
@@ -74,7 +75,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                     final latitude = double.parse(_latitudeController.text);
                     final longitude = double.parse(_longitudeController.text);
 
-                    GeocodingIOS()
+                    _geocodingIOS
                         .placemarkFromCoordinates(latitude, longitude)
                         .then((placemarks) {
                       var output = 'No results found.';
@@ -107,7 +108,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
               child: ElevatedButton(
                   child: Text('Look up location'),
                   onPressed: () {
-                    GeocodingIOS()
+                    _geocodingIOS
                         .locationFromAddress(_addressController.text)
                         .then((locations) {
                       var output = 'No results found.';
@@ -128,7 +129,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                 child: ElevatedButton(
                     child: Text('Is present'),
                     onPressed: () {
-                      GeocodingIOS().isPresent().then((isPresent) {
+                      _geocodingIOS.isPresent().then((isPresent) {
                         var output = isPresent
                             ? "Geocoder is present"
                             : "Geocoder is not present";
@@ -137,6 +138,31 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                         });
                       });
                     })),
+            const Padding(
+              padding: EdgeInsets.only(top: 8),
+            ),
+            Center(
+                child: ElevatedButton(
+                    child: Text('Set locale en_US'),
+                    onPressed: () {
+                      _geocodingIOS.setLocaleIdentifier("en_US").then((_) {
+                        setState(() {});
+                      });
+                    })),
+            const Padding(
+              padding: EdgeInsets.only(top: 8),
+            ),
+            Center(
+                child: ElevatedButton(
+                    child: Text('Set locale nl_NL'),
+                    onPressed: () {
+                      _geocodingIOS.setLocaleIdentifier("nl_NL").then((_) {
+                        setState(() {});
+                      });
+                    })),
+            const Padding(
+              padding: EdgeInsets.only(top: 8),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
