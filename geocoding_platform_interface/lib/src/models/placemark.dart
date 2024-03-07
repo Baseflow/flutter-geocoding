@@ -68,7 +68,7 @@ class Placemark {
   final String? subThoroughfare;
 
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       other is Placemark &&
       other.administrativeArea == administrativeArea &&
       other.country == country &&

@@ -5,24 +5,30 @@ import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 
 const MethodChannel _channel = MethodChannel('flutter.baseflow.com/geocoding');
 
-/// An implementation of [GeocodingPlatform] for Android.
+/// An implementation of [GeocodingPlatform] for iOS.
 class GeocodingIOS extends GeocodingPlatform {
   /// Registers this class as the default instance of [GeocodingPlatform].
   static void registerWith() {
     GeocodingPlatform.instance = GeocodingIOS();
   }
 
+  String? _localeIdentifier;
+
   @override
-  Future<List<Location>> locationFromAddress(
-    String address, {
-    String? localeIdentifier,
-  }) async {
+  Future<void> setLocaleIdentifier(
+    String localeIdentifier,
+  ) async {
+    _localeIdentifier = localeIdentifier;
+  }
+
+  @override
+  Future<List<Location>> locationFromAddress(String address) async {
     final parameters = <String, String>{
       'address': address,
     };
 
-    if (localeIdentifier != null) {
-      parameters['localeIdentifier'] = localeIdentifier;
+    if (_localeIdentifier != null) {
+      parameters['localeIdentifier'] = _localeIdentifier!;
     }
     try {
       final placemarks = await _channel.invokeMethod(
@@ -40,16 +46,15 @@ class GeocodingIOS extends GeocodingPlatform {
   @override
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
-    double longitude, {
-    String? localeIdentifier,
-  }) async {
+    double longitude,
+  ) async {
     final parameters = <String, dynamic>{
       'latitude': latitude,
       'longitude': longitude,
     };
 
-    if (localeIdentifier != null) {
-      parameters['localeIdentifier'] = localeIdentifier;
+    if (_localeIdentifier != null) {
+      parameters['localeIdentifier'] = _localeIdentifier!;
     }
 
     final placemarks =
