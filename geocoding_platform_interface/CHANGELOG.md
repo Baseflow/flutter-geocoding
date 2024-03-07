@@ -1,3 +1,7 @@
+## 3.2.1
+
+- Fixed analysis warnings from `flutter analyse`.
+
 ## 3.2.0
 
 - Adds `isPresent` method to the platform interface.
