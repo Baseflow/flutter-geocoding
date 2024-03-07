@@ -2,6 +2,7 @@
 
 - Updates documentation related to setting the locale.
 - Added `setLocaleIdentifier` to the example app.
+- Updates `geocoding_ios` version to 3.0.0.
 
 ## 2.2.0
 
