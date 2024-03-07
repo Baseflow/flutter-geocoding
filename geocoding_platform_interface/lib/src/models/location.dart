@@ -28,7 +28,7 @@ class Location {
   final DateTime timestamp;
 
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       other is Location &&
       other.latitude == latitude &&
       other.longitude == longitude &&
