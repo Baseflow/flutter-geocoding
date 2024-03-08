@@ -1,3 +1,9 @@
+## 2.2.1
+
+- Updates documentation related to setting the locale.
+- Added `setLocaleIdentifier` to the example app.
+- Updates `geocoding_ios` version to 3.0.0.
+
 ## 2.2.0
 
 - Exposes the `isPresent()` method which on Android returns `true` if the 
