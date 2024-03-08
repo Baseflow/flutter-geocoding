@@ -1,3 +1,7 @@
+## 3.3.0
+
+  * Added `setLocaleIdentifier` to the Android example app.
+
 ## 3.2.0
 
   * Exposes isPresent() call that returns true if there is a geocoder implementation present that may return results.
