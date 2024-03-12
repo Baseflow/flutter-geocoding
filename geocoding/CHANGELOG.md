@@ -1,3 +1,11 @@
+## 3.0.0
+
+* **BREAKING CHANGES**:
+  - Locale is no longer part of the `locationFromAddress` and `placemarkFromAddress`, but should be set first by `setLocaleIdentifier`. This was already implemented on Android but is now working similarly on iOS.
+  - Updates documentation related to setting the locale.
+  - Added `setLocaleIdentifier` to the example app.
+  - Updates `geocoding_ios` version to 3.0.0.
+
 ## 2.2.1+1
 
 - Reverts changes from version `2.2.1`, `2.2.1` should not be used. Use either version `2.2.1+1` or `3.0.0`.
