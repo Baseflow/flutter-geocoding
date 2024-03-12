@@ -1,7 +1,7 @@
 ## 2.2.2
 
-- Updates documentation for isPresen()
-- Removes unused `LocaleIdentifier` parameter for isPresen()
+- Updates documentation for isPresent()
+- Removes unused `LocaleIdentifier` parameter for isPresent()
 
 ## 2.2.1+1
 
