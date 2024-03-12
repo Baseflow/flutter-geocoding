@@ -136,31 +136,6 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   });
                 }),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 8),
-          ),
-          Center(
-              child: ElevatedButton(
-                  child: Text('Set locale en_US'),
-                  onPressed: () {
-                    setLocaleIdentifier("en_US").then((_) {
-                      setState(() {});
-                    });
-                  })),
-          const Padding(
-            padding: EdgeInsets.only(top: 8),
-          ),
-          Center(
-              child: ElevatedButton(
-                  child: Text('Set locale nl_NL'),
-                  onPressed: () {
-                    setLocaleIdentifier("nl_NL").then((_) {
-                      setState(() {});
-                    });
-                  })),
-          const Padding(
-            padding: EdgeInsets.only(top: 8),
-          ),
           Expanded(
             child: SingleChildScrollView(
               child: Container(

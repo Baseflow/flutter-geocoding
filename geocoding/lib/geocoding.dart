@@ -10,7 +10,15 @@ export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 /// However in some situations where the supplied address could not be
 /// resolved into a single [Location], multiple [Location] instances may be
 /// returned.
-Future<List<Location>> locationFromAddress(String address) =>
+///
+/// Optionally you can specify a locale in which the results are returned.
+/// When not supplied the currently active locale of the device will be used.
+/// The `localeIdentifier` should be formatted using the syntax:
+/// [languageCode]_[countryCode] (eg. en_US or nl_NL).
+Future<List<Location>> locationFromAddress(
+  String address, {
+  String? localeIdentifier,
+}) =>
     GeocodingPlatform.instance!.locationFromAddress(
       address,
     );
@@ -22,24 +30,19 @@ Future<List<Location>> locationFromAddress(String address) =>
 /// However in some situations where the supplied coordinates could not be
 /// resolved into a single [Placemark], multiple [Placemark] instances may be
 /// returned.
-Future<List<Placemark>> placemarkFromCoordinates(
-        double latitude, double longitude) =>
-    GeocodingPlatform.instance!.placemarkFromCoordinates(
-      latitude,
-      longitude,
-    );
-
-/// Overrides default locale
 ///
 /// Optionally you can specify a locale in which the results are returned.
 /// When not supplied the currently active locale of the device will be used.
 /// The `localeIdentifier` should be formatted using the syntax:
 /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
-Future<void> setLocaleIdentifier(
-  String localeIdentifier,
-) =>
-    GeocodingPlatform.instance!.setLocaleIdentifier(
-      localeIdentifier,
+Future<List<Placemark>> placemarkFromCoordinates(
+  double latitude,
+  double longitude, {
+  String? localeIdentifier,
+}) =>
+    GeocodingPlatform.instance!.placemarkFromCoordinates(
+      latitude,
+      longitude,
     );
 
 /// Returns a list of [Location] instances found for the supplied address.
@@ -48,6 +51,11 @@ Future<void> setLocaleIdentifier(
 /// However in some situations where the supplied address could not be
 /// resolved into a single [Location], multiple [Location] instances may be
 /// returned.
+///
+/// Optionally you can specify a locale in which the results are returned.
+/// When not supplied the currently active locale of the device will be used.
+/// The `localeIdentifier` should be formatted using the syntax:
+/// [languageCode]_[countryCode] (eg. en_US or nl_NL).
 Future<bool> isPresent({
   String? localeIdentifier,
 }) =>
