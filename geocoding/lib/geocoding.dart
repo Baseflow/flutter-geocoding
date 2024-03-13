@@ -10,15 +10,9 @@ export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 /// However in some situations where the supplied address could not be
 /// resolved into a single [Location], multiple [Location] instances may be
 /// returned.
-///
-/// Optionally you can specify a locale in which the results are returned.
-/// When not supplied the currently active locale of the device will be used.
-/// The `localeIdentifier` should be formatted using the syntax:
-/// [languageCode]_[countryCode] (eg. en_US or nl_NL).
 Future<List<Location>> locationFromAddress(
-  String address, {
-  String? localeIdentifier,
-}) =>
+  String address,
+) =>
     GeocodingPlatform.instance!.locationFromAddress(
       address,
     );
@@ -30,19 +24,26 @@ Future<List<Location>> locationFromAddress(
 /// However in some situations where the supplied coordinates could not be
 /// resolved into a single [Placemark], multiple [Placemark] instances may be
 /// returned.
-///
-/// Optionally you can specify a locale in which the results are returned.
-/// When not supplied the currently active locale of the device will be used.
-/// The `localeIdentifier` should be formatted using the syntax:
-/// [languageCode]_[countryCode] (eg. en_US or nl_NL).
 Future<List<Placemark>> placemarkFromCoordinates(
   double latitude,
-  double longitude, {
-  String? localeIdentifier,
-}) =>
+  double longitude,
+) =>
     GeocodingPlatform.instance!.placemarkFromCoordinates(
       latitude,
       longitude,
+    );
+
+/// Overrides default locale
+///
+/// You can specify a locale in which the results are returned.
+/// When not used the current active locale of the device will be used.
+/// The `localeIdentifier` should be formatted using the syntax:
+/// [languageCode]_[countryCode] (eg. en_US or nl_NL).
+Future<void> setLocaleIdentifier(
+  String localeIdentifier,
+) =>
+    GeocodingPlatform.instance!.setLocaleIdentifier(
+      localeIdentifier,
     );
 
 /// Returns true if there is a geocoder implementation present that may return results.
