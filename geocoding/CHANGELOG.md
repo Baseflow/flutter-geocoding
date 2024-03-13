@@ -1,3 +1,8 @@
+## 2.2.2
+
+- Updates documentation for isPresent().
+- Removes unused `LocaleIdentifier` parameter for isPresent().
+
 ## 2.2.1+1
 
 - Reverts changes from version `2.2.1`, `2.2.1` should not be used. Use either version `2.2.1+1` or `3.0.0`.
