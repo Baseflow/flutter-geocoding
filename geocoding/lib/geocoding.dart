@@ -46,13 +46,10 @@ Future<void> setLocaleIdentifier(
       localeIdentifier,
     );
 
-/// Returns a list of [Location] instances found for the supplied address.
+/// Returns true if there is a geocoder implementation present that may return results.
+/// If true, there is still no guarantee that any individual geocoding attempt will succeed.
 ///
-/// In most situations the returned list should only contain one entry.
-/// However in some situations where the supplied address could not be
-/// resolved into a single [Location], multiple [Location] instances may be
-/// returned.
-Future<bool> isPresent({
-  String? localeIdentifier,
-}) =>
-    GeocodingPlatform.instance!.isPresent();
+///
+/// This method is only implemented on Android, calling this on iOS always
+/// returns [true].
+Future<bool> isPresent() => GeocodingPlatform.instance!.isPresent();
