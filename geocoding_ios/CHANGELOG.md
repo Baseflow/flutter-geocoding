@@ -1,3 +1,7 @@
+## 3.0.1
+
+* Adds privacy manifest.
+
 ## 3.0.0
 
 * **BREAKING CHANGES**:
