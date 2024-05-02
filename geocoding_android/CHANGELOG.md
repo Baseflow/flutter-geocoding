@@ -1,15 +1,19 @@
+## 3.3.1
+
+* Removes deprecated support for Android V1 embedding as support will be removed from Flutter (see [flutter/flutter#144726](https://github.com/flutter/flutter/pull/144726)).
+
 ## 3.3.0
 
-  * Added `setLocaleIdentifier` to the Android example app.
+* Adds `setLocaleIdentifier` to the Android example app.
 
 ## 3.2.0
 
-  * Exposes isPresent() call that returns true if there is a geocoder implementation present that may return results.
+* Exposes isPresent() call that returns true if there is a geocoder implementation present that may return results.
 
 ## 3.1.0
 
-  * Fixes deprecation build warnings. 
-  * Adds Android API 34 support.
+* Fixes deprecation build warnings. 
+* Adds Android API 34 support.
 
 ## 3.0.0
 
