@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding_ios/geocoding_ios.dart';
+import 'package:geocoding_darwin/geocoding_darwin.dart';
 
 import '../template/globals.dart';
 
 /// Example [Widget] showing the use of the Geocode plugin
 class GeocodeWidget extends StatefulWidget {
   /// Constructs the [GeocodeWidget] class
-  const GeocodeWidget({Key? key}) : super(key: key);
+  const GeocodeWidget({super.key});
 
   @override
   State<GeocodeWidget> createState() => _GeocodeWidgetState();
@@ -17,7 +17,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
   final TextEditingController _latitudeController = TextEditingController();
   final TextEditingController _longitudeController = TextEditingController();
   String _output = '';
-  final GeocodingIOS _geocodingIOS = GeocodingIOS();
+  final GeocodingDarwin _geocodingIOS = GeocodingDarwin();
 
   @override
   void initState() {
