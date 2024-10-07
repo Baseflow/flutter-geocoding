@@ -1,11 +1,15 @@
+## 3.0.1
+
+- Updated links in README.md to use `https` protocol.
+
 ## 3.0.0
 
-* **BREAKING CHANGES**:
+- **BREAKING CHANGES**:
   - Locale is no longer part of the `locationFromAddress` and `placemarkFromAddress`, but should be set first by `setLocaleIdentifier`. This was already implemented on Android but is now working similarly on iOS.
   - Updates documentation related to setting the locale.
   - Added `setLocaleIdentifier` to the example app.
   - Updates `geocoding_ios` version to 3.0.0.
-  
+
 ## 2.2.2
 
 - Updates documentation for isPresent().
@@ -23,16 +27,15 @@
 
 ## 2.2.0
 
-- Exposes the `isPresent()` method which on Android returns `true` if the 
-geocoding backend service are present on the device, otherwise returns `false`.
-On iOS this method always returns `true`.
+- Exposes the `isPresent()` method which on Android returns `true` if the
+  geocoding backend service are present on the device, otherwise returns `false`.
+  On iOS this method always returns `true`.
 
 ## 2.1.1
 
 - Updates the example app, so the `example/lib/main.dart` contains clear example
-code on how to use the geocoding plugin. Mean reason for doing so is that the 
-`example/lib/main.dart` is shown in the "Example" tab on pub.dev.
-  
+  code on how to use the geocoding plugin. Mean reason for doing so is that the
+  `example/lib/main.dart` is shown in the "Example" tab on pub.dev.
 
 ## 2.1.0
 
