@@ -12,6 +12,9 @@ class BaseflowPluginExample extends StatelessWidget {
   final MaterialColor themeMaterialColor =
       createMaterialColor(const Color.fromRGBO(48, 49, 60, 1));
 
+  /// Constructs the [BaseflowPluginExample] class
+  BaseflowPluginExample({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = ThemeData();
@@ -22,7 +25,7 @@ class BaseflowPluginExample extends StatelessWidget {
         colorScheme: theme.colorScheme.copyWith(
           secondary: Colors.white60,
           primary: createMaterialColor(const Color.fromRGBO(48, 49, 60, 1)),
-          background: const Color.fromRGBO(48, 49, 60, 0.8),
+          surface: const Color.fromRGBO(48, 49, 60, 0.8),
         ),
         bottomAppBarTheme: theme.bottomAppBarTheme.copyWith(
           color: const Color.fromRGBO(57, 58, 71, 1),
@@ -34,7 +37,7 @@ class BaseflowPluginExample extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
         hintColor: themeMaterialColor.shade500,
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           bodyLarge: TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -52,12 +55,12 @@ class BaseflowPluginExample extends StatelessWidget {
           ),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        inputDecorationTheme: InputDecorationTheme(
-          fillColor: const Color.fromRGBO(37, 37, 37, 1),
+        inputDecorationTheme: const InputDecorationTheme(
+          fillColor: Color.fromRGBO(37, 37, 37, 1),
           filled: true,
         ),
       ),
-      home: AppHome(title: 'Baseflow $pluginName example app'),
+      home: const AppHome(title: 'Baseflow $pluginName example app'),
     );
   }
 
@@ -86,14 +89,14 @@ class BaseflowPluginExample extends StatelessWidget {
 /// A Flutter example demonstrating how the [pluginName] plugin could be used
 class AppHome extends StatefulWidget {
   /// Constructs the [AppHome] class
-  AppHome({required this.title});
+  const AppHome({Key? key, required this.title}) : super(key: key);
 
   /// The [title] of the application, which is shown in the application's
   /// title bar.
   final String title;
 
   @override
-  _AppHomeState createState() => _AppHomeState();
+  State<AppHome> createState() => _AppHomeState();
 }
 
 class _AppHomeState extends State<AppHome> {
@@ -150,7 +153,7 @@ class _AppHomeState extends State<AppHome> {
 
   void _animateToPage(int page) {
     _pageController.animateToPage(page,
-        duration: Duration(milliseconds: 200), curve: Curves.linear);
+        duration: const Duration(milliseconds: 200), curve: Curves.linear);
   }
 
   Color _bottomAppBarIconColor(int page) {
