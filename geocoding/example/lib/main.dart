@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 
 void main() {
-  runApp(_GeocodingExample());
+  runApp(const _GeocodingExample());
 }
 
 /// Example [Widget] showing the use of the Geocode plugin
 class GeocodeWidget extends StatefulWidget {
+  /// Constructs the [GeocodeWidget] class
+  const GeocodeWidget({Key? key}) : super(key: key);
+
   @override
-  _GeocodeWidgetState createState() => _GeocodeWidgetState();
+  State<GeocodeWidget> createState() => _GeocodeWidgetState();
 }
 
 class _GeocodeWidgetState extends State<GeocodeWidget> {
@@ -45,13 +48,13 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   autocorrect: false,
                   controller: _latitudeController,
                   style: Theme.of(context).textTheme.bodyMedium,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Latitude',
                   ),
                   keyboardType: TextInputType.number,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               Expanded(
@@ -59,7 +62,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   autocorrect: false,
                   controller: _longitudeController,
                   style: Theme.of(context).textTheme.bodyMedium,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Longitude',
                   ),
                   keyboardType: TextInputType.number,
@@ -72,7 +75,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
           ),
           Center(
             child: ElevatedButton(
-                child: Text('Look up address'),
+                child: const Text('Look up address'),
                 onPressed: () {
                   final latitude = double.parse(_latitudeController.text);
                   final longitude = double.parse(_longitudeController.text);
@@ -97,7 +100,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
             autocorrect: false,
             controller: _addressController,
             style: Theme.of(context).textTheme.bodyMedium,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Address',
             ),
             keyboardType: TextInputType.text,
@@ -107,7 +110,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
           ),
           Center(
             child: ElevatedButton(
-                child: Text('Look up location'),
+                child: const Text('Look up location'),
                 onPressed: () {
                   locationFromAddress(_addressController.text)
                       .then((locations) {
@@ -126,7 +129,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
           ),
           Center(
             child: ElevatedButton(
-                child: Text('is Present'),
+                child: const Text('is Present'),
                 onPressed: () {
                   isPresent().then((isPresent) {
                     var output = isPresent ? 'Is present' : 'Is not present';
@@ -141,7 +144,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
           ),
           Center(
               child: ElevatedButton(
-                  child: Text('Set locale en_US'),
+                  child: const Text('Set locale en_US'),
                   onPressed: () {
                     setLocaleIdentifier("en_US").then((_) {
                       setState(() {});
@@ -152,7 +155,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
           ),
           Center(
               child: ElevatedButton(
-                  child: Text('Set locale nl_NL'),
+                  child: const Text('Set locale nl_NL'),
                   onPressed: () {
                     setLocaleIdentifier("nl_NL").then((_) {
                       setState(() {});
@@ -163,7 +166,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Text(_output),
               ),
@@ -187,7 +190,7 @@ class _GeocodingExample extends StatelessWidget {
         pages: [
           ExamplePage(
             Icons.pin_drop,
-            (BuildContext context) => GeocodeWidget(),
+            (BuildContext context) => const GeocodeWidget(),
           ),
         ]);
   }

@@ -32,6 +32,6 @@ final List<IconData> icons = [
 
 /// Returns a [List] with [Widget]s to construct pages in the [AppBar].
 final List<Widget> pages = [
-  GeocodeWidget(),
-  InfoPage(),
+  const GeocodeWidget(),
+  const InfoPage(),
 ];
