@@ -9,7 +9,7 @@ void main() {
 /// Example [Widget] showing the use of the Geocode plugin
 class GeocodeWidget extends StatefulWidget {
   /// Constructs the [GeocodeWidget] class
-  const GeocodeWidget({Key? key}) : super(key: key);
+  const GeocodeWidget({super.key});
 
   @override
   State<GeocodeWidget> createState() => _GeocodeWidgetState();
@@ -179,7 +179,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
 }
 
 class _GeocodingExample extends StatelessWidget {
-  const _GeocodingExample({Key? key}) : super(key: key);
+  const _GeocodingExample();
 
   @override
   Widget build(BuildContext context) {

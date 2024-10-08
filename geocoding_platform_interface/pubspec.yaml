@@ -5,6 +5,10 @@ homepage: https://github.com/baseflow/flutter-geocoding/tree/main/geocoding_plat
 # less-clean API. See https://flutter.dev/go/platform-interface-breaking-changes
 version: 3.2.1
 
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
@@ -16,9 +20,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^3.0.1
+  flutter_lints: ^5.0.0
   mockito: ^5.0.0
 
-environment:
-  sdk: '>=2.12.0 <4.0.0'
-  flutter: ">=1.10.0"
