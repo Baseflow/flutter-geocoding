@@ -1,14 +1,16 @@
 # geocoding_platform_interface
 
-[![pub package](https://img.shields.io/pub/v/geocoding_platform_interface.svg)](https://pub.dartlang.org/packages/geocoding_platform_interface) ![Build status](https://github.com/Baseflow/flutter-geocoding/workflows/geocoding_platform_interface/badge.svg?branch=main) [![style: flutter_lints](https://img.shields.io/badge/style-flutter_lints-40c4ff.svg)](https://pub.dev/packages/flutter_lints)
+[![pub package](https://img.shields.io/pub/v/geocoding_platform_interface.svg)](https://pub.dartlang.org/packages/geocoding_platform_interface)
+[![Buid status](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_platform_interface.yaml/badge.svg)](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_platform_interface.yaml)
+[![style: flutter_lints](https://img.shields.io/badge/style-flutter_lints-40c4ff.svg)](https://pub.dev/packages/flutter_lints)
 
 A common platform interface for the [`geocoding`][1] plugin.
 
 This interface allows platform-specific implementations of the `geocoding`
 plugin, as well as the plugin itself, to ensure they are supporting the
-same interface. Have a look at the [Federated plugins](https://flutter.dev/docs/development/packages-and-plugins/developing-packages#federated-plugins) 
-section of the official [Developing packages & plugins](https://flutter.dev/docs/development/packages-and-plugins/developing-packages) 
-documentation for more information regarding the federated architecture concept. 
+same interface. Have a look at the [Federated plugins](https://flutter.dev/docs/development/packages-and-plugins/developing-packages#federated-plugins)
+section of the official [Developing packages & plugins](https://flutter.dev/docs/development/packages-and-plugins/developing-packages)
+documentation for more information regarding the federated architecture concept.
 
 ## Usage
 

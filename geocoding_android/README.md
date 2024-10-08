@@ -1,4 +1,4 @@
-# geocoding\_android
+# geocoding_android
 
 The android implementation of [`geocoding`][1].
 
