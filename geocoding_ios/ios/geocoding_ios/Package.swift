@@ -13,6 +13,9 @@ let package = Package(
     targets: [
         .target(
             name: "geocoding_ios",
+            resources: [
+                .process("PrivacyInfo.xcprivacy"),
+            ],
             cSettings: [
                 // TODO: Update your plugin name.
                 .headerSearchPath("include/geocoding_ios")
