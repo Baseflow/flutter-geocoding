@@ -1,17 +1,6 @@
 group 'com.baseflow.geocoding'
 version '1.0'
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.10.0'
-    }
-}
-
 rootProject.allprojects {
     repositories {
         google()
@@ -26,7 +15,7 @@ android {
         namespace("com.baseflow.geocoding")
     }
 
-    compileSdk 33
+    compileSdk 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
