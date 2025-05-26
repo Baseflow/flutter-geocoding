@@ -6,6 +6,7 @@
 * Updates kotlin version to soon minimal supported Kotlin version `1.8.10`
 * Updates Gradle version to `8.11.1`
 * Updates iOS Platform verion from `11` to `12`
+* Updates `geolocator_android` dependency version from `3.x.x` to `4.x.x`
 
 ## 3.0.1
 
