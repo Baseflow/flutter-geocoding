@@ -1,3 +1,7 @@
+## 3.0.2
+
+* Fixed deprecation warnings.
+
 ## 3.0.1
 
 * Adds privacy manifest.
