@@ -1,3 +1,13 @@
+## 4.0.0
+
+* **BREAKING CHANGES** Please update to Flutter 3.29+ before updating to this version
+* Updates Android CompileSDK to 35
+* Migrates example project to applying Gradle plugins with the declarative plugins block
+* Updates kotlin version to soon minimal supported Kotlin version `1.8.10`
+* Updates Gradle version to `8.11.1`
+* Updates iOS Platform version from `11` to `12`
+* Updates `geolocator_android` dependency version from `3.x.x` to `4.x.x`
+
 ## 3.0.1
 
 - Updated links in README.md to use `https` protocol.

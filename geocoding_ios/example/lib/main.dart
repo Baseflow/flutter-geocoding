@@ -76,14 +76,13 @@ class BaseflowPluginExample extends StatelessWidget {
     for (var strength in strengths) {
       final ds = 0.5 - strength;
       swatch[(strength * 1000).round()] = Color.fromRGBO(
-        (r + ((ds < 0 ? r : (255 - r)) * ds)).round(),
-        (g + ((ds < 0 ? g : (255 - g)) * ds)).round(),
-        (b + ((ds < 0 ? b : (255 - b)) * ds)).round(),
+        (r + ((ds < 0 ? r : (1.0 - r)) * ds) * 255).round(),
+        (g + ((ds < 0 ? g : (1.0 - g)) * ds) * 255).round(),
+        (b + ((ds < 0 ? b : (1.0 - b)) * ds) * 255).round(),
         1,
       );
     }
-    // ignore: deprecated_member_use
-    return MaterialColor(color.value, swatch);
+    return MaterialColor(color.toARGB32(), swatch);
   }
 }
 
