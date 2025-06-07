@@ -104,6 +104,16 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         result.success(true);
     }
 
+    // Parses a string as a double and returns the parsed value.
+    // If parsing is not possible or fails, returns null.
+    private static Double parseDoubleOrReturnNull(final String _string){
+        try{
+            return Double.parseDouble(_string);
+        }catch (Throwable t){
+            return null;
+        }
+    }
+
     private void onLocationFromAddress(MethodCall call, Result result) {
         final String address = call.argument("address");
 
@@ -114,8 +124,13 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                     null);
         }
 
-        geocoding.placemarkFromAddress(address, new GeocodeListenerAdapter() {
-
+        geocoding.placemarkFromAddress(
+            address,
+            parseDoubleOrReturnNull(call.argument("targetRegionSLat")), // lowerLeftLatitude,
+            parseDoubleOrReturnNull(call.argument("targetRegionWLng")), // lowerLeftLongitude,
+            parseDoubleOrReturnNull(call.argument("targetRegionNLat")), // upperRightLatitude,
+            parseDoubleOrReturnNull(call.argument("targetRegionELng")), // upperRightLongitude
+        new GeocodeListenerAdapter() {
             @Override
             public void onGeocode(List<Address> addresses) {
                 if (addresses != null && addresses.size() > 0) {
@@ -148,8 +163,13 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                     null);
         }
 
-        geocoding.placemarkFromAddress(address, new GeocodeListenerAdapter() {
-
+        geocoding.placemarkFromAddress(
+            address,
+            parseDoubleOrReturnNull(call.argument("targetRegionSLat")), // lowerLeftLatitude,
+            parseDoubleOrReturnNull(call.argument("targetRegionWLng")), // lowerLeftLongitude,
+            parseDoubleOrReturnNull(call.argument("targetRegionNLat")), // upperRightLatitude,
+            parseDoubleOrReturnNull(call.argument("targetRegionELng")), // upperRightLongitude
+        new GeocodeListenerAdapter() {
             @Override
             public void onGeocode(List<Address> addresses) {
                 if (addresses != null && addresses.size() > 0) {
