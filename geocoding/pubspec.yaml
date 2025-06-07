@@ -15,20 +15,11 @@ dependencies:
     sdk: flutter
 
   geocoding_platform_interface:
-    git:
-      url: https://github.com/androidseb/flutter-geocoding
-      ref: 5ed982eb070cae3582b302fc9dcc9607c8eb1cb4
-      path: geocoding_platform_interface
+    path: ../geocoding_platform_interface
   geocoding_android:
-    git:
-      url: https://github.com/androidseb/flutter-geocoding
-      ref: 5ed982eb070cae3582b302fc9dcc9607c8eb1cb4
-      path: geocoding_android
+    path: ../geocoding_android
   geocoding_ios:
-    git:
-      url: https://github.com/androidseb/flutter-geocoding
-      ref: 5ed982eb070cae3582b302fc9dcc9607c8eb1cb4
-      path: geocoding_ios
+    path: ../geocoding_ios
 
 dev_dependencies:
   flutter_test:
