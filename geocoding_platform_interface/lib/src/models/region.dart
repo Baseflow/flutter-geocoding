@@ -48,12 +48,12 @@ class Region {
         eastLongitude = _normalizeLongitude(eastLongitude);
 
   @override
-  bool operator ==(dynamic o) =>
-      o is Region &&
-      o.southLatitude == southLatitude &&
-      o.northLatitude == northLatitude &&
-      o.westLongitude == westLongitude &&
-      o.eastLongitude == eastLongitude;
+  bool operator ==(Object other) =>
+      other is Region &&
+      other.southLatitude == southLatitude &&
+      other.northLatitude == northLatitude &&
+      other.westLongitude == westLongitude &&
+      other.eastLongitude == eastLongitude;
 
   @override
   int get hashCode => southLatitude.hashCode ^

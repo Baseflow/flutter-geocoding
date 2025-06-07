@@ -16,8 +16,10 @@ dependencies:
 
   geocoding_platform_interface:
     path:  ../geocoding_platform_interface
-  geocoding_android: ^4.0.0
-  geocoding_ios: ^3.0.0
+  geocoding_android:
+    path: ../geocoding_android
+  geocoding_ios:
+    path: ../geocoding_ios
 
 dev_dependencies:
   flutter_test:

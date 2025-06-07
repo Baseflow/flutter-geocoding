@@ -25,8 +25,9 @@ class GeocodingAndroid extends GeocodingPlatform {
 
   @override
   Future<List<Location>> locationFromAddress(
-    String address,
-  ) async {
+    String address, {
+    Region? targetRegion,
+  }) async {
     final parameters = <String, String>{
       'address': address,
     };
