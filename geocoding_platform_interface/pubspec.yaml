@@ -1,9 +1,13 @@
 name: geocoding_platform_interface
 description: A common platform interface for the geocoding plugin.
-homepage: https://github.com/baseflow/flutter-geocoding/tree/master/geocoding_platform_interface
+homepage: https://github.com/baseflow/flutter-geocoding/tree/main/geocoding_platform_interface
 # NOTE: We strongly prefer non-breaking changes, even at the expense of a
 # less-clean API. See https://flutter.dev/go/platform-interface-breaking-changes
-version: 2.0.1
+version: 3.2.1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.0.0"
 
 publish_to: 'none'
 
@@ -18,9 +22,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  effective_dart: ^1.3.0
+  flutter_lints: ^5.0.0
   mockito: ^5.0.0
 
-environment:
-  sdk: '>=2.12.0 <3.0.0'
-  flutter: ">=1.10.0"

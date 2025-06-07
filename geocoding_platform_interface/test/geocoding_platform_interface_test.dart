@@ -4,7 +4,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
-import 'package:geocoding_platform_interface/src/implementations/method_channel_geocoding.dart';
 import 'package:mockito/mockito.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -12,14 +11,21 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('$GeocodingPlatform', () {
-    test('$MethodChannelGeocoding is the default instance', () {
-      expect(GeocodingPlatform.instance, isA<MethodChannelGeocoding>());
+    test('Default instance equals null', () {
+      expect(GeocodingPlatform.instance, isNull);
     });
 
     test('Cannot be implemented with `implements`', () {
       expect(() {
         GeocodingPlatform.instance = ImplementsGeocodingPlatform();
-      }, throwsNoSuchMethodError);
+        // In versions of `package:plugin_platform_interface` prior to fixing
+        // https://github.com/flutter/flutter/issues/109339, an attempt to
+        // implement a platform interface using `implements` would sometimes
+        // throw a `NoSuchMethodError` and other times throw an
+        // `AssertionError`.  After the issue is fixed, an `AssertionError` will
+        // always be thrown.  For the purpose of this test, we don't really care
+        // what exception is thrown, so just allow any exception.
+      }, throwsA(anything));
     });
 
     test('Can be extended', () {
@@ -47,6 +53,20 @@ void main() {
 
     test(
         // ignore: lines_longer_than_80_chars
+        'Default implementation of isPresent should throw unimplemented error',
+        () {
+      // Arrange
+      final geocodingPlatform = ExtendsGeocodingPlatform();
+
+      // Act & Assert
+      expect(
+        () => geocodingPlatform.isPresent(),
+        throwsUnimplementedError,
+      );
+    });
+
+    test(
+        // ignore: lines_longer_than_80_chars
         'Default implementation of placemarkFromCoordinates should throw unimplemented error',
         () {
       // Arrange
@@ -55,6 +75,20 @@ void main() {
       // Act & Assert
       expect(
         () => geocodingPlatform.placemarkFromCoordinates(0, 0),
+        throwsUnimplementedError,
+      );
+    });
+
+    test(
+        // ignore: lines_longer_than_80_chars
+        'Default implementation of setLocale should throw unimplemented error',
+        () {
+      // Arrange
+      final geocodingPlatform = ExtendsGeocodingPlatform();
+
+      // Act & Assert
+      expect(
+        () => geocodingPlatform.setLocaleIdentifier('en_US'),
         throwsUnimplementedError,
       );
     });

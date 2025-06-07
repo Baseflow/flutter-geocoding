@@ -1,3 +1,69 @@
+## 4.0.0
+
+* **BREAKING CHANGES** Please update to Flutter 3.29+ before updating to this version
+* Updates Android CompileSDK to 35
+* Migrates example project to applying Gradle plugins with the declarative plugins block
+* Updates kotlin version to soon minimal supported Kotlin version `1.8.10`
+* Updates Gradle version to `8.11.1`
+* Updates iOS Platform version from `11` to `12`
+* Updates `geolocator_android` dependency version from `3.x.x` to `4.x.x`
+
+## 3.0.1
+
+- Updated links in README.md to use `https` protocol.
+
+## 3.0.0
+
+- **BREAKING CHANGES**:
+  - Locale is no longer part of the `locationFromAddress` and `placemarkFromAddress`, but should be set first by `setLocaleIdentifier`. This was already implemented on Android but is now working similarly on iOS.
+  - Updates documentation related to setting the locale.
+  - Added `setLocaleIdentifier` to the example app.
+  - Updates `geocoding_ios` version to 3.0.0.
+
+## 2.2.2
+
+- Updates documentation for isPresent().
+- Removes unused `LocaleIdentifier` parameter for isPresent().
+
+## 2.2.1+1
+
+- Reverts changes from version `2.2.1`, `2.2.1` should not be used. Use either version `2.2.1+1` or `3.0.0`.
+
+## 2.2.1
+
+- Updates documentation related to setting the locale.
+- Added `setLocaleIdentifier` to the example app.
+- Updates `geocoding_ios` version to 3.0.0.
+
+## 2.2.0
+
+- Exposes the `isPresent()` method which on Android returns `true` if the
+  geocoding backend service are present on the device, otherwise returns `false`.
+  On iOS this method always returns `true`.
+
+## 2.1.1
+
+- Updates the example app, so the `example/lib/main.dart` contains clear example
+  code on how to use the geocoding plugin. Mean reason for doing so is that the
+  `example/lib/main.dart` is shown in the "Example" tab on pub.dev.
+
+## 2.1.0
+
+- Upgrades the app-facing package to use the federated architecture.
+
+## 2.0.6
+
+- Upgrades `compileSdkVersion` to `33` on Android.
+- Fix issues in example project.
+
+## 2.0.5+1
+
+- Update pub.dev links.
+
+## 2.0.5
+
+- Fixed [#58](https://github.com/Baseflow/flutter-geocoding/issues/58) getting locationFromAddress freezes main thread.
+
 ## 2.0.4
 
 - Fixes link to the Android migration guide in README.

@@ -11,7 +11,7 @@ final mockLocation = Location(
   timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),
 );
 
-final mockPlacemark = Placemark(
+const mockPlacemark = Placemark(
     administrativeArea: 'Overijssel',
     country: 'Netherlands',
     isoCountryCode: 'NL',
@@ -52,7 +52,6 @@ class MockGeocodingPlatform extends Mock
   Future<List<Location>> locationFromAddress(
     String address, {
     Region? targetRegion,
-    String? localeIdentifier,
   }) async {
     return [mockLocation];
   }
@@ -60,9 +59,8 @@ class MockGeocodingPlatform extends Mock
   @override
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
-    double longitude, {
-    String? localeIdentifier,
-  }) async {
+    double longitude,
+  ) async {
     return [mockPlacemark];
   }
 }

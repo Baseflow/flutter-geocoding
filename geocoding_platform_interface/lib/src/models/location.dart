@@ -6,7 +6,7 @@ class Location {
   /// Constructs an instance with the given values for testing. [Location]
   /// instances constructed this way won't actually reflect any real information
   /// from the platform, just whatever was passed in at construction time.
-  Location({
+  const Location({
     required this.title,
     required this.description,
     required this.latitude,
@@ -14,7 +14,7 @@ class Location {
     required this.timestamp,
   });
 
-  Location._({
+  const Location._({
     required this.title,
     required this.description,
     required this.latitude,
@@ -38,13 +38,13 @@ class Location {
   final DateTime timestamp;
 
   @override
-  bool operator ==(dynamic o) =>
-      o is Location &&
-      o.title == title &&
-      o.description == description &&
-      o.latitude == latitude &&
-      o.longitude == longitude &&
-      o.timestamp == timestamp;
+  bool operator ==(Object other) =>
+      other is Location &&
+      other.title == title &&
+      other.description == description &&
+      other.latitude == latitude &&
+      other.longitude == longitude &&
+      other.timestamp == timestamp;
 
   @override
   int get hashCode =>

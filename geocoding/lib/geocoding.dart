@@ -10,20 +10,13 @@ export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 /// However in some situations where the supplied address could not be
 /// resolved into a single [Location], multiple [Location] instances may be
 /// returned.
-///
-/// Optionally you can specify a locale in which the results are returned.
-/// When not supplied the currently active locale of the device will be used.
-/// The `localeIdentifier` should be formatted using the syntax:
-/// [languageCode]_[countryCode] (eg. en_US or nl_NL).
 Future<List<Location>> locationFromAddress(
   String address, {
   Region? targetRegion,
-  String? localeIdentifier,
 }) =>
-    GeocodingPlatform.instance.locationFromAddress(
+    GeocodingPlatform.instance!.locationFromAddress(
       address,
       targetRegion: targetRegion,
-      localeIdentifier: localeIdentifier,
     );
 
 /// Returns a list of [Placemark] instances found for the supplied
@@ -33,18 +26,32 @@ Future<List<Location>> locationFromAddress(
 /// However in some situations where the supplied coordinates could not be
 /// resolved into a single [Placemark], multiple [Placemark] instances may be
 /// returned.
-///
-/// Optionally you can specify a locale in which the results are returned.
-/// When not supplied the currently active locale of the device will be used.
-/// The `localeIdentifier` should be formatted using the syntax:
-/// [languageCode]_[countryCode] (eg. en_US or nl_NL).
 Future<List<Placemark>> placemarkFromCoordinates(
   double latitude,
-  double longitude, {
-  String? localeIdentifier,
-}) =>
-    GeocodingPlatform.instance.placemarkFromCoordinates(
+  double longitude,
+) =>
+    GeocodingPlatform.instance!.placemarkFromCoordinates(
       latitude,
       longitude,
-      localeIdentifier: localeIdentifier,
     );
+
+/// Overrides default locale
+///
+/// You can specify a locale in which the results are returned.
+/// When not used the current active locale of the device will be used.
+/// The `localeIdentifier` should be formatted using the syntax:
+/// [languageCode]_[countryCode] (eg. en_US or nl_NL).
+Future<void> setLocaleIdentifier(
+  String localeIdentifier,
+) =>
+    GeocodingPlatform.instance!.setLocaleIdentifier(
+      localeIdentifier,
+    );
+
+/// Returns true if there is a geocoder implementation present that may return results.
+/// If true, there is still no guarantee that any individual geocoding attempt will succeed.
+///
+///
+/// This method is only implemented on Android, calling this on iOS always
+/// returns [true].
+Future<bool> isPresent() => GeocodingPlatform.instance!.isPresent();

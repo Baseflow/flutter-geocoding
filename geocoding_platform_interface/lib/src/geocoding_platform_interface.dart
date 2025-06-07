@@ -1,5 +1,5 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'implementations/method_channel_geocoding.dart';
+
 import 'models/models.dart';
 
 /// The interface that implementations of Geocoding  must implement.
@@ -16,19 +16,33 @@ abstract class GeocodingPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static GeocodingPlatform _instance = MethodChannelGeocoding();
+  static GeocodingPlatform? _instance;
 
   /// The default instance of [GeocodingPlatform] to use.
-  ///
-  /// Defaults to [MethodChannelgeocoding].
-  static GeocodingPlatform get instance => _instance;
+  static GeocodingPlatform? get instance => _instance;
 
   /// Platform-specific plugins should set this with their own
   /// platform-specific class that extends [GeocodingPlatform] when they
   /// register themselves.
-  static set instance(GeocodingPlatform instance) {
+  static set instance(GeocodingPlatform? instance) {
+    if (instance == null) {
+      throw AssertionError(
+        'Instance of geocoding platform has to be non-null.',
+      );
+    }
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
+  }
+
+  /// Sets the locale identifier used for the geocoding.
+  ///
+  /// The `localeIdentifier` should be formatted using the syntax:
+  /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
+  Future<void> setLocaleIdentifier(
+    String localeIdentifier,
+  ) {
+    throw UnimplementedError(
+        'setLocaleIdentifier() has not been implementated.');
   }
 
   /// Returns a list of [Location] instances found for the supplied address.
@@ -37,18 +51,22 @@ abstract class GeocodingPlatform extends PlatformInterface {
   /// However in some situations where the supplied address could not be
   /// resolved into a single [Location], multiple [Location] instances may be
   /// returned.
-  ///
-  /// Optionally you can specify a locale in which the results are returned.
-  /// When not supplied the currently active locale of the device will be used.
-  /// The `localeIdentifier` should be formatted using the syntax:
-  /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
   Future<List<Location>> locationFromAddress(
     String address, {
     Region? targetRegion,
-    String? localeIdentifier,
   }) {
     throw UnimplementedError(
         'locationFromAddress() has not been implementated.');
+  }
+
+  /// Returns true if there is a geocoder implementation present that may return results.
+  /// If true, there is still no guarantee that any individual geocoding attempt will succeed.
+  ///
+  ///
+  /// This method is only implemented on Android, calling this on iOS always
+  /// returns [true].
+  Future<bool> isPresent() {
+    throw UnimplementedError('isPresent() has not been implementated.');
   }
 
   /// Returns a list of [Placemark] instances found for the supplied
@@ -58,17 +76,24 @@ abstract class GeocodingPlatform extends PlatformInterface {
   /// However in some situations where the supplied coordinates could not be
   /// resolved into a single [Placemark], multiple [Placemark] instances may be
   /// returned.
-  ///
-  /// Optionally you can specify a locale in which the results are returned.
-  /// When not supplied the currently active locale of the device will be used.
-  /// The `localeIdentifier` should be formatted using the syntax:
-  /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
-    double longitude, {
-    String? localeIdentifier,
-  }) {
+    double longitude,
+  ) {
     throw UnimplementedError(
         'placemarkFromCoordinates() has not been implementated.');
+  }
+
+  /// Returns a list of [Placemark] instances found for the supplied address.
+  ///
+  /// In most situations the returned list should only contain one entry.
+  /// However in some situations where the supplied address could not be
+  /// resolved into a single [Placemark], multiple [Placemark] instances may be
+  /// returned.
+  Future<List<Placemark>> placemarkFromAddress(
+    String address,
+  ) {
+    throw UnimplementedError(
+        'placemarkFromAddress() has not been implementated.');
   }
 }

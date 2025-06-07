@@ -6,8 +6,8 @@ void main() {
     test('hashCode hould be the same for two instances with the same values',
         () {
       // Arrange
-      final firstPlacemark = Placemark();
-      final secondPlacemark = Placemark();
+      const firstPlacemark = Placemark();
+      const secondPlacemark = Placemark();
 
       // Act & Assert
       expect(
@@ -18,7 +18,7 @@ void main() {
 
     test('hashCode should not match when the name property is different', () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -31,7 +31,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'different test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -56,7 +56,7 @@ void main() {
         // ignore: lines_longer_than_80_chars
         'hashCode should not match when the street property is different', () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -69,7 +69,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'different test value',
         isoCountryCode: 'test value',
@@ -95,7 +95,7 @@ void main() {
         'hashCode should not match when the isoCountryCode property is different',
         () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -108,7 +108,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'different test value',
@@ -132,7 +132,7 @@ void main() {
     test('hashCode should not match when the country property is different',
         () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -145,7 +145,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -169,7 +169,7 @@ void main() {
     test('hashCode should not match when the postalCode property is different',
         () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -182,7 +182,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -208,7 +208,7 @@ void main() {
         'hashCode should not match when the administrativeArea property is different',
         () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -221,7 +221,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -247,7 +247,7 @@ void main() {
         'hashCode should not match when the subAdministrativeArea property is different',
         () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -260,7 +260,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -286,7 +286,7 @@ void main() {
         'hashCode should not match when the locality property is different',
         () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -299,7 +299,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -325,7 +325,7 @@ void main() {
         'hashCode should not match when the subLocality property is different',
         () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -338,7 +338,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -364,7 +364,7 @@ void main() {
         'hashCode should not match when the thoroughfare property is different',
         () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -377,7 +377,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -403,7 +403,7 @@ void main() {
         'hashCode should not match when the subThoroughfare property is different',
         () {
       // Arrange
-      final firstPlacemark = Placemark(
+      const firstPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -416,7 +416,7 @@ void main() {
         thoroughfare: 'test value',
         subThoroughfare: 'test value',
       );
-      final secondPlacemark = Placemark(
+      const secondPlacemark = Placemark(
         name: 'test value',
         street: 'test value',
         isoCountryCode: 'test value',
@@ -452,7 +452,7 @@ void main() {
 
   group('toString tests:', () {
     test('toString should list the contents of all properties', () {
-      final mockPlacemark = Placemark(
+      const mockPlacemark = Placemark(
           administrativeArea: 'Overijssel',
           country: 'Netherlands',
           isoCountryCode: 'NL',
