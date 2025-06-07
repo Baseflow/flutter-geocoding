@@ -4,6 +4,8 @@ import 'package:geocoding_android/geocoding_android.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 
 final mockLocation = Location(
+  title: '',
+  description: '',
   latitude: 52.2165157,
   longitude: 6.9437819,
   timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),

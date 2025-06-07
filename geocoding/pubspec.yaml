@@ -1,6 +1,6 @@
 name: geocoding
 description: A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding features.
-version: 4.0.0
+version: 4.1.0
 repository: https://github.com/baseflow/flutter-geocoding/tree/main/geocoding
 issue_tracker: https://github.com/Baseflow/flutter-geocoding/issues
 
@@ -12,9 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  geocoding_platform_interface: ^3.0.0
-  geocoding_android: ^4.0.0
-  geocoding_ios: ^3.0.0
+  geocoding_platform_interface: ^4.0.0
+  geocoding_android: ^4.1.0
+  geocoding_ios: ^3.1.0
 
 dev_dependencies:
   flutter_test:

@@ -7,10 +7,14 @@ void main() {
         () {
       // Arrange
       final firstLocation = Location(
+          title: '',
+          description: '',
           latitude: 0,
           longitude: 0,
           timestamp: DateTime.fromMillisecondsSinceEpoch((0)));
       final secondLocation = Location(
+          title: '',
+          description: '',
           latitude: 0,
           longitude: 0,
           timestamp: DateTime.fromMillisecondsSinceEpoch((0)));
@@ -26,11 +30,15 @@ void main() {
         () {
       // Arrange
       final firstLocation = Location(
+        title: '',
+        description: '',
         latitude: 0,
         longitude: 0,
         timestamp: DateTime.fromMillisecondsSinceEpoch(0),
       );
       final secondLocation = Location(
+        title: '',
+        description: '',
         latitude: 1,
         longitude: 0,
         timestamp: DateTime.fromMillisecondsSinceEpoch(0),
@@ -47,11 +55,15 @@ void main() {
         () {
       // Arrange
       final firstLocation = Location(
+        title: '',
+        description: '',
         latitude: 0,
         longitude: 0,
         timestamp: DateTime.fromMillisecondsSinceEpoch(0),
       );
       final secondLocation = Location(
+        title: '',
+        description: '',
         latitude: 0,
         longitude: 1,
         timestamp: DateTime.fromMillisecondsSinceEpoch(0),
@@ -68,11 +80,15 @@ void main() {
         () {
       // Arrange
       final firstLocation = Location(
+        title: '',
+        description: '',
         latitude: 0,
         longitude: 0,
         timestamp: DateTime.fromMillisecondsSinceEpoch(0),
       );
       final secondLocation = Location(
+        title: '',
+        description: '',
         latitude: 0,
         longitude: 0,
         timestamp: DateTime.fromMillisecondsSinceEpoch(1),
@@ -105,6 +121,8 @@ void main() {
   group('toString tests:', () {
     test('toString should list the contents of all properties', () {
       final mockLocation = Location(
+        title: '',
+        description: '',
         latitude: 52.2165157,
         longitude: 6.9437819,
         timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),

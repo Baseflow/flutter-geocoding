@@ -52,14 +52,37 @@ class Geocoding {
      * @param callback the GeocodeListenerAdapter that listens for success or error
      * @return a list of Address objects. Returns null or empty list if no matches were found or there is no backend service available.
      */
-    void placemarkFromAddress(String address, GeocodeListenerAdapter callback) {
+    void placemarkFromAddress(
+        String address,
+        Double lowerLeftLatitude,
+        Double lowerLeftLongitude,
+        Double upperRightLatitude,
+        Double upperRightLongitude,
+        GeocodeListenerAdapter callback
+    ) {
         final Geocoder geocoder = createGeocoder(androidContext, locale);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            getAddressesWithGeocodeListener(geocoder, address, 5, callback);
+            getAddressesWithGeocodeListener(
+                geocoder,
+                address,
+                5,
+                lowerLeftLatitude,
+                lowerLeftLongitude,
+                upperRightLatitude,
+                upperRightLongitude,
+                callback
+            );
         } else {
             try {
-                List<Address> addresses = deprecatedGetFromLocationName(geocoder, address);
+                List<Address> addresses = deprecatedGetFromLocationName(
+                    geocoder,
+                    address,
+                    lowerLeftLatitude,
+                    lowerLeftLongitude,
+                    upperRightLatitude,
+                    upperRightLongitude
+                );
                 callback.onGeocode(addresses);
             } catch (IOException ex) {
                 callback.onError(ex.getMessage());
@@ -68,13 +91,33 @@ class Geocoding {
     }
 
     @SuppressWarnings("deprecation")
-    private List<Address> deprecatedGetFromLocationName(Geocoder geocoder, String address) throws IOException {
-        return geocoder.getFromLocationName(address, 5);
+    private List<Address> deprecatedGetFromLocationName(
+        Geocoder geocoder,
+        String address,
+        Double lowerLeftLatitude,
+        Double lowerLeftLongitude,
+        Double upperRightLatitude,
+        Double upperRightLongitude
+    ) throws IOException {
+        if (lowerLeftLatitude == null || lowerLeftLongitude == null || upperRightLatitude == null || upperRightLongitude == null) {
+            return geocoder.getFromLocationName(address, 5);
+        } else {
+            return geocoder.getFromLocationName(address, 5, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
-    private void getAddressesWithGeocodeListener(Geocoder geocoder, String address, int maxResults, GeocodeListenerAdapter callback) {
-        geocoder.getFromLocationName(address, maxResults, new Geocoder.GeocodeListener() {
+    private void getAddressesWithGeocodeListener(
+        Geocoder geocoder,
+        String address,
+        int maxResults,
+        Double lowerLeftLatitude,
+        Double lowerLeftLongitude,
+        Double upperRightLatitude,
+        Double upperRightLongitude,
+        GeocodeListenerAdapter callback
+    ) {
+        final Geocoder.GeocodeListener listener = new Geocoder.GeocodeListener() {
             @Override
             public void onGeocode(List<Address> geocodedAddresses) {
                 callback.onGeocode(geocodedAddresses);
@@ -84,7 +127,12 @@ class Geocoding {
             public void onError(@Nullable String errorMessage) {
                 callback.onError(errorMessage);
             }
-        });
+        };
+        if (lowerLeftLatitude == null || lowerLeftLongitude == null || upperRightLatitude == null || upperRightLongitude == null) {
+            geocoder.getFromLocationName(address, maxResults, listener);
+        } else {
+            geocoder.getFromLocationName(address, maxResults, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, listener);
+        }
     }
 
 

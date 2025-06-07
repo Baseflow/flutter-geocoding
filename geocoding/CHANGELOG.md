@@ -1,3 +1,8 @@
+## 4.1.0
+
+* Added the ability to refine address search by geographic location
+* The search results' Location object now have new `title` and `description` fields
+
 ## 4.0.0
 
 * **BREAKING CHANGES** Please update to Flutter 3.29+ before updating to this version

@@ -22,7 +22,10 @@ class GeocodingIOS extends GeocodingPlatform {
   }
 
   @override
-  Future<List<Location>> locationFromAddress(String address) async {
+  Future<List<Location>> locationFromAddress(
+    String address, {
+    Region? targetRegion,
+  }) async {
     final parameters = <String, String>{
       'address': address,
     };

@@ -17,6 +17,10 @@ typedef void (^GeocodingFailure)(NSString* errorCode, NSString* errorDescription
 
 - (void) geocodeFromAddress: (NSString *)address
                      locale: (NSLocale *)locale
+                       sLat: (CGFloat)sLat
+                       wLng: (CGFloat)sLng
+                       nLat: (CGFloat)nLat
+                       eLng: (CGFloat)nLng
                     success: (_Nonnull GeocodingSuccess)successHandler
                     failure: (_Nonnull GeocodingFailure)failureHandler;
 

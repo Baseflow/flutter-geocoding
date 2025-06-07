@@ -11,10 +11,12 @@ export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 /// resolved into a single [Location], multiple [Location] instances may be
 /// returned.
 Future<List<Location>> locationFromAddress(
-  String address,
-) =>
+  String address, {
+  Region? targetRegion,
+}) =>
     GeocodingPlatform.instance!.locationFromAddress(
       address,
+      targetRegion: targetRegion,
     );
 
 /// Returns a list of [Placemark] instances found for the supplied

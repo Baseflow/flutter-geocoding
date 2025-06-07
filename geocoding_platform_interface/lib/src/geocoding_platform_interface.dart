@@ -52,8 +52,9 @@ abstract class GeocodingPlatform extends PlatformInterface {
   /// resolved into a single [Location], multiple [Location] instances may be
   /// returned.
   Future<List<Location>> locationFromAddress(
-    String address,
-  ) {
+    String address, {
+    Region? targetRegion,
+  }) {
     throw UnimplementedError(
         'locationFromAddress() has not been implementated.');
   }
