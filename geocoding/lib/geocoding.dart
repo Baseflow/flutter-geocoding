@@ -17,10 +17,12 @@ export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
 Future<List<Location>> locationFromAddress(
   String address, {
+  Region? targetRegion,
   String? localeIdentifier,
 }) =>
     GeocodingPlatform.instance.locationFromAddress(
       address,
+      targetRegion: targetRegion,
       localeIdentifier: localeIdentifier,
     );
 

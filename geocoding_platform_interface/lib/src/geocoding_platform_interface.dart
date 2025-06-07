@@ -44,6 +44,7 @@ abstract class GeocodingPlatform extends PlatformInterface {
   /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
   Future<List<Location>> locationFromAddress(
     String address, {
+    Region? targetRegion,
     String? localeIdentifier,
   }) {
     throw UnimplementedError(

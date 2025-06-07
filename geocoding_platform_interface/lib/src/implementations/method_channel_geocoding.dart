@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 
 import '../errors/errors.dart';
 import '../geocoding_platform_interface.dart';
@@ -16,12 +16,19 @@ class MethodChannelGeocoding extends GeocodingPlatform {
   @override
   Future<List<Location>> locationFromAddress(
     String address, {
+    Region? targetRegion,
     String? localeIdentifier,
   }) async {
     final parameters = <String, String>{
       'address': address,
     };
 
+    if (targetRegion != null) {
+      parameters['targetRegionSLat'] = '${targetRegion.southLatitude}';
+      parameters['targetRegionNLat'] = '${targetRegion.northLatitude}';
+      parameters['targetRegionWLng'] = '${targetRegion.westLongitude}';
+      parameters['targetRegionELng'] = '${targetRegion.eastLongitude}';
+    }
     if (localeIdentifier != null) {
       parameters['localeIdentifier'] = localeIdentifier;
     }

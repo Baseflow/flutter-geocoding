@@ -45,8 +45,12 @@
     if (self.location == nil) {
         return nil;
     }
+
+    NSArray *lines = self.addressDictionary[@"FormattedAddressLines"];
     
     NSMutableDictionary<NSString *, NSObject*> *dict = [[NSMutableDictionary alloc] initWithDictionary:@{
+        @"title": self.name,
+        @"description": [lines componentsJoinedByString:@", "] ?: [NSNull null],
         @"latitude": @(self.location.coordinate.latitude),
         @"longitude": @(self.location.coordinate.longitude),
         @"timestamp": @([CLPlacemark currentTimeInMilliSeconds: self.location.timestamp]),

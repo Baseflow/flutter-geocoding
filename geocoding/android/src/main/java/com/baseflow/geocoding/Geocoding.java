@@ -30,10 +30,25 @@ class Geocoding {
      * @return a list of Address objects. Returns null or empty list if no matches were found or there is no backend service available.
      * @throws java.io.IOException if the network is unavailable or any other I/O problem occurs.
      */
-    List<Address> placemarkFromAddress(String address, Locale locale) throws IOException {
-
+    List<Address> placemarkFromAddress(String address,
+                                       Locale locale,
+                                       Double lowerLeftLatitude,
+                                       Double lowerLeftLongitude,
+                                       Double upperRightLatitude,
+                                       Double upperRightLongitude) throws IOException {
         final Geocoder geocoder = createGeocoder(androidContext, locale);
-        return geocoder.getFromLocationName(address, 5);
+        if (lowerLeftLatitude == null || lowerLeftLongitude == null || upperRightLatitude == null || upperRightLongitude == null) {
+            return geocoder.getFromLocationName(address, 5);
+        }else {
+            return geocoder.getFromLocationName(
+                    address,
+                    5,
+                    lowerLeftLatitude,
+                    lowerLeftLongitude,
+                    upperRightLatitude,
+                    upperRightLongitude
+            );
+        }
     }
 
     /**

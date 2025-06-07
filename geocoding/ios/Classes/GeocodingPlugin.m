@@ -18,13 +18,27 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
++ (CGFloat) parseCGFloat:(NSString*)numberString {
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle=NSNumberFormatterDecimalStyle;
+    return [[formatter numberFromString:numberString] doubleValue];
+}
+
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([@"locationFromAddress" isEqualToString:call.method]) {
         NSString* address = call.arguments[@"address"];
+        NSString* targetRegionSLat = call.arguments[@"targetRegionSLat"];
+        NSString* targetRegionNLat = call.arguments[@"targetRegionNLat"];
+        NSString* targetRegionWLng = call.arguments[@"targetRegionWLng"];
+        NSString* targetRegionELng = call.arguments[@"targetRegionELng"];
         
         GeocodingHandler* handler = [[GeocodingHandler alloc] init];
         [handler geocodeFromAddress:address
                              locale:[GeocodingPlugin parseLocale: call.arguments]
+                               sLat:[GeocodingPlugin parseCGFloat: targetRegionSLat]
+                               wLng:[GeocodingPlugin parseCGFloat: targetRegionWLng]
+                               nLat:[GeocodingPlugin parseCGFloat: targetRegionNLat]
+                               eLng:[GeocodingPlugin parseCGFloat: targetRegionELng]
                             success:^(NSArray<CLPlacemark *> * placemarks) {
             result([GeocodingPlugin toLocationResult: placemarks]);
         }

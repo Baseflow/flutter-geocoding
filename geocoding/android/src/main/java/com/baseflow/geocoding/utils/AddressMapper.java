@@ -55,6 +55,18 @@ public class AddressMapper {
     private static Map<String, Object> toLocationHashmap(Address address) {
         Map<String, Object> location = new HashMap<>();
 
+        location.put("title", address.getFeatureName());
+        {
+            final int maxAddressLineIndex = address.getMaxAddressLineIndex();
+            final StringBuilder descriptionString = new StringBuilder();
+            for (int i = 0; i <= maxAddressLineIndex; i++) {
+                if (i > 0) {
+                    descriptionString.append("\n");
+                }
+                descriptionString.append(address.getAddressLine(i));
+            }
+            location.put("description", descriptionString.toString());
+        }
         location.put("latitude", address.getLatitude());
         location.put("longitude", address.getLongitude());
         location.put("timestamp", Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis());

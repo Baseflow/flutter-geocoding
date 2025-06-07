@@ -1,6 +1,7 @@
 package com.baseflow.geocoding;
 
 import android.location.Address;
+import android.os.AsyncTask;
 import android.util.Log;
 import androidx.annotation.Nullable;
 
@@ -31,13 +32,23 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
     }
 
     @Override
-    public void onMethodCall(MethodCall call, Result result) {
+    public void onMethodCall(final MethodCall call, final Result result) {
         switch (call.method) {
             case "locationFromAddress":
-                onLocationFromAddress(call, result);
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        onLocationFromAddress(call, result);
+                    }
+                });
                 break;
             case "placemarkFromCoordinates":
-                onPlacemarkFromCoordinates(call, result);
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        onPlacemarkFromCoordinates(call, result);
+                    }
+                });
                 break;
             default:
                 result.notImplemented();
@@ -77,9 +88,23 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         channel = null;
     }
 
+    // Parses a string as a double and returns the parsed value.
+    // If parsing is not possible or fails, returns null.
+    private static Double parseDoubleOrReturnNull(final String _string){
+        try{
+            return Double.parseDouble(_string);
+        }catch (Throwable t){
+            return null;
+        }
+    }
+
     private void onLocationFromAddress(MethodCall call, Result result) {
         final String address = call.argument("address");
         final String languageTag = call.argument("localeIdentifier");
+        final String targetRegionSLat = call.argument("targetRegionSLat");
+        final String targetRegionNLat = call.argument("targetRegionNLat");
+        final String targetRegionWLng = call.argument("targetRegionWLng");
+        final String targetRegionELng = call.argument("targetRegionELng");
 
         if (address == null || address.isEmpty()) {
             result.error(
@@ -91,7 +116,12 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
         try {
             final List<Address> addresses = geocoding.placemarkFromAddress(
                     address,
-                    LocaleConverter.fromLanguageTag(languageTag));
+                    LocaleConverter.fromLanguageTag(languageTag),
+                    parseDoubleOrReturnNull(targetRegionSLat), // lowerLeftLatitude,
+                    parseDoubleOrReturnNull(targetRegionWLng), // lowerLeftLongitude,
+                    parseDoubleOrReturnNull(targetRegionNLat), // upperRightLatitude,
+                    parseDoubleOrReturnNull(targetRegionELng) // upperRightLongitude
+            );
 
             if (addresses == null || addresses.isEmpty()) {
                 result.error(

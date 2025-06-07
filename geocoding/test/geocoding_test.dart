@@ -4,6 +4,8 @@ import 'package:mockito/mockito.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 final mockLocation = Location(
+  title: '',
+  description: '',
   latitude: 52.2165157,
   longitude: 6.9437819,
   timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),
@@ -49,6 +51,7 @@ class MockGeocodingPlatform extends Mock
   @override
   Future<List<Location>> locationFromAddress(
     String address, {
+    Region? targetRegion,
     String? localeIdentifier,
   }) async {
     return [mockLocation];
