@@ -23,6 +23,10 @@
 
 - (void) geocodeFromAddress: (NSString *)address
                      locale: (NSLocale *)locale
+                       sLat: (CGFloat) sLat
+                       wLng: (CGFloat) sLng
+                       nLat: (CGFloat) nLat
+                       eLng: (CGFloat) nLng
                     success: (GeocodingSuccess)successHandler
                     failure: (GeocodingFailure)failureHandler {
     
@@ -30,9 +34,21 @@
         failureHandler(@"ARGUMENT_ERROR", @"Please supply a valid string containing the address to lookup");
         return;
     }
-    
+
+    CLRegion* region;
+    if (sLat == 0 || sLng == 0 || nLat == 0 || nLng == 0){
+        region = nil;
+    }else{
+        CLLocationCoordinate2D center = CLLocationCoordinate2DMake(sLat + (nLat-sLat) / 2, sLng + (nLng-sLng) / 2);
+        //Computing the radius based on lat delta, since 1 lat = 111 km no matter the location
+        float latDelta = nLat - sLat;
+        float radiusLat = (latDelta/2);
+        float radius = radiusLat * 111000;
+        region = [[CLCircularRegion alloc] initWithCenter:center radius:radius identifier:@"Search Radius"];
+    }
+
     [_geocoder geocodeAddressString:address
-                           inRegion:nil
+                           inRegion:region
                     preferredLocale:locale
                   completionHandler:^(NSArray< CLPlacemark *> *__nullable placemarks, NSError *__nullable error)
      {
