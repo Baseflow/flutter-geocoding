@@ -1,6 +1,6 @@
 name: geocoding_ios
 description: A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding features.
-version: 3.0.2
+version: 3.1.0
 repository: https://github.com/baseflow/flutter-geocoding/tree/main/geocoding_ios
 issue_tracker: https://github.com/Baseflow/flutter-geocoding/issues
 
@@ -8,17 +8,11 @@ environment:
   sdk: ">=3.3.0 <4.0.0"
   flutter: ">=3.0.0"
 
-publish_to: 'none'
-
 dependencies:
   flutter:
     sdk: flutter
 
-  geocoding_platform_interface:
-    git:
-      url: https://github.com/androidseb/flutter-geocoding
-      ref: 5ed982eb070cae3582b302fc9dcc9607c8eb1cb4
-      path: geocoding_platform_interface
+  geocoding_platform_interface: ^4.0.0
 
 dev_dependencies:
   flutter_test:
