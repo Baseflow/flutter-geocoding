@@ -1,3 +1,12 @@
+## 4.0.0
+
+- **BREAKING CHANGES:**
+  - Releases new interface making the Geocoding plugin easier to extend and
+    implement on different platforms.
+  - Moves the old interface into the `legacy` folder. This interface will
+    remain available but will no longer be maintained. To import the old
+    interface use `import 'package:geocoding_platform_interface/legacy/geocoding_platform_interface.dart`.
+
 ## 3.2.1
 
 - Fixed analysis warnings from `flutter analyse`.

@@ -56,12 +56,14 @@ class Location {
 
     final Map<dynamic, dynamic> locationMap = message;
     final timestamp = DateTime.fromMillisecondsSinceEpoch(
-        locationMap['timestamp'].toInt(),
-        isUtc: true);
+      locationMap['timestamp'].toInt(),
+      isUtc: true,
+    );
 
     if (locationMap['latitude'] == null || locationMap['longitude'] == null) {
       throw ArgumentError(
-          'The parameters latitude and longitude should not be null.');
+        'The parameters latitude and longitude should not be null.',
+      );
     }
 
     return Location._(
@@ -74,10 +76,10 @@ class Location {
   /// Converts the [Location] instance into a [Map] instance that can be
   /// serialized to JSON.
   Map<String, dynamic> toJson() => {
-        'latitude': latitude,
-        'longitude': longitude,
-        'timestamp': timestamp.millisecondsSinceEpoch,
-      };
+    'latitude': latitude,
+    'longitude': longitude,
+    'timestamp': timestamp.millisecondsSinceEpoch,
+  };
 
   @override
   String toString() {
