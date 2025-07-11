@@ -72,7 +72,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                         dropdownMenuEntries: <DropdownMenuEntry<Locale>>[
                           DropdownMenuEntry<Locale>(
                             value: Localizations.localeOf(context),
-                            label: 'Default system locale',
+                            label: 'Default locale',
                           ),
                           DropdownMenuEntry<Locale>(
                             value: Locale('en_US'),
