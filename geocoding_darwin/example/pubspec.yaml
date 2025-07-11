@@ -1,0 +1,29 @@
+name: geocoding_darwin_example
+description: "Demonstrates how to use the geocoding_darwin plugin."
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  geocoding_darwin:
+    path: ../
+  cupertino_icons: ^1.0.8
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  integration_test:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - res/images/baseflow_logo_def_light-02.png
+    - res/images/poweredByBaseflowLogoLight@3x.png

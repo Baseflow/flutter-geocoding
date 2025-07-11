@@ -1,0 +1,35 @@
+name: geocoding_darwin
+description: |-
+  A Flutter Geocoding plugin which provides easy geocoding and 
+  reverse-geocoding features for iOS and macOS.
+version: 0.0.1
+repository: https://github.com/baseflow/flutter-geocoding
+
+publish_to: none
+
+environment:
+  sdk: ^3.8.1
+  flutter: ">=3.7.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  geocoding_platform_interface:
+    path: ../geocoding_platform_interface
+  pigeon: ^25.5.0
+  plugin_platform_interface: ^2.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  plugin:
+    platforms:
+      ios:
+        pluginClass: GeocodingDarwinPlugin
+        sharedDarwinSource: true
+      macos:
+        pluginClass: GeocodingDarwinPlugin
+        sharedDarwinSource: true
