@@ -1,3 +1,7 @@
+## 3.1.0
+
+* Adds SPM support
+
 ## 3.0.2
 
 * Fixed deprecation warnings.
