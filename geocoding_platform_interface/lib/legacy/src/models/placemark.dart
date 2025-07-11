@@ -132,18 +132,18 @@ class Placemark {
   /// Converts the [Placemark] instance into a [Map] instance that can be
   /// serialized to JSON.
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'street': street,
-        'isoCountryCode': isoCountryCode,
-        'country': country,
-        'postalCode': postalCode,
-        'administrativeArea': administrativeArea,
-        'subAdministrativeArea': subAdministrativeArea,
-        'locality': locality,
-        'subLocality': subLocality,
-        'thoroughfare': thoroughfare,
-        'subThoroughfare': subThoroughfare,
-      };
+    'name': name,
+    'street': street,
+    'isoCountryCode': isoCountryCode,
+    'country': country,
+    'postalCode': postalCode,
+    'administrativeArea': administrativeArea,
+    'subAdministrativeArea': subAdministrativeArea,
+    'locality': locality,
+    'subLocality': subLocality,
+    'thoroughfare': thoroughfare,
+    'subThoroughfare': subThoroughfare,
+  };
 
   @override
   String toString() {

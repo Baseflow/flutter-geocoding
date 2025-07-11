@@ -1,49 +1,45 @@
+import 'package:flutter/widgets.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'models/models.dart';
+import 'geocoding_platform_factory.dart';
+import 'types/types.dart';
 
-/// The interface that implementations of Geocoding  must implement.
+/// Interface for a platform implementation of a [Geocoding] instance.
 ///
 /// Platform implementations should extend this class rather than implement it
-/// as `Geocoding` does not consider newly added methods to be breaking
+/// as `geocoding` package does not consider newly added methods to be breaking
 /// changes. Extending this class (using `extends`) ensures that the subclass
 /// will get the default implementation, while platform implementations that
 /// `implements` this interface will be broken by newly added
-/// [GeocodingPlatform] methods.
-abstract class GeocodingPlatform extends PlatformInterface {
-  /// Constructs a [GeocodingPlatform].
-  GeocodingPlatform() : super(token: _token);
+/// [Geocoding] methods.
+abstract class Geocoding extends PlatformInterface {
+  /// Creates a new [PlatformWebViewController]
+  factory Geocoding(GeocodingCreationParams params) {
+    assert(
+      GeocodingPlatformFactory.instance != null,
+      'A platform implementation for `geocoding` has not been set. Please '
+      'ensure that an implementation of `GeocodingPlatformFactory` has been '
+      'set te `GeocodingPlatformFactory.instance` before use. For unit '
+      'testing, `GeocodingPlatformFactory.instance` can be set with your own '
+      'test implementation.',
+    );
+    final Geocoding geocoding = GeocodingPlatformFactory.instance!
+        .createGeocoding(params);
+    PlatformInterface.verify(geocoding, _token);
+    return geocoding;
+  }
+
+  /// Used by the platform implementation to create a new [Geocoding].
+  ///
+  /// Should only be used by platform implementations because they can't extend
+  /// a class that only contains a factory constructor.
+  @protected
+  Geocoding.implementation(this.params) : super(token: _token);
 
   static final Object _token = Object();
 
-  static GeocodingPlatform? _instance;
-
-  /// The default instance of [GeocodingPlatform] to use.
-  static GeocodingPlatform? get instance => _instance;
-
-  /// Platform-specific plugins should set this with their own
-  /// platform-specific class that extends [GeocodingPlatform] when they
-  /// register themselves.
-  static set instance(GeocodingPlatform? instance) {
-    if (instance == null) {
-      throw AssertionError(
-        'Instance of geocoding platform has to be non-null.',
-      );
-    }
-    PlatformInterface.verifyToken(instance, _token);
-    _instance = instance;
-  }
-
-  /// Sets the locale identifier used for the geocoding.
-  ///
-  /// The `localeIdentifier` should be formatted using the syntax:
-  /// [languageCode]_[countryCode] (eg. en_US or nl_NL).
-  Future<void> setLocaleIdentifier(
-    String localeIdentifier,
-  ) {
-    throw UnimplementedError(
-        'setLocaleIdentifier() has not been implementated.');
-  }
+  /// The parameters used to initialize the [Geocoding] instance.
+  final GeocodingCreationParams params;
 
   /// Returns a list of [Location] instances found for the supplied address.
   ///
@@ -51,11 +47,10 @@ abstract class GeocodingPlatform extends PlatformInterface {
   /// However in some situations where the supplied address could not be
   /// resolved into a single [Location], multiple [Location] instances may be
   /// returned.
-  Future<List<Location>> locationFromAddress(
-    String address,
-  ) {
+  Future<List<Location>> locationFromAddress(String address, {Locale? locale}) {
     throw UnimplementedError(
-        'locationFromAddress() has not been implementated.');
+      'locationFromAddress() has not been implementated.',
+    );
   }
 
   /// Returns true if there is a geocoder implementation present that may return results.
@@ -77,10 +72,12 @@ abstract class GeocodingPlatform extends PlatformInterface {
   /// returned.
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
-    double longitude,
-  ) {
+    double longitude, {
+    Locale? locale,
+  }) {
     throw UnimplementedError(
-        'placemarkFromCoordinates() has not been implementated.');
+      'placemarkFromCoordinates() has not been implementated.',
+    );
   }
 
   /// Returns a list of [Placemark] instances found for the supplied address.
@@ -90,9 +87,11 @@ abstract class GeocodingPlatform extends PlatformInterface {
   /// resolved into a single [Placemark], multiple [Placemark] instances may be
   /// returned.
   Future<List<Placemark>> placemarkFromAddress(
-    String address,
-  ) {
+    String address, {
+    Locale? locale,
+  }) {
     throw UnimplementedError(
-        'placemarkFromAddress() has not been implementated.');
+      'placemarkFromAddress() has not been implementated.',
+    );
   }
 }
