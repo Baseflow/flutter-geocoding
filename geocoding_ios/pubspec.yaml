@@ -37,3 +37,4 @@ flutter:
       ios:
         pluginClass: GeocodingPlugin
         dartPluginClass: GeocodingDarwin
+        sharedDarwinSource: true

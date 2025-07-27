@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:geocoding_darwin/geocoding_ios.dart';
+import 'package:geocoding_darwin/geocoding_darwin.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 
 final mockLocation = Location(

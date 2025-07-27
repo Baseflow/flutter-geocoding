@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding_darwin/geocoding_ios.dart';
+import 'package:geocoding_darwin/geocoding_darwin.dart';
 
 import '../template/globals.dart';
 
