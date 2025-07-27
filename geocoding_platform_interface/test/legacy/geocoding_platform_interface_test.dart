@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
+import 'package:geocoding_platform_interface/legacy/geocoding_platform_interface.dart';
 import 'package:mockito/mockito.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -38,60 +38,61 @@ void main() {
     });
 
     test(
-        // ignore: lines_longer_than_80_chars
-        'Default implementation of locationFromAddress should throw unimplemented error',
-        () {
-      // Arrange
-      final geocodingPlatform = ExtendsGeocodingPlatform();
+      // ignore: lines_longer_than_80_chars
+      'Default implementation of locationFromAddress should throw unimplemented error',
+      () {
+        // Arrange
+        final geocodingPlatform = ExtendsGeocodingPlatform();
 
-      // Act & Assert
-      expect(
-        () => geocodingPlatform.locationFromAddress('address'),
-        throwsUnimplementedError,
-      );
-    });
-
-    test(
-        // ignore: lines_longer_than_80_chars
-        'Default implementation of isPresent should throw unimplemented error',
-        () {
-      // Arrange
-      final geocodingPlatform = ExtendsGeocodingPlatform();
-
-      // Act & Assert
-      expect(
-        () => geocodingPlatform.isPresent(),
-        throwsUnimplementedError,
-      );
-    });
+        // Act & Assert
+        expect(
+          () => geocodingPlatform.locationFromAddress('address'),
+          throwsUnimplementedError,
+        );
+      },
+    );
 
     test(
-        // ignore: lines_longer_than_80_chars
-        'Default implementation of placemarkFromCoordinates should throw unimplemented error',
-        () {
-      // Arrange
-      final geocodingPlatform = ExtendsGeocodingPlatform();
+      // ignore: lines_longer_than_80_chars
+      'Default implementation of isPresent should throw unimplemented error',
+      () {
+        // Arrange
+        final geocodingPlatform = ExtendsGeocodingPlatform();
 
-      // Act & Assert
-      expect(
-        () => geocodingPlatform.placemarkFromCoordinates(0, 0),
-        throwsUnimplementedError,
-      );
-    });
+        // Act & Assert
+        expect(() => geocodingPlatform.isPresent(), throwsUnimplementedError);
+      },
+    );
 
     test(
-        // ignore: lines_longer_than_80_chars
-        'Default implementation of setLocale should throw unimplemented error',
-        () {
-      // Arrange
-      final geocodingPlatform = ExtendsGeocodingPlatform();
+      // ignore: lines_longer_than_80_chars
+      'Default implementation of placemarkFromCoordinates should throw unimplemented error',
+      () {
+        // Arrange
+        final geocodingPlatform = ExtendsGeocodingPlatform();
 
-      // Act & Assert
-      expect(
-        () => geocodingPlatform.setLocaleIdentifier('en_US'),
-        throwsUnimplementedError,
-      );
-    });
+        // Act & Assert
+        expect(
+          () => geocodingPlatform.placemarkFromCoordinates(0, 0),
+          throwsUnimplementedError,
+        );
+      },
+    );
+
+    test(
+      // ignore: lines_longer_than_80_chars
+      'Default implementation of setLocale should throw unimplemented error',
+      () {
+        // Arrange
+        final geocodingPlatform = ExtendsGeocodingPlatform();
+
+        // Act & Assert
+        expect(
+          () => geocodingPlatform.setLocaleIdentifier('en_US'),
+          throwsUnimplementedError,
+        );
+      },
+    );
   });
 }
 
@@ -104,7 +105,6 @@ class MockGeocodingPlatform extends Mock
     with
         // ignore: prefer_mixin
         MockPlatformInterfaceMixin
-    implements
-        GeocodingPlatform {}
+    implements GeocodingPlatform {}
 
 class ExtendsGeocodingPlatform extends GeocodingPlatform {}
