@@ -3,22 +3,21 @@
 import PackageDescription
 
 let package = Package(
-    name: "geocoding_ios",
+    name: "geocoding_darwin",
     platforms: [
         .iOS("12.0")
     ],
     products: [
-        .library(name: "geocoding-ios", targets: ["geocoding_ios"])
+        .library(name: "geocoding-darwin", targets: ["geocoding_darwin"])
     ],
     targets: [
         .target(
-            name: "geocoding_ios",
+            name: "geocoding_darwin",
             resources: [
                 .process("PrivacyInfo.xcprivacy"),
             ],
             cSettings: [
-                // TODO: Update your plugin name.
-                .headerSearchPath("include/geocoding_ios")
+                .headerSearchPath("include/geocoding_darwin")
             ]
         )
     ]

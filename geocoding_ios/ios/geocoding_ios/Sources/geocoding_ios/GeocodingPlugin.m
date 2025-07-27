@@ -5,9 +5,9 @@
 //  Created by Maurits van Beusekom on 07/06/2020.
 //
 
-#import "include/geocoding_ios/CLPlacemarkExtensions.h"
-#import "include/geocoding_ios/GeocodingHandler.h"
-#import "include/geocoding_ios/GeocodingPlugin.h"
+#import "include/geocoding_darwin/CLPlacemarkExtensions.h"
+#import "include/geocoding_darwin/GeocodingHandler.h"
+#import "include/geocoding_darwin/GeocodingPlugin.h"
 
 @implementation GeocodingPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {

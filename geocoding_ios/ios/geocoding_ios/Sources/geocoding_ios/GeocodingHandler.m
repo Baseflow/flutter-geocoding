@@ -5,7 +5,7 @@
 //  Created by Maurits van Beusekom on 07/06/2020.
 //
 
-#import "include/geocoding_ios/GeocodingHandler.h"
+#import "include/geocoding_darwin/GeocodingHandler.h"
 
 @implementation GeocodingHandler {
     CLGeocoder* _geocoder;
