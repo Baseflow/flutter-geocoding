@@ -1,3 +1,3 @@
-export 'src/errors/errors.dart';
-export 'src/geocoding_platform_interface.dart';
-export 'src/models/models.dart';
+export 'src/geocoding.dart';
+export 'src/geocoding_platform_factory.dart';
+export 'src/types/types.dart';
