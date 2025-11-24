@@ -1,3 +1,7 @@
+## 4.0.1
+
+* Resolved issue #271 where the app could crash if the onError message was null. The error message is now properly handled as nullable.
+
 ## 4.0.0
 
 * **BREAKING CHANGES** Please update to Flutter 3.29+ before updating to this version

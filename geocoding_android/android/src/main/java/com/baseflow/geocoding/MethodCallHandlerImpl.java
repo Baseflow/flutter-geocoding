@@ -129,10 +129,10 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
             }
 
             @Override
-            public void onError(String errorMessage) {
+            public void onError(@Nullable String errorMessage) {
                 result.error(
                         "IO_ERROR",
-                        String.format(errorMessage),
+                        errorMessage != null ? errorMessage : "Unknown error occurred",
                         null);
             }
         });
@@ -163,10 +163,10 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
             }
 
             @Override
-            public void onError(String errorMessage) {
+            public void onError(@Nullable String errorMessage) {
                 result.error(
                         "IO_ERROR",
-                        String.format(errorMessage),
+                        errorMessage != null ? errorMessage : "Unknown error occurred",
                         null);
             }
         });
@@ -198,10 +198,10 @@ final class MethodCallHandlerImpl implements MethodCallHandler {
                     }
 
                     @Override
-                    public void onError(String errorMessage) {
+                    public void onError(@Nullable String errorMessage) {
                         result.error(
                                 "IO_ERROR",
-                                String.format(errorMessage),
+                                errorMessage != null ? errorMessage : "Unknown error occurred",
                                 null);
                     }
                 });
