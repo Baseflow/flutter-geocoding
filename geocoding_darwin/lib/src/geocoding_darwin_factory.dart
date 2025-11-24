@@ -1,5 +1,3 @@
-import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
-
 import 'geocoding_darwin.dart';
 
 /// Implementation of [GeocodingPlatformFactory] for the Darwin (Apple)
@@ -11,7 +9,6 @@ class GeocodingDarwinFactory extends GeocodingPlatformFactory {
 
   @override
   Geocoding createGeocoding(GeocodingCreationParams params) {
-    // TODO: implement createGeocoding
-    return super.createGeocoding(params);
+    return GeocodingDarwin(params);
   }
 }

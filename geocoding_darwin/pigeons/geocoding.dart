@@ -4,14 +4,17 @@ import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(
   PigeonOptions(
-    dartOut: 'lib/src/clgeocoder/clgeocoder.g.dart',
-    swiftOut: 'darwin/geocoding_darwin/Sources/CLGeocoder/CLGeocoderLibrary.g.swift',
+    dartOut: 'lib/src/geocoding/geocoding.g.dart',
+    swiftOut:
+    'darwin/geocoding_darwin/Sources/geocoding_darwin/Geocoding/GeocodingLibrary.g.swift',
   ),
 )
+
 /// The floor of a building on which the user’s device is located.
 ///
-/// See https://developer.apple.com/documentation/corelocation/clfloor
-@ProxyApi(swiftOptions: SwiftProxyApiOptions(import: 'CoreLocation'))
+/// See https://developer.apple.com/documentation/corelocation/clfloor. 
+@ProxyApi(
+    swiftOptions: SwiftProxyApiOptions(import: 'CoreLocation'))
 abstract class CLFloor extends NSObject {
   /// The logical floor of the building.
   late int level;
@@ -39,15 +42,13 @@ abstract class CLGeocoder extends NSObject {
   /// Submits a forward-geocoding requesting using the specified locale and
   /// Contacts framework information.
   @async
-  List<CLPlacemark>? geocodePostalAddress(
-    CNPostalAddress postalAddress, {
+  List<CLPlacemark>? geocodePostalAddress(CNPostalAddress postalAddress, {
     Locale? locale,
   });
 
   /// Submits a reverse-geocoding request for the specified location.
   @async
-  List<CLPlacemark>? reverseGeocodeLocation(
-    CLLocation location, {
+  List<CLPlacemark>? reverseGeocodeLocation(CLLocation location, {
     Locale? locale,
   });
 }
@@ -323,19 +324,17 @@ abstract class NSObject {
   /// Informs the observing object when the value at the specified key path
   /// relative to the observed object has changed.
   late void Function(
-    String? keyPath,
-    NSObject? object,
-    Map<KeyValueChangeKey, Object?>? change,
-  )?
+      String? keyPath,
+      NSObject? object,
+      Map<KeyValueChangeKey, Object?>? change,
+      )?
   observeValue;
 
   /// Registers the observer object to receive KVO notifications for the key
   /// path relative to the object receiving this message.
-  void addObserver(
-    NSObject observer,
-    String keyPath,
-    List<KeyValueObservingOptions> options,
-  );
+  void addObserver(NSObject observer,
+      String keyPath,
+      List<KeyValueObservingOptions> options,);
 
   /// Stops the observer object from receiving change notifications for the
   /// property specified by the key path relative to the object receiving this

@@ -11,7 +11,7 @@ import Foundation
 #endif
 
 /// Implementation of the `CLGeocoderLibraryPigeonProxyApiRegistrar` that provides any addition resources needed by API implementations.
-open class ProxyApiRegistrar: CLGeocoderLibraryPigeonProxyApiRegistrar {
+open class ProxyApiRegistrar: GeocodingLibraryPigeonProxyApiRegistrar {
     init(
         binaryMessenger: FlutterBinaryMessenger
     ) {
@@ -53,40 +53,40 @@ open class ProxyApiRegistrar: CLGeocoderLibraryPigeonProxyApiRegistrar {
 }
 
 /// Implementation of `CLGeocoderLibraryPigeonProxyApiDelegate` that provides each ProxyApi delegate implementation.
-class ProxyApiDelegate: CLGeocoderLibraryPigeonProxyApiDelegate {
-    func pigeonApiCLGeocoder(_ registrar: CLGeocoderLibraryPigeonProxyApiRegistrar) -> PigeonApiCLGeocoder {
+class ProxyApiDelegate: GeocodingLibraryPigeonProxyApiDelegate {
+    func pigeonApiCLGeocoder(_ registrar: GeocodingLibraryPigeonProxyApiRegistrar) -> PigeonApiCLGeocoder {
         return PigeonApiCLGeocoder(pigeonRegistrar: registrar, delegate: CLGeocoderProxyApiDelegate())
     }
     
-    func pigeonApiCLLocation(_ registrar: CLGeocoderLibraryPigeonProxyApiRegistrar) -> PigeonApiCLLocation {
+    func pigeonApiCLLocation(_ registrar: GeocodingLibraryPigeonProxyApiRegistrar) -> PigeonApiCLLocation {
         return PigeonApiCLLocation(pigeonRegistrar: registrar, delegate: CLLocationProxyApiDelegate())
     }
     
-    func pigeonApiCLLocationCoordinate2D(_ registrar: CLGeocoderLibraryPigeonProxyApiRegistrar) -> PigeonApiCLLocationCoordinate2D {
+    func pigeonApiCLLocationCoordinate2D(_ registrar: GeocodingLibraryPigeonProxyApiRegistrar) -> PigeonApiCLLocationCoordinate2D {
         return PigeonApiCLLocationCoordinate2D(pigeonRegistrar: registrar, delegate: CLLocationCoordinate2DProxyApiDelegate())
     }
     
-    func pigeonApiCLLocationSourceInformation(_ registrar: CLGeocoderLibraryPigeonProxyApiRegistrar) -> PigeonApiCLLocationSourceInformation {
+    func pigeonApiCLLocationSourceInformation(_ registrar: GeocodingLibraryPigeonProxyApiRegistrar) -> PigeonApiCLLocationSourceInformation {
         return PigeonApiCLLocationSourceInformation(pigeonRegistrar: registrar, delegate: CLLocationSourceInformationProxyApiDelegate())
     }
     
-    func pigeonApiCLPlacemark(_ registrar: CLGeocoderLibraryPigeonProxyApiRegistrar) -> PigeonApiCLPlacemark {
+    func pigeonApiCLPlacemark(_ registrar: GeocodingLibraryPigeonProxyApiRegistrar) -> PigeonApiCLPlacemark {
         return PigeonApiCLPlacemark(pigeonRegistrar: registrar, delegate: CLPlacemarkProxyApiDelegate())
     }
         
-    func pigeonApiCNPostalAddress(_ registrar: CLGeocoderLibraryPigeonProxyApiRegistrar) -> PigeonApiCNPostalAddress {
+    func pigeonApiCNPostalAddress(_ registrar: GeocodingLibraryPigeonProxyApiRegistrar) -> PigeonApiCNPostalAddress {
         return PigeonApiCNPostalAddress(pigeonRegistrar: registrar, delegate: CNPostalAddressProxyApiDelegate())
     }
     
-    func pigeonApiLocale(_ registrar: CLGeocoderLibraryPigeonProxyApiRegistrar) -> PigeonApiLocale {
+    func pigeonApiLocale(_ registrar: GeocodingLibraryPigeonProxyApiRegistrar) -> PigeonApiLocale {
         return PigeonApiLocale(pigeonRegistrar: registrar, delegate: LocaleProxyApiDelegate())
     }
     
-    func pigeonApiNSObject(_ registrar: CLGeocoderLibraryPigeonProxyApiRegistrar) -> PigeonApiNSObject {
+    func pigeonApiNSObject(_ registrar: GeocodingLibraryPigeonProxyApiRegistrar) -> PigeonApiNSObject {
         return PigeonApiNSObject(pigeonRegistrar: registrar, delegate: NSObjectProxyApiDelegate())
     }
     
-    func pigeonApiCLFloor(_ registrar: CLGeocoderLibraryPigeonProxyApiRegistrar) -> PigeonApiCLFloor {
+    func pigeonApiCLFloor(_ registrar: GeocodingLibraryPigeonProxyApiRegistrar) -> PigeonApiCLFloor {
         return PigeonApiCLFloor(pigeonRegistrar: registrar, delegate: CLFloorProxyApiDelegate())
     }
 }
