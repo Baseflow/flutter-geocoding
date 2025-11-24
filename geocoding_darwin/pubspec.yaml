@@ -16,13 +16,13 @@ dependencies:
     sdk: flutter
   geocoding_platform_interface:
     path: ../geocoding_platform_interface
-  pigeon: ^25.5.0
+  pigeon: ^26.1.2
   plugin_platform_interface: ^2.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   plugin:

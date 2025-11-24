@@ -6,7 +6,7 @@ environment:
   sdk: ^3.8.1
 
 dependencies:
-  baseflow_plugin_template: ^2.1.2
+  baseflow_plugin_template: ^2.2.1
   flutter:
     sdk: flutter
 
@@ -20,7 +20,7 @@ dev_dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true

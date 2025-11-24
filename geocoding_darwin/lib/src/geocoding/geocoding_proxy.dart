@@ -1,7 +1,7 @@
-import 'clgeocoder.g.dart';
+import 'geocoding.g.dart';
 
 /// Handles constructing objects and calling static methods for the Darwin
-/// CLGeocder native library.
+/// CLGeocoder native library.
 ///
 /// This class provides dependency injection for the implementations of the
 /// platform interface classes. Improving the ease of unit testing and/or

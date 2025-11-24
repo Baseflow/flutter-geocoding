@@ -32,7 +32,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
   final TextEditingController _longitudeController = TextEditingController();
   String _output = '';
   Locale? _locale;
-  final GeocodingDarwin _geocoding = GeocodingDarwin(
+  final Geocoding _geocoding = GeocodingDarwin(
     GeocodingDarwinCreationParams(),
   );
 

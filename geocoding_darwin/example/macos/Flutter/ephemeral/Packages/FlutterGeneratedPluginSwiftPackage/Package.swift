@@ -9,14 +9,14 @@ import PackageDescription
 let package = Package(
     name: "FlutterGeneratedPluginSwiftPackage",
     platforms: [
-        .macOS("10.14")
+        .macOS("10.15")
     ],
     products: [
         .library(name: "FlutterGeneratedPluginSwiftPackage", type: .static, targets: ["FlutterGeneratedPluginSwiftPackage"])
     ],
     dependencies: [
-        .package(name: "url_launcher_macos", path: "/Users/maurits/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.2/macos/url_launcher_macos"),
-        .package(name: "geocoding_darwin", path: "/Users/maurits/sources/Baseflow/Internal/Flutter/geocoding/geocoding_darwin/darwin/geocoding_darwin")
+        .package(name: "url_launcher_macos", path: "../.packages/url_launcher_macos"),
+        .package(name: "geocoding_darwin", path: "../.packages/geocoding_darwin")
     ],
     targets: [
         .target(

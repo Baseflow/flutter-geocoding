@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart' as flt;
-import 'package:geocoding_darwin/src/clgeocoder/clgeocoder.g.dart';
-import 'package:geocoding_darwin/src/clgeocoder/clgeocoder_proxy.dart';
+import 'package:geocoding_darwin/src/geocoding/geocoding.g.dart';
+import 'package:geocoding_darwin/src/geocoding/geocoding_proxy.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 
 export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
@@ -9,32 +9,26 @@ export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 @flt.immutable
 class GeocodingDarwinCreationParams extends GeocodingCreationParams {
   //// Creates a [GeocodingDarwinCreationParams].
-  GeocodingDarwinCreationParams({
+  const GeocodingDarwinCreationParams({
     @flt.visibleForTesting
     this.coreLocationGeocoderProxy = const CLGeocoderProxy(),
-    @flt.visibleForTesting PigeonInstanceManager? instanceManager,
-  }) : _instanceManager = instanceManager ?? PigeonInstanceManager.instance;
+  });
 
   /// Creates a [GeocodingDarwinCreationParams] using a
   /// [GeocodingCreationParams].
-  GeocodingDarwinCreationParams.fromGeocodingCreationParams(
+  const GeocodingDarwinCreationParams.fromGeocodingCreationParams(
     GeocodingCreationParams params, {
     @flt.visibleForTesting
     CLGeocoderProxy coreLocationGeocoderProxy = const CLGeocoderProxy(),
     @flt.visibleForTesting PigeonInstanceManager? instanceManager,
   }) : this(
          coreLocationGeocoderProxy: coreLocationGeocoderProxy,
-         instanceManager: instanceManager,
        );
 
   /// Handles constructing objects and calling static method for the Core
   /// Location Geocoder native library.
   @flt.visibleForTesting
   final CLGeocoderProxy coreLocationGeocoderProxy;
-
-  // Maintains instances used to communicate with the native objects they
-  // represent.
-  final PigeonInstanceManager _instanceManager;
 }
 
 /// An implementation of the [Geocoding] interface for the Darwin (iOS, macOS)
