@@ -55,7 +55,7 @@ class Location {
     }
 
     final Map<dynamic, dynamic> locationMap = message;
-    final timestamp = DateTime.fromMillisecondsSinceEpoch(
+    final DateTime timestamp = DateTime.fromMillisecondsSinceEpoch(
       locationMap['timestamp'].toInt(),
       isUtc: true,
     );
@@ -75,7 +75,7 @@ class Location {
 
   /// Converts the [Location] instance into a [Map] instance that can be
   /// serialized to JSON.
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
     'latitude': latitude,
     'longitude': longitude,
     'timestamp': timestamp.millisecondsSinceEpoch,

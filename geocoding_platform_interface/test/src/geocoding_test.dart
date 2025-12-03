@@ -10,7 +10,7 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'geocoding_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<GeocodingPlatformFactory>()])
+@GenerateNiceMocks(<MockSpec<dynamic>>[MockSpec<GeocodingPlatformFactory>()])
 void main() {
   setUp(() {
     GeocodingPlatformFactory.instance = MockGeocodingPlatformFactoryWithMixin();
@@ -59,7 +59,7 @@ void main() {
     'Default implementation of locationFromAddress should throw unimplemented error',
     () {
       // Arrange
-      final geocodingPlatform = ExtendsGeocoding(
+      final ExtendsGeocoding geocodingPlatform = ExtendsGeocoding(
         const GeocodingCreationParams(),
       );
 
@@ -76,7 +76,7 @@ void main() {
     'Default implementation of isPresent should throw unimplemented error',
     () {
       // Arrange
-      final geocodingPlatform = ExtendsGeocoding(
+      final ExtendsGeocoding geocodingPlatform = ExtendsGeocoding(
         const GeocodingCreationParams(),
       );
 
@@ -90,7 +90,7 @@ void main() {
     'Default implementation of placemarkFromAddress should throw unimplemented error',
     () {
       // Arrange
-      final geocodingPlatform = ExtendsGeocoding(
+      final ExtendsGeocoding geocodingPlatform = ExtendsGeocoding(
         const GeocodingCreationParams(),
       );
 
@@ -107,7 +107,7 @@ void main() {
     'Default implementation of placemarkFromCoordinates should throw unimplemented error',
     () {
       // Arrange
-      final geocodingPlatform = ExtendsGeocoding(
+      final ExtendsGeocoding geocodingPlatform = ExtendsGeocoding(
         const GeocodingCreationParams(),
       );
 

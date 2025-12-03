@@ -34,7 +34,7 @@ void main() {
     });
 
     test('Can be mocked with `implements`', () {
-      final mock = MockGeocodingPlatformFactory();
+      final MockGeocodingPlatformFactory mock = MockGeocodingPlatformFactory();
       GeocodingPlatformFactory.instance = mock;
     });
 
@@ -43,7 +43,7 @@ void main() {
       'Default implementation of createGeocoding should throw unimplemented error',
       () {
         // Arrange
-        final geocodingPlatform = ExtendsGeocodingPlatformFactory();
+        final ExtendsGeocodingPlatformFactory geocodingPlatform = ExtendsGeocodingPlatformFactory();
 
         // Act & Assert
         expect(

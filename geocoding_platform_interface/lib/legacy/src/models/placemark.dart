@@ -131,7 +131,7 @@ class Placemark {
 
   /// Converts the [Placemark] instance into a [Map] instance that can be
   /// serialized to JSON.
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
     'name': name,
     'street': street,
     'isoCountryCode': isoCountryCode,

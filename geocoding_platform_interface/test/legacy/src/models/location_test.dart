@@ -7,12 +7,12 @@ void main() {
       'hashCode hould be the same for two instances with the same values',
       () {
         // Arrange
-        final firstLocation = Location(
+        final Location firstLocation = Location(
           latitude: 0,
           longitude: 0,
           timestamp: DateTime.fromMillisecondsSinceEpoch((0)),
         );
-        final secondLocation = Location(
+        final Location secondLocation = Location(
           latitude: 0,
           longitude: 0,
           timestamp: DateTime.fromMillisecondsSinceEpoch((0)),
@@ -27,12 +27,12 @@ void main() {
       'hashCode should not match when the latitude property is different',
       () {
         // Arrange
-        final firstLocation = Location(
+        final Location firstLocation = Location(
           latitude: 0,
           longitude: 0,
           timestamp: DateTime.fromMillisecondsSinceEpoch(0),
         );
-        final secondLocation = Location(
+        final Location secondLocation = Location(
           latitude: 1,
           longitude: 0,
           timestamp: DateTime.fromMillisecondsSinceEpoch(0),
@@ -47,12 +47,12 @@ void main() {
       'hashCode should not match when the longitude property is different',
       () {
         // Arrange
-        final firstLocation = Location(
+        final Location firstLocation = Location(
           latitude: 0,
           longitude: 0,
           timestamp: DateTime.fromMillisecondsSinceEpoch(0),
         );
-        final secondLocation = Location(
+        final Location secondLocation = Location(
           latitude: 0,
           longitude: 1,
           timestamp: DateTime.fromMillisecondsSinceEpoch(0),
@@ -67,12 +67,12 @@ void main() {
       'hashCode should not match when the timestamp property is different',
       () {
         // Arrange
-        final firstLocation = Location(
+        final Location firstLocation = Location(
           latitude: 0,
           longitude: 0,
           timestamp: DateTime.fromMillisecondsSinceEpoch(0),
         );
-        final secondLocation = Location(
+        final Location secondLocation = Location(
           latitude: 0,
           longitude: 0,
           timestamp: DateTime.fromMillisecondsSinceEpoch(1),
@@ -92,7 +92,7 @@ void main() {
     test(
       'fromMap throws argument error when latitude or longitude are null',
       () {
-        final location = <dynamic, dynamic>{
+        final Map<dynamic, dynamic> location = <dynamic, dynamic>{
           'latitude': null,
           'longitude': null,
           'timestamp': 1615216821218,
@@ -104,13 +104,13 @@ void main() {
 
   group('toString tests:', () {
     test('toString should list the contents of all properties', () {
-      final mockLocation = Location(
+      final Location mockLocation = Location(
         latitude: 52.2165157,
         longitude: 6.9437819,
         timestamp: DateTime.fromMillisecondsSinceEpoch(0).toUtc(),
       );
 
-      final expected =
+      final String expected =
           '''
       Latitude: ${mockLocation.latitude},
       Longitude: ${mockLocation.longitude},

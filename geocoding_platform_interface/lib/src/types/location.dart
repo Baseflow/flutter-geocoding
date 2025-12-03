@@ -10,7 +10,7 @@ class Location {
   const Location({
     required this.latitude,
     required this.longitude,
-    required this.timestamp,
+    this.timestamp,
   });
 
   /// The latitude associated with the placemark.
@@ -20,7 +20,10 @@ class Location {
   final double longitude;
 
   /// The UTC timestamp the coordinates have been requested.
-  final DateTime timestamp;
+  ///
+  /// If `null`, the time the coordinates have been determined is not known or
+  /// not provided by the platform (e.g. on Android).
+  final DateTime? timestamp;
 
   @override
   bool operator ==(Object other) =>

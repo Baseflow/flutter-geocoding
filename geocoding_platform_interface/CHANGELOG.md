@@ -1,3 +1,10 @@
+## 5.0.0
+
+- **BREAKING CHANGES:**
+  - Changes the `Location.timestamp` field to allow `null` values. Not all 
+    platforms (e.g. Android) specify a timestamp indicating when the 
+    coordinates for an address where resolved.
+
 ## 4.0.0
 
 - **BREAKING CHANGES:**
