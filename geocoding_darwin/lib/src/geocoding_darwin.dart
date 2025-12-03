@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart' as flt;
-import 'package:geocoding_darwin/src/geocoding/geocoding.g.dart';
-import 'package:geocoding_darwin/src/geocoding/geocoding_proxy.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
+
+import 'geocoding/geocoding.g.dart';
+import 'geocoding/geocoding_proxy.dart';
 
 export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 
@@ -73,7 +74,7 @@ class GeocodingDarwin extends Geocoding {
   }
 
   @override
-  Future<bool> isPresent() => Future.value(true);
+  Future<bool> isPresent() => Future<bool>.value(true);
 
   @override
   Future<List<Placemark>> placemarkFromAddress(
