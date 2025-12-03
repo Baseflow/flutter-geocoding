@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  geocoding_platform_interface: ^3.2.0
+  geocoding_platform_interface: ">=3.2.0 <6.0.0"
 
 dev_dependencies:
   flutter_test:
