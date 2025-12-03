@@ -5,7 +5,9 @@ import 'geocoding_darwin.dart';
 class GeocodingDarwinFactory extends GeocodingPlatformFactory {
   /// Registers this class as the default instance of the
   /// [GeocodingPlatformFactory].
-  static void registerWith() {}
+  static void registerWith() {
+    GeocodingPlatformFactory.instance = GeocodingDarwinFactory();
+  }
 
   @override
   Geocoding createGeocoding(GeocodingCreationParams params) {
