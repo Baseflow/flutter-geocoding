@@ -1,48 +1,62 @@
+## 5.0.0
+
+- **BREAKING CHANGES:**
+  - Implements version 4.0.0 of the geocoding_platform_interface.
+    - Allows passing the `Locale` with the `locationFromAddress`,
+      `locationFromCoordinates` and `placemarkFromAddress` methods instead of
+      having to separately set the `setLocaleIdentifier` method (this resolves
+      potential race condition).
+    - Changes the `Location.timestamp` field to allow `null` values. Not all
+      platforms (e.g. Android) specify a timestamp indicating when the
+      coordinates for an address where resolved.
+- Offers access to the Android native `geocoder` API by importing the
+  `geocoder.dart` library (using: `import "package:geocoding_android/geocoder.dart";`).
+
 ## 4.0.1
 
-* Resolved issue #271 where the app could crash if the onError message was null. The error message is now properly handled as nullable.
+- Resolved issue #271 where the app could crash if the onError message was null. The error message is now properly handled as nullable.
 
 ## 4.0.0
 
-* **BREAKING CHANGES** Please update to Flutter 3.29+ before updating to this version
-* Updates Android CompileSDK to 35
-* Migrates example project to applying Gradle plugins with the declarative plugins block
-* Updates kotlin version to soon minimal supported Kotlin version `1.8.10`
-* Updates Gradle version to `8.11.1`
+- **BREAKING CHANGES** Please update to Flutter 3.29+ before updating to this version
+- Updates Android CompileSDK to 35
+- Migrates example project to applying Gradle plugins with the declarative plugins block
+- Updates kotlin version to soon minimal supported Kotlin version `1.8.10`
+- Updates Gradle version to `8.11.1`
 
 ## 3.3.1
 
-* Removes deprecated support for Android V1 embedding as support will be removed from Flutter (see [flutter/flutter#144726](https://github.com/flutter/flutter/pull/144726)).
+- Removes deprecated support for Android V1 embedding as support will be removed from Flutter (see [flutter/flutter#144726](https://github.com/flutter/flutter/pull/144726)).
 
 ## 3.3.0
 
-* Adds `setLocaleIdentifier` to the Android example app.
+- Adds `setLocaleIdentifier` to the Android example app.
 
 ## 3.2.0
 
-* Exposes isPresent() call that returns true if there is a geocoder implementation present that may return results.
+- Exposes isPresent() call that returns true if there is a geocoder implementation present that may return results.
 
 ## 3.1.0
 
-* Fixes deprecation build warnings. 
-* Adds Android API 34 support.
+- Fixes deprecation build warnings.
+- Adds Android API 34 support.
 
 ## 3.0.0
 
-* **BREAKING CHANGES**:
-  * Updates `geocoding_platform_interface` to version 3.1.0.
-  * Adds method `setLocaleIdentifier` to set the locale for all calls to the geocoding platform.
-  * Removes the `localeIdentifier` argument from all methods. Use method `setLocaleIdentifier` to configure the locale.
-* Implements `placemarkFromAddress`.
+- **BREAKING CHANGES**:
+  - Updates `geocoding_platform_interface` to version 3.1.0.
+  - Adds method `setLocaleIdentifier` to set the locale for all calls to the geocoding platform.
+  - Removes the `localeIdentifier` argument from all methods. Use method `setLocaleIdentifier` to configure the locale.
+- Implements `placemarkFromAddress`.
 
 ## 2.1.2
 
-* Downgrades Android Gradle plugin to version 7.3.1 so the project is inline with current Flutter stable (version 3.10.5).
+- Downgrades Android Gradle plugin to version 7.3.1 so the project is inline with current Flutter stable (version 3.10.5).
 
 ## 2.1.1
 
-* Updates the Android Gradle plugin to version 8 and the Android Gradle build tools to version 8.0.2.
+- Updates the Android Gradle plugin to version 8 and the Android Gradle build tools to version 8.0.2.
 
 ## 2.1.0
 
-* Splits from `geocoding` as a federated implementation.
+- Splits from `geocoding` as a federated implementation.

@@ -1,164 +1,235 @@
+import 'package:baseflow_plugin_template/baseflow_plugin_template.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding_android/geocoding_android.dart';
 
-import 'template/globals.dart';
+/// Defines the main theme color.
+final MaterialColor themeMaterialColor =
+    BaseflowPluginExample.createMaterialColor(
+      const Color.fromRGBO(48, 49, 60, 1),
+    );
 
 void main() {
-  runApp(BaseflowPluginExample());
+  runApp(const GeocodeWidget());
 }
 
-/// A Flutter application demonstrating the functionality of this plugin
-class BaseflowPluginExample extends StatelessWidget {
-  /// [MaterialColor] to be used in the app [ThemeData]
-  final MaterialColor themeMaterialColor =
-      createMaterialColor(const Color.fromRGBO(48, 49, 60, 1));
+/// Example [Widget] showing the use of the Geocode plugin
+class GeocodeWidget extends StatefulWidget {
+  /// Constructs the [GeocodeWidget] class
+  const GeocodeWidget({super.key});
 
-  /// Constructs the [BaseflowPluginExample] class
-  BaseflowPluginExample({Key? key}) : super(key: key);
+  /// Utility method to create a page with the Baseflow templating.
+  static ExamplePage createPage() {
+    return ExamplePage(Icons.location_on, (context) => const GeocodeWidget());
+  }
+
+  @override
+  State<GeocodeWidget> createState() => _GeocodeWidgetState();
+}
+
+class _GeocodeWidgetState extends State<GeocodeWidget> {
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _latitudeController = TextEditingController();
+  final TextEditingController _longitudeController = TextEditingController();
+  String _output = '';
+  Locale? _locale;
+  final Geocoding _geocoding = GeocodingAndroidFactory().createGeocoding(
+    GeocodingAndroidCreationParams(),
+  );
+
+  @override
+  void initState() {
+    _addressController.text = 'Gronausestraat 710, Enschede';
+    _latitudeController.text = '52.2165157';
+    _longitudeController.text = '6.9437819';
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = ThemeData();
-    return MaterialApp(
-      title: 'Baseflow $pluginName',
-      theme: theme.copyWith(
-        scaffoldBackgroundColor: const Color.fromRGBO(48, 49, 60, 0.8),
-        colorScheme: theme.colorScheme.copyWith(
-          secondary: Colors.white60,
-          primary: createMaterialColor(const Color.fromRGBO(48, 49, 60, 1)),
-          surface: const Color.fromRGBO(48, 49, 60, 0.8),
-        ),
-        bottomAppBarTheme: theme.bottomAppBarTheme.copyWith(
-          color: const Color.fromRGBO(57, 58, 71, 1),
-        ),
-        buttonTheme: ButtonThemeData(
-          buttonColor: themeMaterialColor.shade500,
-          disabledColor: themeMaterialColor.withRed(200),
-          splashColor: themeMaterialColor.shade50,
-          textTheme: ButtonTextTheme.primary,
-        ),
-        hintColor: themeMaterialColor.shade500,
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            height: 1.3,
-          ),
-          bodyMedium: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            height: 1.2,
-          ),
-          labelLarge: TextStyle(color: Colors.white),
-          displayLarge: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        inputDecorationTheme: const InputDecorationTheme(
-          fillColor: Color.fromRGBO(37, 37, 37, 1),
-          filled: true,
-        ),
-      ),
-      home: const AppHome(title: 'Baseflow $pluginName example app'),
-    );
-  }
+    return BaseflowPluginExample(
+      pluginName: 'geocoding_darwin',
+      githubURL: 'https://github.com/Baseflow/flutter-geocoding',
+      pubDevURL: 'https://pub.dev/packages/geocoding',
+      pages: <ExamplePage>[
+        ExamplePage(Icons.location_on, (BuildContext context) {
+          return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      DropdownMenu(
+                        leadingIcon: Icon(Icons.language, color: Colors.white),
+                        hintText: 'Locale',
+                        initialSelection: Localizations.localeOf(context),
+                        dropdownMenuEntries: <DropdownMenuEntry<Locale>>[
+                          DropdownMenuEntry<Locale>(
+                            value: Localizations.localeOf(context),
+                            label: 'Default locale',
+                          ),
+                          DropdownMenuEntry<Locale>(
+                            value: Locale('en_US'),
+                            label: 'English (US)',
+                          ),
+                          DropdownMenuEntry<Locale>(
+                            value: Locale('nl_NL'),
+                            label: 'Nederlands (NL)',
+                          ),
+                        ],
+                        onSelected: (Locale? value) =>
+                            setState(() => _locale = value),
+                      ),
+                    ],
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 32)),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                          autocorrect: false,
+                          controller: _latitudeController,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          decoration: const InputDecoration(
+                            hintText: 'Latitude',
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: TextField(
+                          autocorrect: false,
+                          controller: _longitudeController,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          decoration: const InputDecoration(
+                            hintText: 'Longitude',
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 8)),
+                  Center(
+                    child: ElevatedButton(
+                      child: const Text('Look up address'),
+                      onPressed: () {
+                        final latitude = double.parse(_latitudeController.text);
+                        final longitude = double.parse(
+                          _longitudeController.text,
+                        );
 
-  /// Creates a [MaterialColor] based on the supplied [Color]
-  static MaterialColor createMaterialColor(Color color) {
-    final strengths = <double>[.05];
-    final swatch = <int, Color>{};
-    final r = color.r, g = color.g, b = color.b;
+                        _geocoding
+                            .placemarkFromCoordinates(
+                              latitude,
+                              longitude,
+                              locale: _locale,
+                            )
+                            .then((placemarks) {
+                              var output = 'No results found.';
+                              if (placemarks.isNotEmpty) {
+                                output = placemarks[0].toDisplayString();
+                              }
 
-    for (var i = 1; i < 10; i++) {
-      strengths.add(0.1 * i);
-    }
-    for (var strength in strengths) {
-      final ds = 0.5 - strength;
-      swatch[(strength * 1000).round()] = Color.fromRGBO(
-        (r + ((ds < 0 ? r : (1.0 - r)) * ds) * 255).round(),
-        (g + ((ds < 0 ? g : (1.0 - g)) * ds) * 255).round(),
-        (b + ((ds < 0 ? b : (1.0 - b)) * ds) * 255).round(),
-        1,
-      );
-    }
-    return MaterialColor(color.toARGB32(), swatch);
-  }
-}
+                              setState(() {
+                                _output = output;
+                              });
+                            });
+                      },
+                    ),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 32)),
+                  TextField(
+                    autocorrect: false,
+                    controller: _addressController,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    decoration: const InputDecoration(hintText: 'Address'),
+                    keyboardType: TextInputType.text,
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 8)),
+                  Center(
+                    child: ElevatedButton(
+                      child: const Text('Look up location'),
+                      onPressed: () {
+                        _geocoding
+                            .locationFromAddress(_addressController.text)
+                            .then((locations) {
+                              var output = 'No results found.';
+                              if (locations.isNotEmpty) {
+                                output = locations[0].toDisplayString();
+                              }
 
-/// A Flutter example demonstrating how the [pluginName] plugin could be used
-class AppHome extends StatefulWidget {
-  /// Constructs the [AppHome] class
-  const AppHome({Key? key, required this.title}) : super(key: key);
-
-  /// The [title] of the application, which is shown in the application's
-  /// title bar.
-  final String title;
-
-  @override
-  State<AppHome> createState() => _AppHomeState();
-}
-
-class _AppHomeState extends State<AppHome> {
-  final _pageController = PageController(initialPage: 0);
-  var _currentPage = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        title: Center(
-          child: Image.asset(
-            'res/images/baseflow_logo_def_light-02.png',
-            width: 140,
-          ),
-        ),
-      ),
-      body: PageView(
-        controller: _pageController,
-        children: pages,
-        onPageChanged: (page) {
-          setState(() {
-            _currentPage = page;
-          });
-        },
-      ),
-      bottomNavigationBar: _bottomAppBar(),
-    );
-  }
-
-  BottomAppBar _bottomAppBar() {
-    return BottomAppBar(
-      elevation: 5,
-      color: Theme.of(context).bottomAppBarTheme.color,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.unmodifiable(() sync* {
-          for (var i = 0; i < pages.length; i++) {
-            yield Expanded(
-              child: IconButton(
-                iconSize: 30,
-                icon: Icon(icons.elementAt(i)),
-                color: _bottomAppBarIconColor(i),
-                onPressed: () => _animateToPage(i),
+                              setState(() {
+                                _output = output;
+                              });
+                            });
+                      },
+                    ),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 8)),
+                  Center(
+                    child: ElevatedButton(
+                      child: const Text('Is present'),
+                      onPressed: () {
+                        _geocoding.isPresent().then((isPresent) {
+                          var output = isPresent
+                              ? "Geocoder is present"
+                              : "Geocoder is not present";
+                          setState(() {
+                            _output = output;
+                          });
+                        });
+                      },
+                    ),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 8)),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(_output),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            );
-          }
-        }()),
-      ),
+            ),
+          );
+        }),
+      ],
     );
   }
+}
 
-  void _animateToPage(int page) {
-    _pageController.animateToPage(page,
-        duration: const Duration(milliseconds: 200), curve: Curves.linear);
+extension _PlacemarkExtensions on Placemark {
+  String toDisplayString() {
+    return '''
+      Name: $name, 
+      Street: $street, 
+      ISO Country Code: $isoCountryCode, 
+      Country: $country, 
+      Postal code: $postalCode, 
+      Administrative area: $administrativeArea, 
+      Subadministrative area: $subAdministrativeArea,
+      Locality: $locality,
+      Sublocality: $subLocality,
+      Thoroughfare: $thoroughfare,
+      Subthoroughfare: $subThoroughfare''';
   }
+}
 
-  Color _bottomAppBarIconColor(int page) {
-    return _currentPage == page
-        ? Colors.white
-        : Theme.of(context).colorScheme.secondary;
+extension _LocationExtensions on Location {
+  String toDisplayString() {
+    return '''
+      Latitude: $latitude,
+      Longitude: $longitude,
+      Timestamp: $timestamp''';
   }
 }
