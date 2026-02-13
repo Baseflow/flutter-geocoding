@@ -23,7 +23,7 @@ abstract class CLFloor extends NSObject {
 /// An object that displays interactive web content, such as for an in-app
 /// browser.
 ///
-/// See https://developer.apple.com/documentation/webkit/wkwebview.
+/// See https://developer.apple.com/documentation/corelocation/clgeocoder.
 @ProxyApi(
   swiftOptions: SwiftProxyApiOptions(
     import: 'CoreLocation',

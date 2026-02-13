@@ -1,3 +1,4 @@
-## 0.0.1
+## 1.0.0
 
-* TODO: Describe initial release.
+- Initial release of the geocoding_darwin package containing easy geocoding and
+  reverse-geocoding features for iOS and macOS.
