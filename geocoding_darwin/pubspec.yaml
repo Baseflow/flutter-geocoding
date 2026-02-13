@@ -5,8 +5,6 @@ description: |-
 version: 1.0.0
 repository: https://github.com/baseflow/flutter-geocoding
 
-publish_to: none
-
 environment:
   sdk: ^3.8.1
   flutter: ">=3.7.0"
