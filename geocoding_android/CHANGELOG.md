@@ -1,3 +1,7 @@
+## 5.0.1
+
+- Update the example app to demonstrate Android-specific platform channel methods.
+
 ## 5.0.0
 
 - **BREAKING CHANGES:**
