@@ -1,12 +1,9 @@
+import 'dart:async';
+import 'dart:ui' as ui;
+
 import 'package:baseflow_plugin_template/baseflow_plugin_template.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding_android/geocoding_android.dart';
-
-/// Defines the main theme color.
-final MaterialColor themeMaterialColor =
-    BaseflowPluginExample.createMaterialColor(
-      const Color.fromRGBO(48, 49, 60, 1),
-    );
+import 'package:geocoding_android/geocoder.dart';
 
 void main() {
   runApp(const GeocodeWidget());
@@ -30,25 +27,89 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _latitudeController = TextEditingController();
   final TextEditingController _longitudeController = TextEditingController();
+  final TextEditingController _lowerLeftLatitudeBoundController =
+      TextEditingController();
+  final TextEditingController _lowerLeftLongitudeBoundController =
+      TextEditingController();
+  final TextEditingController _upperRightLatitudeBoundController =
+      TextEditingController();
+  final TextEditingController _upperRightLongitudeBoundController =
+      TextEditingController();
   String _output = '';
-  Locale? _locale;
-  final Geocoding _geocoding = GeocodingAndroidFactory().createGeocoding(
-    GeocodingAndroidCreationParams(),
-  );
+  String? _locale;
+
+  (Geocoder, GeocodeListener) _createGeocoderWithListener() {
+    final geocoderInstance = Geocoder(
+      locale: Locale(
+        identifier:
+            _locale ?? ui.PlatformDispatcher.instance.locale.languageCode,
+      ),
+    );
+
+    final listener = GeocodeListener(
+      onGeocode: (GeocodeListener listener, List<Address?> addresses) {
+        _buildOutputFromAddresses(addresses);
+      },
+      onError: (GeocodeListener instance, String? errorMessage) {
+        setState(() {
+          _output = 'Error: ${errorMessage ?? "Unknown error"}';
+        });
+      },
+    );
+
+    return (geocoderInstance, listener);
+  }
 
   @override
   void initState() {
-    _addressController.text = 'Gronausestraat 710, Enschede';
+    super.initState();
+
+    _addressController.text = 'Gronausestraat';
     _latitudeController.text = '52.2165157';
     _longitudeController.text = '6.9437819';
+    _lowerLeftLatitudeBoundController.text = '52.207778';
+    _lowerLeftLongitudeBoundController.text = '6.925356';
+    _upperRightLatitudeBoundController.text = '52.224816';
+    _upperRightLongitudeBoundController.text = '6.979773';
+  }
 
-    super.initState();
+  Future<void> _buildOutputFromAddresses(List<Address?> addresses) async {
+    final buffer = StringBuffer();
+
+    for (int i = 0; i < addresses.length; i++) {
+      final address = addresses[i];
+      if (address == null) continue;
+
+      final addressLine = await address.getAddressLine(0);
+      final locality = await address.getLocality();
+      final adminArea = await address.getAdminArea();
+      final countryName = await address.getCountryName();
+      final postalCode = await address.getPostalCode();
+      final lat = await address.getLatitude();
+      final lng = await address.getLongitude();
+
+      buffer.writeln('--- Address ${i + 1} ---');
+      buffer.writeln('Address line: $addressLine');
+      buffer.writeln('Locality: $locality');
+      buffer.writeln('Admin area: $adminArea');
+      buffer.writeln('Country: $countryName');
+      buffer.writeln('Postal code: $postalCode');
+      buffer.writeln('Lat/Lng: $lat, $lng');
+    }
+
+    if (buffer.isEmpty) {
+      buffer.write('No results found.');
+    }
+
+    setState(() {
+      _output = buffer.toString();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseflowPluginExample(
-      pluginName: 'geocoding_darwin',
+      pluginName: 'geocoding_android',
       githubURL: 'https://github.com/Baseflow/flutter-geocoding',
       pubDevURL: 'https://pub.dev/packages/geocoding',
       pages: <ExamplePage>[
@@ -61,140 +122,23 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      DropdownMenu(
-                        leadingIcon: Icon(Icons.language, color: Colors.white),
-                        hintText: 'Locale',
-                        initialSelection: Localizations.localeOf(context),
-                        dropdownMenuEntries: <DropdownMenuEntry<Locale>>[
-                          DropdownMenuEntry<Locale>(
-                            value: Localizations.localeOf(context),
-                            label: 'Default locale',
-                          ),
-                          DropdownMenuEntry<Locale>(
-                            value: Locale('en_US'),
-                            label: 'English (US)',
-                          ),
-                          DropdownMenuEntry<Locale>(
-                            value: Locale('nl_NL'),
-                            label: 'Nederlands (NL)',
-                          ),
-                        ],
-                        onSelected: (Locale? value) =>
-                            setState(() => _locale = value),
-                      ),
-                    ],
-                  ),
+                  _languageSelector(context),
                   const Padding(padding: EdgeInsets.only(top: 32)),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: TextField(
-                          autocorrect: false,
-                          controller: _latitudeController,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          decoration: const InputDecoration(
-                            hintText: 'Latitude',
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: TextField(
-                          autocorrect: false,
-                          controller: _longitudeController,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          decoration: const InputDecoration(
-                            hintText: 'Longitude',
-                          ),
-                          keyboardType: TextInputType.number,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 8)),
-                  Center(
-                    child: ElevatedButton(
-                      child: const Text('Look up address'),
-                      onPressed: () {
-                        final latitude = double.parse(_latitudeController.text);
-                        final longitude = double.parse(
-                          _longitudeController.text,
-                        );
-
-                        _geocoding
-                            .placemarkFromCoordinates(
-                              latitude,
-                              longitude,
-                              locale: _locale,
-                            )
-                            .then((placemarks) {
-                              var output = 'No results found.';
-                              if (placemarks.isNotEmpty) {
-                                output = placemarks[0].toDisplayString();
-                              }
-
-                              setState(() {
-                                _output = output;
-                              });
-                            });
-                      },
-                    ),
-                  ),
+                  _isPresent(),
                   const Padding(padding: EdgeInsets.only(top: 32)),
-                  TextField(
-                    autocorrect: false,
-                    controller: _addressController,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    decoration: const InputDecoration(hintText: 'Address'),
-                    keyboardType: TextInputType.text,
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 8)),
-                  Center(
-                    child: ElevatedButton(
-                      child: const Text('Look up location'),
-                      onPressed: () {
-                        _geocoding
-                            .locationFromAddress(_addressController.text)
-                            .then((locations) {
-                              var output = 'No results found.';
-                              if (locations.isNotEmpty) {
-                                output = locations[0].toDisplayString();
-                              }
-
-                              setState(() {
-                                _output = output;
-                              });
-                            });
-                      },
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 8)),
-                  Center(
-                    child: ElevatedButton(
-                      child: const Text('Is present'),
-                      onPressed: () {
-                        _geocoding.isPresent().then((isPresent) {
-                          var output = isPresent
-                              ? "Geocoder is present"
-                              : "Geocoder is not present";
-                          setState(() {
-                            _output = output;
-                          });
-                        });
-                      },
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 8)),
+                  _getFromLocation(context),
+                  const Padding(padding: EdgeInsets.only(top: 32)),
+                  _getFromLocationName(context),
+                  const Padding(padding: EdgeInsets.only(top: 16)),
+                  // -- Output display --
                   Expanded(
                     child: SingleChildScrollView(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: Text(_output),
+                        child: Text(
+                          _output,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ),
                     ),
                   ),
@@ -206,30 +150,209 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
       ],
     );
   }
-}
 
-extension _PlacemarkExtensions on Placemark {
-  String toDisplayString() {
-    return '''
-      Name: $name, 
-      Street: $street, 
-      ISO Country Code: $isoCountryCode, 
-      Country: $country, 
-      Postal code: $postalCode, 
-      Administrative area: $administrativeArea, 
-      Subadministrative area: $subAdministrativeArea,
-      Locality: $locality,
-      Sublocality: $subLocality,
-      Thoroughfare: $thoroughfare,
-      Subthoroughfare: $subThoroughfare''';
+  Widget _languageSelector(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        DropdownMenu(
+          leadingIcon: Icon(Icons.language, color: Colors.white),
+          hintText: 'Locale',
+          initialSelection: Localizations.localeOf(context).toString(),
+          dropdownMenuEntries: <DropdownMenuEntry<String>>[
+            DropdownMenuEntry<String>(
+              value: Localizations.localeOf(context).toString(),
+              label: 'Default locale',
+            ),
+            DropdownMenuEntry<String>(value: 'en', label: 'English (US)'),
+            DropdownMenuEntry<String>(value: 'nl', label: 'Nederlands (NL)'),
+          ],
+          onSelected: (String? value) => setState(() => _locale = value),
+        ),
+      ],
+    );
   }
-}
 
-extension _LocationExtensions on Location {
-  String toDisplayString() {
-    return '''
-      Latitude: $latitude,
-      Longitude: $longitude,
-      Timestamp: $timestamp''';
+  Widget _isPresent() {
+    final isPresent = Geocoder.isPresent();
+
+    return FutureBuilder<Widget>(
+      future: isPresent.then(
+        (present) => Text(
+          'Is geocoder present on this device? ${present ? "Yes" : "No"}',
+        ),
+      ),
+      builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return snapshot.data!;
+        }
+      },
+    );
+  }
+
+  Widget _getFromLocation(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: TextField(
+                autocorrect: false,
+                controller: _latitudeController,
+                style: Theme.of(context).textTheme.bodyMedium,
+                decoration: const InputDecoration(hintText: 'Latitude'),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: TextField(
+                autocorrect: false,
+                controller: _longitudeController,
+                style: Theme.of(context).textTheme.bodyMedium,
+                decoration: const InputDecoration(hintText: 'Longitude'),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+          ],
+        ),
+        const Padding(padding: EdgeInsets.only(top: 8)),
+        Center(
+          child: ElevatedButton(
+            child: const Text('Look up address'),
+            onPressed: () {
+              final latitude = double.parse(_latitudeController.text);
+              final longitude = double.parse(_longitudeController.text);
+
+              setState(() => _output = 'Loading...');
+
+              final (geocoderInstance, listener) =
+                  _createGeocoderWithListener();
+
+              /// If you're on Pre Android API 33, you need to use getFromLocationPreAndroidApi33.
+              geocoderInstance.getFromLocation(
+                latitude,
+                longitude,
+                5,
+                listener,
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getFromLocationName(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          autocorrect: false,
+          controller: _addressController,
+          style: Theme.of(context).textTheme.bodyMedium,
+          decoration: const InputDecoration(hintText: 'Address'),
+          keyboardType: TextInputType.text,
+        ),
+        const Padding(padding: EdgeInsets.only(top: 8)),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: TextField(
+                autocorrect: false,
+                controller: _lowerLeftLatitudeBoundController,
+                style: Theme.of(context).textTheme.bodyMedium,
+                decoration: const InputDecoration(
+                  hintText: 'Lower left latitude bound',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: TextField(
+                autocorrect: false,
+                controller: _lowerLeftLongitudeBoundController,
+                style: Theme.of(context).textTheme.bodyMedium,
+                decoration: const InputDecoration(
+                  hintText: 'Lower left longitude bound',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+          ],
+        ),
+        const Padding(padding: EdgeInsets.only(top: 8)),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: TextField(
+                autocorrect: false,
+                controller: _upperRightLatitudeBoundController,
+                style: Theme.of(context).textTheme.bodyMedium,
+                decoration: const InputDecoration(
+                  hintText: 'Upper right latitude bound',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: TextField(
+                autocorrect: false,
+                controller: _upperRightLongitudeBoundController,
+                style: Theme.of(context).textTheme.bodyMedium,
+                decoration: const InputDecoration(
+                  hintText: 'Upper right longitude bound',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+          ],
+        ),
+        const Padding(padding: EdgeInsets.only(top: 8)),
+        Center(
+          child: ElevatedButton(
+            child: const Text('Look up location'),
+            onPressed: () {
+              setState(() => _output = 'Loading...');
+
+              final lowerLeftLatitude = double.parse(
+                _lowerLeftLatitudeBoundController.text,
+              );
+              final lowerLeftLongitude = double.parse(
+                _lowerLeftLongitudeBoundController.text,
+              );
+              final upperRightLatitude = double.parse(
+                _upperRightLatitudeBoundController.text,
+              );
+              final upperRightLongitude = double.parse(
+                _upperRightLongitudeBoundController.text,
+              );
+
+              final (geocoderInstance, listener) =
+                  _createGeocoderWithListener();
+
+              /// If you're on Pre Android API 33, you need to use getFromLocationNamePreAndroidApi33.
+              geocoderInstance.getFromLocationName(
+                _addressController.text,
+                5,
+                listener,
+                GeographicBounds(
+                  lowerLeftLatitude: lowerLeftLatitude,
+                  lowerLeftLongitude: lowerLeftLongitude,
+                  upperRightLatitude: upperRightLatitude,
+                  upperRightLongitude: upperRightLongitude,
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }
