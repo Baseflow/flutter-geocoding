@@ -1,6 +1,6 @@
 ## 5.0.1
 
-- Update the example app to demonstrate Android-specific platform channel methods.
+- Updates the example app to demonstrate Android-specific platform channel methods.
 
 ## 5.0.0
 
