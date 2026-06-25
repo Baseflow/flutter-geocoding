@@ -204,7 +204,10 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
 
       var output = 'No results found.';
       if (placemarks != null && placemarks.isNotEmpty) {
-        output = await placemarks[0].toLocationDisplayString();
+        final cl.CLLocation? location = placemarks[0].location;
+        output = location != null
+            ? await location.toDisplayString()
+            : 'No location found.';
       }
 
       setState(() => _output = output);
@@ -229,17 +232,12 @@ extension _CLPlacemarkExtensions on cl.CLPlacemark {
       Thoroughfare: $thoroughfare,
       Subthoroughfare: $subThoroughfare''';
   }
+}
 
-  Future<String> toLocationDisplayString() async {
-    final cl.CLLocation? localLocation = location;
-
-    if (localLocation == null) {
-      return 'No location found.';
-    }
-
-    final cl.CLLocationCoordinate2D coordinate = await localLocation
-        .getCoordinate();
-    final int timestamp = await localLocation.getTimestamp();
+extension _CLLocationExtensions on cl.CLLocation {
+  Future<String> toDisplayString() async {
+    final cl.CLLocationCoordinate2D coordinate = await getCoordinate();
+    final int timestamp = await getTimestamp();
 
     return '''
       Latitude: ${coordinate.latitude},
