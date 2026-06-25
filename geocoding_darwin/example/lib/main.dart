@@ -35,10 +35,6 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
   Locale? _locale;
   final cl.CLGeocoder _geocoder = cl.CLGeocoder();
 
-  cl.Locale? _nativeLocale() {
-    return _locale != null ? cl.Locale(identifier: _locale!.toString()) : null;
-  }
-
   @override
   void initState() {
     _addressController.text = 'Gronausestraat 710, Enschede';
@@ -166,6 +162,10 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
         }),
       ],
     );
+  }
+
+  cl.Locale? _nativeLocale() {
+    return _locale != null ? cl.Locale(identifier: _locale!.toString()) : null;
   }
 
   Future<void> _reverseGeocode() async {
