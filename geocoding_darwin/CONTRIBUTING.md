@@ -3,6 +3,12 @@
 Please start by taking a look at the general guide to contributing to the `baseflow/flutter-geocoding` repo:
 https://github.com/baseflow/flutter-geocoding/blob/main/CONTRIBUTING.md
 
+## Versioning
+
+When your change affects this package (code, example, README, etc.), bump the version in
+[`pubspec.yaml`](pubspec.yaml) and add a matching entry at the top of
+[`CHANGELOG.md`](CHANGELOG.md) using the same version number (e.g. `## 1.0.1`). See the [Pull request scope and versioning](https://github.com/baseflow/flutter-geocoding/blob/main/CONTRIBUTING.md#pull-request-scope-and-versioning) section in the root contributing guide.
+
 ## Package Structure
 
 This plugin serves as a platform implementation plugin as outlined in [federated plugins](https://docs.flutter.dev/packages-and-plugins/developing-packages#federated-plugins).

@@ -1,6 +1,7 @@
 import 'package:baseflow_plugin_template/baseflow_plugin_template.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding_darwin/geocoding_darwin.dart';
+import 'package:flutter/services.dart';
+import 'package:geocoding_darwin/clgeocoder.dart' as cl;
 
 /// Defines the main theme color.
 final MaterialColor themeMaterialColor =
@@ -32,9 +33,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
   final TextEditingController _longitudeController = TextEditingController();
   String _output = '';
   Locale? _locale;
-  final Geocoding _geocoding = GeocodingDarwinFactory().createGeocoding(
-    GeocodingDarwinCreationParams(),
-  );
+  final cl.CLGeocoder _geocoder = cl.CLGeocoder();
 
   @override
   void initState() {
@@ -119,30 +118,8 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   const Padding(padding: EdgeInsets.only(top: 8)),
                   Center(
                     child: ElevatedButton(
+                      onPressed: _reverseGeocode,
                       child: const Text('Look up address'),
-                      onPressed: () {
-                        final latitude = double.parse(_latitudeController.text);
-                        final longitude = double.parse(
-                          _longitudeController.text,
-                        );
-
-                        _geocoding
-                            .placemarkFromCoordinates(
-                              latitude,
-                              longitude,
-                              locale: _locale,
-                            )
-                            .then((placemarks) {
-                              var output = 'No results found.';
-                              if (placemarks.isNotEmpty) {
-                                output = placemarks[0].toDisplayString();
-                              }
-
-                              setState(() {
-                                _output = output;
-                              });
-                            });
-                      },
                     ),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 32)),
@@ -156,37 +133,17 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   const Padding(padding: EdgeInsets.only(top: 8)),
                   Center(
                     child: ElevatedButton(
+                      onPressed: _forwardGeocode,
                       child: const Text('Look up location'),
-                      onPressed: () {
-                        _geocoding
-                            .locationFromAddress(_addressController.text)
-                            .then((locations) {
-                              var output = 'No results found.';
-                              if (locations.isNotEmpty) {
-                                output = locations[0].toDisplayString();
-                              }
-
-                              setState(() {
-                                _output = output;
-                              });
-                            });
-                      },
                     ),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 8)),
                   Center(
                     child: ElevatedButton(
-                      child: const Text('Is present'),
                       onPressed: () {
-                        _geocoding.isPresent().then((isPresent) {
-                          var output = isPresent
-                              ? "Geocoder is present"
-                              : "Geocoder is not present";
-                          setState(() {
-                            _output = output;
-                          });
-                        });
+                        setState(() => _output = 'Geocoder is present');
                       },
+                      child: const Text('Is present'),
                     ),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 8)),
@@ -206,16 +163,68 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
       ],
     );
   }
+
+  cl.Locale? _nativeLocale() {
+    return _locale != null ? cl.Locale(identifier: _locale!.toString()) : null;
+  }
+
+  Future<void> _reverseGeocode() async {
+    setState(() => _output = 'Loading...');
+
+    try {
+      final latitude = double.parse(_latitudeController.text);
+      final longitude = double.parse(_longitudeController.text);
+
+      final placemarks = await _geocoder.reverseGeocodeLocation(
+        cl.CLLocation(latitude: latitude, longitude: longitude),
+        _nativeLocale(),
+      );
+
+      var output = 'No results found.';
+      if (placemarks != null && placemarks.isNotEmpty) {
+        output = placemarks[0].toDisplayString();
+      }
+
+      setState(() => _output = output);
+    } on PlatformException catch (e) {
+      setState(() => _output = 'Error: ${e.message ?? e.code}');
+    } on FormatException catch (e) {
+      setState(() => _output = 'Error: ${e.message}');
+    }
+  }
+
+  Future<void> _forwardGeocode() async {
+    setState(() => _output = 'Loading...');
+
+    try {
+      final placemarks = await _geocoder.geocodeAddressString(
+        _addressController.text,
+        _nativeLocale(),
+      );
+
+      var output = 'No results found.';
+      if (placemarks != null && placemarks.isNotEmpty) {
+        final cl.CLLocation? location = placemarks[0].location;
+        output = location != null
+            ? await location.toDisplayString()
+            : 'No location found.';
+      }
+
+      setState(() => _output = output);
+    } on PlatformException catch (e) {
+      setState(() => _output = 'Error: ${e.message ?? e.code}');
+    }
+  }
 }
 
-extension _PlacemarkExtensions on Placemark {
+extension _CLPlacemarkExtensions on cl.CLPlacemark {
   String toDisplayString() {
     return '''
       Name: $name, 
-      Street: $street, 
+      Street: ${postalAddress?.street ?? thoroughfare}, 
       ISO Country Code: $isoCountryCode, 
       Country: $country, 
-      Postal code: $postalCode, 
+      Postal code: ${postalAddress?.postalCode ?? postalCode}, 
       Administrative area: $administrativeArea, 
       Subadministrative area: $subAdministrativeArea,
       Locality: $locality,
@@ -225,11 +234,14 @@ extension _PlacemarkExtensions on Placemark {
   }
 }
 
-extension _LocationExtensions on Location {
-  String toDisplayString() {
+extension _CLLocationExtensions on cl.CLLocation {
+  Future<String> toDisplayString() async {
+    final cl.CLLocationCoordinate2D coordinate = await getCoordinate();
+    final int timestamp = await getTimestamp();
+
     return '''
-      Latitude: $latitude,
-      Longitude: $longitude,
-      Timestamp: $timestamp''';
+      Latitude: ${coordinate.latitude},
+      Longitude: ${coordinate.longitude},
+      Timestamp: ${DateTime.fromMillisecondsSinceEpoch(timestamp)}''';
   }
 }
