@@ -6,8 +6,9 @@
 
 - [ ] I made sure the project builds.
 - [ ] I read the [Contributor Guide] and followed the process outlined there for submitting PRs.
-- [ ] I updated `pubspec.yaml` with an appropriate new version according to the [pub versioning philosophy], or this PR is does not need version changes.
-- [ ] I updated `CHANGELOG.md` to add a description of the change.
+- [ ] This PR only changes one package (or documents why an exception is needed).
+- [ ] I updated `pubspec.yaml` with an appropriate new version according to the [pub versioning philosophy], or this PR does not need version changes.
+- [ ] I updated `CHANGELOG.md` with a new `## x.y.z` section that matches the version in `pubspec.yaml`
 - [ ] I updated/added relevant documentation (doc comments with `///`).
 - [ ] I rebased onto `main`.
 - [ ] I added new tests to check the change I am making, or this PR does not need tests.
