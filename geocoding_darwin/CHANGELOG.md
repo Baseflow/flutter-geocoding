@@ -1,4 +1,4 @@
-## Unreleased
+## 1.0.1
 
 - Updates the example app to demonstrate Darwin-specific native CLGeocoder
   methods via `clgeocoder.dart`.
