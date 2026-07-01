@@ -1,3 +1,7 @@
+## 5.0.2
+
+- Corrects a small mistake in the 5.0.0 changelog entry.
+
 ## 5.0.1
 
 - Updates the example app to demonstrate Android-specific platform channel methods.
@@ -5,7 +9,7 @@
 ## 5.0.0
 
 - **BREAKING CHANGES:**
-  - Implements version 4.0.0 of the geocoding_platform_interface.
+  - Implements version 5.0.0 of the geocoding_platform_interface.
     - Allows passing the `Locale` with the `locationFromAddress`,
       `locationFromCoordinates` and `placemarkFromAddress` methods instead of
       having to separately set the `setLocaleIdentifier` method (this resolves
