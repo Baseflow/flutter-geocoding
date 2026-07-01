@@ -1,3 +1,8 @@
+## 1.0.2
+
+- Registers the `GeocodingDarwinFactory` class as `dartPluginClass` factory to
+  ensure the plugin automatically registers it self correctly.
+
 ## 1.0.1
 
 - Updates the example app to demonstrate Darwin-specific native CLGeocoder
