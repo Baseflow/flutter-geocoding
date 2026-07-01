@@ -1,12 +1,24 @@
+## 5.0.0
+
+- **BREAKING CHANGES**
+  - Updates to version 5.0.0 of the `geocoding_platform_interface` package,
+    which now allows a `null` value for the `Location.timestamp` field as not
+    all platforms (mainly Android) always supply a value.
+  - Updates to version 5.0.0 of the `geocoding_android` package which
+    implements the latest `geocoding_platform_interface` version.
+  - Updates to version 1.0.0 of the `geocoding_darwin` package which
+    implements the latest `geocoding_platform_interface` version and now
+    includes support for macOS.
+
 ## 4.0.0
 
-* **BREAKING CHANGES** Please update to Flutter 3.29+ before updating to this version
-* Updates Android CompileSDK to 35
-* Migrates example project to applying Gradle plugins with the declarative plugins block
-* Updates kotlin version to soon minimal supported Kotlin version `1.8.10`
-* Updates Gradle version to `8.11.1`
-* Updates iOS Platform version from `11` to `12`
-* Updates `geolocator_android` dependency version from `3.x.x` to `4.x.x`
+- **BREAKING CHANGES** Please update to Flutter 3.29+ before updating to this version
+- Updates Android CompileSDK to 35
+- Migrates example project to applying Gradle plugins with the declarative plugins block
+- Updates kotlin version to soon minimal supported Kotlin version `1.8.10`
+- Updates Gradle version to `8.11.1`
+- Updates iOS Platform version from `11` to `12`
+- Updates `geolocator_android` dependency version from `3.x.x` to `4.x.x`
 
 ## 3.0.1
 
@@ -15,7 +27,9 @@
 ## 3.0.0
 
 - **BREAKING CHANGES**:
-  - Locale is no longer part of the `locationFromAddress` and `placemarkFromAddress`, but should be set first by `setLocaleIdentifier`. This was already implemented on Android but is now working similarly on iOS.
+  - Locale is no longer part of the `locationFromAddress` and
+    `placemarkFromAddress`, but should be set first by `setLocaleIdentifier`.
+    This was already implemented on Android but is now working similarly on iOS.
   - Updates documentation related to setting the locale.
   - Added `setLocaleIdentifier` to the example app.
   - Updates `geocoding_ios` version to 3.0.0.
