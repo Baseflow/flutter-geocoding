@@ -1,6 +1,9 @@
 ## 5.0.0
 
-- **BREAKING CHANGES**
+- **BREAKING CHANGES** (see our [migration guide](../docs/migrations/migrate-to-5.0.0.md))
+  - Wraps all functionality into the `Geocoding` class.
+  - Deprecates the `setLocaleIdentifier` method in favor of the `locale`
+    parameter of the `Geocoding({Locale locale})` constructor.
   - Updates to version 5.0.0 of the `geocoding_platform_interface` package,
     which now allows a `null` value for the `Location.timestamp` field as not
     all platforms (mainly Android) always supply a value.

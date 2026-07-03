@@ -1,5 +1,8 @@
+import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geocoding_platform_interface/geocoding_platform_interface.dart'
+    as pi;
 import 'package:mockito/mockito.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -25,19 +28,31 @@ const mockPlacemark = Placemark(
 void main() {
   group('Geocoding', () {
     setUp(() {
-      GeocodingPlatform.instance = MockGeocodingPlatform();
+      GeocodingPlatformFactory.instance = MockGeocodingPlatformFactory();
     });
 
     test('locationFromAddress', () async {
-      final locations = await (locationFromAddress(''));
+      final locations = await (Geocoding().locationFromAddress(''));
       expect(locations.single, mockLocation);
     });
 
+    test('placemarkFromAddress', () async {
+      final placemarks = await (Geocoding().placemarkFromAddress(''));
+      expect(placemarks.single, mockPlacemark);
+    });
+
     test('placemarkFromCoordinates', () async {
-      final placemarks = await (placemarkFromCoordinates(0, 0));
+      final placemarks = await (Geocoding().placemarkFromCoordinates(0, 0));
       expect(placemarks.single, mockPlacemark);
     });
   });
+}
+
+class MockGeocodingPlatformFactory implements GeocodingPlatformFactory {
+  @override
+  pi.Geocoding createGeocoding(GeocodingCreationParams params) {
+    return MockGeocodingPlatform();
+  }
 }
 
 class MockGeocodingPlatform extends Mock
@@ -45,19 +60,21 @@ class MockGeocodingPlatform extends Mock
         // ignore: prefer_mixin
         MockPlatformInterfaceMixin
     implements
-        GeocodingPlatform {
+        pi.Geocoding {
   @override
   Future<List<Location>> locationFromAddress(
-    String address,
-  ) async {
+    String address, {
+    Locale? locale,
+  }) async {
     return [mockLocation];
   }
 
   @override
   Future<List<Placemark>> placemarkFromCoordinates(
     double latitude,
-    double longitude,
-  ) async {
+    double longitude, {
+    Locale? locale,
+  }) async {
     return [mockPlacemark];
   }
 }

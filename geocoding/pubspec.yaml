@@ -14,7 +14,7 @@ dependencies:
 
   geocoding_platform_interface: ^5.0.0
   geocoding_android: ^5.0.0
-  geocoding_darwin: ^1.0.0
+  geocoding_darwin: ^1.0.2
 
 dev_dependencies:
   flutter_test:

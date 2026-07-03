@@ -2,6 +2,8 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
+    # Ignore the example sub-project.
+    - 'example/**'
     # Ignore generated files
     - '**/*.g.dart'
     - 'lib/src/generated/*.dart'

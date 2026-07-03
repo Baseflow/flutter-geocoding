@@ -16,10 +16,12 @@ class GeocodeWidget extends StatefulWidget {
 }
 
 class _GeocodeWidgetState extends State<GeocodeWidget> {
+  final Geocoding _geocoding = Geocoding();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _latitudeController = TextEditingController();
   final TextEditingController _longitudeController = TextEditingController();
   String _output = '';
+  Locale? _locale;
 
   @override
   void initState() {
@@ -80,11 +82,16 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
                   final latitude = double.parse(_latitudeController.text);
                   final longitude = double.parse(_longitudeController.text);
 
-                  placemarkFromCoordinates(latitude, longitude)
+                  _geocoding
+                      .placemarkFromCoordinates(
+                    latitude,
+                    longitude,
+                    locale: _locale,
+                  )
                       .then((placemarks) {
                     var output = 'No results found.';
                     if (placemarks.isNotEmpty) {
-                      output = placemarks[0].toString();
+                      output = placemarks[0].toDisplayString();
                     }
 
                     setState(() {
@@ -112,11 +119,15 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
             child: ElevatedButton(
                 child: const Text('Look up location'),
                 onPressed: () {
-                  locationFromAddress(_addressController.text)
+                  _geocoding
+                      .locationFromAddress(
+                    _addressController.text,
+                    locale: _locale,
+                  )
                       .then((locations) {
                     var output = 'No results found.';
                     if (locations.isNotEmpty) {
-                      output = locations[0].toString();
+                      output = locations[0].toDisplayString();
                     }
                     setState(() {
                       _output = output;
@@ -131,7 +142,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
             child: ElevatedButton(
                 child: const Text('is Present'),
                 onPressed: () {
-                  isPresent().then((isPresent) {
+                  _geocoding.isPresent().then((isPresent) {
                     var output = isPresent ? 'Is present' : 'Is not present';
                     setState(() {
                       _output = output;
@@ -146,9 +157,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
               child: ElevatedButton(
                   child: const Text('Set locale en_US'),
                   onPressed: () {
-                    setLocaleIdentifier("en_US").then((_) {
-                      setState(() {});
-                    });
+                    setState(() => _locale = Locale('en_US'));
                   })),
           const Padding(
             padding: EdgeInsets.only(top: 8),
@@ -157,9 +166,7 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
               child: ElevatedButton(
                   child: const Text('Set locale nl_NL'),
                   onPressed: () {
-                    setLocaleIdentifier("nl_NL").then((_) {
-                      setState(() {});
-                    });
+                    setState(() => _locale = Locale('nl_NL'));
                   })),
           const Padding(
             padding: EdgeInsets.only(top: 8),
@@ -178,15 +185,41 @@ class _GeocodeWidgetState extends State<GeocodeWidget> {
   }
 }
 
+extension _PlacemarkExtensions on Placemark {
+  String toDisplayString() {
+    return '''
+      Name: $name, 
+      Street: $street, 
+      ISO Country Code: $isoCountryCode, 
+      Country: $country, 
+      Postal code: $postalCode, 
+      Administrative area: $administrativeArea, 
+      Subadministrative area: $subAdministrativeArea,
+      Locality: $locality,
+      Sublocality: $subLocality,
+      Thoroughfare: $thoroughfare,
+      Subthoroughfare: $subThoroughfare''';
+  }
+}
+
+extension _LocationExtensions on Location {
+  String toDisplayString() {
+    return '''
+      Latitude: $latitude,
+      Longitude: $longitude,
+      Timestamp: $timestamp''';
+  }
+}
+
 class _GeocodingExample extends StatelessWidget {
   const _GeocodingExample();
 
   @override
   Widget build(BuildContext context) {
     return BaseflowPluginExample(
-        pluginName: 'Geolocator',
-        githubURL: 'https://github.com/Baseflow/flutter-geolocator',
-        pubDevURL: 'https://pub.dev/packages/geolocator',
+        pluginName: 'Geocoding',
+        githubURL: 'https://github.com/Baseflow/flutter-geocoding',
+        pubDevURL: 'https://pub.dev/packages/geocoding',
         pages: [
           ExamplePage(
             Icons.pin_drop,

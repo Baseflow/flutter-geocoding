@@ -10,64 +10,55 @@ A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding f
 
 **Important**:
 
-1. This plugin uses the free Geocoding services provided by the iOS and Android platforms. This means that there are restrictions to their use. More information can be found in the [Apple documentation for iOS](https://developer.apple.com/documentation/corelocation/clgeocoder) and the [Google documentation for Android](https://developer.android.com/reference/android/location/Geocoder).
+1. This plugin uses the free Geocoding services provided by the iOS, macOS and Android platforms. This means that there are restrictions to their use. More information can be found in the [Apple documentation for iOS and macOS](https://developer.apple.com/documentation/corelocation/clgeocoder) and the [Google documentation for Android](https://developer.android.com/reference/android/location/Geocoder).
    When a `PlatformException(IO_ERROR, ...)` gets thrown, most of the times it means that the rate limit has been reached.
 2. The availability of the Google Play Services depends on your country. If your country doesn't support a connection with the Google Play Services, you'll need to try a VPN to establish a connection. For more information about how to work with Google Play Services visit the following link: https://developers.google.com/android/guides/overview
 
-## Usage
+## Installing
 
 To use this plugin, please follow the installation guide on the [official geocoding plugin page](https://pub.dev/packages/geocoding/install).
 
-> **NOTE:** This plugin relies on the AndroidX version of the Android Support Libraries. This means you need to make sure your Android project is also upgraded to support AndroidX. Detailed instructions can be found [here](https://flutter.dev/docs/development/packages-and-plugins/androidx-compatibility).
+> **Migrating to version 5.0.0**
 >
-> The TL;DR version is:
->
-> 1. Add the following to your "gradle.properties" file:
->
->    ```properties
->    android.useAndroidX=true
->    android.enableJetifier=true
->    ```
->
-> 2. Make sure you set the `compileSdkVersion` in your "android/app/build.gradle" file to 33:
->
->    ```gradle
->    android {
->     compileSdkVersion 33
->
->     ...
->    }
->    ```
->
-> 3. Make sure you replace all the `android.` dependencies to their AndroidX counterparts (a full list can be found [Android migration guide](https://developer.android.com/jetpack/androidx/migrate)).
+> Check out our [migration guide](../docs/migrations/migrate-to-5.0.0.md) when upgrading to version 5.0.0.
 
-## API
+## Usage
 
-To translate an address into latitude and longitude coordinates you can use the `placemarkFromAddress` method:
+To start using the `Geocoding` plugin import the `geocoding/geocoding.dart` package and create an instance of the `Geocoding` class:
 
 ```dart
 import 'package:geocoding/geocoding.dart';
 
-List<Location> locations = await locationFromAddress("Gronausestraat 710, Enschede");
+final Geocoding geocoding = Geocoding();
 ```
 
-If you want to translate latitude and longitude coordinates into an address you can use the `placemarkFromCoordinates` method:
+Use the newly created instance to perform geocoding translations. For example use the `Geocoding.placemarkFromCoordinates` method to convert latitude and longitude coordinates into a list of addresses (the addressed are sorted on relevance, the first entry in the list is nearest to the coordinates):
 
 ```dart
-import 'package:geocoding/geocoding.dart';
-
-List<Placemark> placemarks = await placemarkFromCoordinates(52.2165157, 6.9437819);
+// Returns a list of addresses matching the supplied coordinates. The first 
+// entry in the list is generally the address closest to the supplied 
+// coordinates.
+List<Placemark> placemarks = await geocoding.placemarkFromCoordinates(52.2165157, 6.9437819);
 ```
 
-The setLocaleIdentifier with the `localeIdentifier` parameter can be used to enforce the results to be formatted (and translated) according to the specified locale. The `localeIdentifier` should be formatted using the syntax: [languageCode]\_[countryCode]. Use the [ISO 639-1 or ISO 639-2](https://www.loc.gov/standards/iso639-2/php/English_list.php) standard for the language code and the 2 letter [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard for the country code. Some examples are:
+To convert an address into coordinates use the `Geocoding.locationFromAddress` method:
 
-| Locale identifier | Description                                                     |
-| ----------------- | --------------------------------------------------------------- |
-| en                | All English speakers (will translate all attributes to English) |
-| en_US             | English speakers in the United States of America                |
-| en_UK             | English speakers in the United Kingdom                          |
-| nl_NL             | Dutch speakers in The Netherlands                               |
-| nl_BE             | Dutch speakers in Belgium                                       |
+```dart
+// Returns a list of latitude / longitude coordinates matching the supplied
+// address. The first entry in the list is the coordinate nearest to the
+// address.
+List<Location> locations = await geocoding.locationFromAddress('Gronausestraat 710, Enschede');
+```
+
+It is also possible to try convert a partial address into a more detailed address using the `Geocoding.placemarkFromAddress` method:
+
+```dart
+// Returns a list of placemarks containing addresses matching the 
+// string "Gronausestraat 710".
+List<Placemark> placemarks = await placemarkFromAddress('Gronausestraat 710');
+```
+
+All these methods take an instance of the `Locale` class, which is used to return the address in the desired locale / language.
 
 ## Issues
 
