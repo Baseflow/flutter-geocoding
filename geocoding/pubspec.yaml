@@ -20,7 +20,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   mockito: ^5.0.0
   plugin_platform_interface: ^2.0.0
 
@@ -39,7 +39,7 @@ flutter:
         default_package: geocoding_android
       ios:
         default_package: geocoding_darwin
-      macos: 
+      macos:
         default_package: geocoding_darwin
 
   # To add assets to your plugin package, add an assets section, like this:
