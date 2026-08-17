@@ -1,3 +1,11 @@
+## 1.0.3
+
+- Moves `pigeon` to `dev_dependencies`, matching `geocoding_android`.
+  It is only used to generate `lib/src/geocoding/geocoding.g.dart` at
+  build time and is not imported at runtime, so declaring it as a
+  regular dependency propagated its version constraints to every
+  consuming application.
+
 ## 1.0.2
 
 - Registers the `GeocodingDarwinFactory` class as `dartPluginClass` factory to
