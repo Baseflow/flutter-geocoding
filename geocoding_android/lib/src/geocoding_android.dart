@@ -24,10 +24,7 @@ class GeocodingAndroidCreationParams extends GeocodingCreationParams {
     GeocodingCreationParams params, {
     @visibleForTesting GeocoderProxy geocoderProxy = const GeocoderProxy(),
     @visibleForTesting PigeonInstanceManager? instanceManager,
-  }) : this(
-          geocoderProxy: geocoderProxy,
-          instanceManager: instanceManager,
-        );
+  }) : this(geocoderProxy: geocoderProxy, instanceManager: instanceManager);
 
   /// Handles constructing objects and calling static method for the Geocoder
   /// native library.
@@ -48,12 +45,13 @@ class GeocodingAndroidCreationParams extends GeocodingCreationParams {
 class GeocodingAndroid extends Geocoding {
   /// Creates a [GeocodingDarwin].
   GeocodingAndroid(GeocodingCreationParams params)
-      : super.implementation(
-          (params is GeocodingAndroidCreationParams)
-              ? params
-              : GeocodingAndroidCreationParams.fromGeocodingCreationParams(
-                  params),
-        );
+    : super.implementation(
+        (params is GeocodingAndroidCreationParams)
+            ? params
+            : GeocodingAndroidCreationParams.fromGeocodingCreationParams(
+                params,
+              ),
+      );
 
   GeocodingAndroidCreationParams get _androidParams =>
       params as GeocodingAndroidCreationParams;
@@ -70,7 +68,10 @@ class GeocodingAndroid extends Geocoding {
 
     if (androidSdkVersion < 33) {
       addresses = await geocoder.getFromLocationNamePreAndroidApi33(
-          address, _maxAddressResults, null);
+        address,
+        _maxAddressResults,
+        null,
+      );
     } else {
       final Future<List<Address?>?> future = _GeocodeListenerWrapper(
         geocoderProxy: _androidParams.geocoderProxy,
@@ -105,7 +106,10 @@ class GeocodingAndroid extends Geocoding {
 
     if (androidSdkVersion < 33) {
       addresses = await geocoder.getFromLocationNamePreAndroidApi33(
-          address, _maxAddressResults, null);
+        address,
+        _maxAddressResults,
+        null,
+      );
     } else {
       final Future<List<Address?>?> future = _GeocodeListenerWrapper(
         geocoderProxy: _androidParams.geocoderProxy,
@@ -138,7 +142,10 @@ class GeocodingAndroid extends Geocoding {
 
     if (androidSdkVersion < 33) {
       addresses = await geocoder.getFromLocationPreAndroidApi33(
-          latitude, longitude, _maxAddressResults);
+        latitude,
+        longitude,
+        _maxAddressResults,
+      );
     } else {
       final Future<List<Address?>?> future = _GeocodeListenerWrapper(
         geocoderProxy: _androidParams.geocoderProxy,
@@ -160,12 +167,11 @@ class GeocodingAndroid extends Geocoding {
   }
 
   Geocoder _createGeocoder(flt.Locale? locale) {
-    final Locale? nativeLocale =
-        locale != null ? Locale(identifier: locale.toString()) : null;
+    final Locale? nativeLocale = locale != null
+        ? Locale(identifier: locale.toString())
+        : null;
 
-    return _androidParams.geocoderProxy.newGeocoder(
-      locale: nativeLocale,
-    );
+    return _androidParams.geocoderProxy.newGeocoder(locale: nativeLocale);
   }
 }
 
@@ -175,8 +181,9 @@ class _GeocodeListenerWrapper {
     required Geocoder geocoder,
   }) : _geocoder = geocoder {
     _listener = geocoderProxy.newGeocodeListener(
-        onError: (GeocodeListener listener, String? error) {},
-        onGeocode: _onGeocode);
+      onError: (GeocodeListener listener, String? error) {},
+      onGeocode: _onGeocode,
+    );
   }
 
   final Completer<List<Address?>?> _completer = Completer();
@@ -249,9 +256,6 @@ extension _AddressExtensions on Address {
       return null;
     }
 
-    return Location(
-      latitude: latitude,
-      longitude: longitude,
-    );
+    return Location(latitude: latitude, longitude: longitude);
   }
 }
