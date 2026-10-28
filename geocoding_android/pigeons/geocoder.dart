@@ -13,7 +13,6 @@ import 'package:pigeon/pigeon.dart';
     ),
   ),
 )
-
 /// A class representing an Address, that is, a set of Strings describing a
 /// location.
 ///
@@ -155,7 +154,8 @@ abstract class Geocoder {
   /// in blocking the main thread. On Android devices running API 33 or higher
   /// please use the [Geocoder.getFromLocation] method.
   @Deprecated(
-      'This method was deprecated in Android API level 33. Use `getFromLocation` instead.')
+    'This method was deprecated in Android API level 33. Use `getFromLocation` instead.',
+  )
   List<Address?>? getFromLocationPreAndroidApi33(
     double latitude,
     double longitude,
@@ -188,7 +188,8 @@ abstract class Geocoder {
   /// in blocking the main thread. On Android devices running API 33 or higher
   /// please use the [Geocoder.getFromLocation] method.
   @Deprecated(
-      'This method was deprecated in Android API level 33. Use `getFromLocationName` instead.')
+    'This method was deprecated in Android API level 33. Use `getFromLocationName` instead.',
+  )
   List<Address?>? getFromLocationNamePreAndroidApi33(
     String locationName,
     int maxResults, {
@@ -217,7 +218,8 @@ abstract class GeographicBounds {
 ///
 /// See https://developer.android.com/reference/java/util/Locale.
 @ProxyApi(
-    kotlinOptions: KotlinProxyApiOptions(fullClassName: 'java.util.Locale'))
+  kotlinOptions: KotlinProxyApiOptions(fullClassName: 'java.util.Locale'),
+)
 abstract class Locale {
   /// Creates a [Locale].
   Locale(String identifier);
