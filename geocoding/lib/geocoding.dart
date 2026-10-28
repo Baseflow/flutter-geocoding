@@ -12,10 +12,10 @@ export 'package:geocoding_platform_interface/geocoding_platform_interface.dart';
 class Geocoding {
   /// Constructs a [Geocoding] instance.
   Geocoding({Locale? locale})
-    : this._fromPlatformCreationParams(
-        pi.GeocodingCreationParams(),
-        locale: locale,
-      );
+      : this._fromPlatformCreationParams(
+          pi.GeocodingCreationParams(),
+          locale: locale,
+        );
 
   /// Constructs a [Geocoding] instance from creation params for a specific
   /// platform.
