@@ -1,5 +1,6 @@
 ## 5.0.1
 
+- Fixes the `locale` parameter of the `Geocoding` constructor being ignored (#324).
 - Fixes the unit tests of the `Geocoding` class.
 
 ## 5.0.0
