@@ -1,3 +1,7 @@
+## 5.0.1
+
+- Fixes the unit tests of the `Geocoding` class.
+
 ## 5.0.0
 
 - **BREAKING CHANGES** (see our [migration guide](../docs/migrations/migrate-to-5.0.0.md))
