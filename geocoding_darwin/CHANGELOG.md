@@ -1,10 +1,10 @@
 ## 1.0.3
 
-- Moves `pigeon` to `dev_dependencies`, matching `geocoding_android`.
-  It is only used to generate `lib/src/geocoding/geocoding.g.dart` at
-  build time and is not imported at runtime, so declaring it as a
-  regular dependency propagated its version constraints to every
-  consuming application.
+- Moves `pigeon` from `dependencies` to `dev_dependencies`. Pigeon is a
+  build-time code generator; the generated `geocoding.g.dart` does not import it
+  at runtime. Declaring it as a runtime dependency leaked pigeon's `analyzer`
+  version constraint into consuming apps. This matches `geocoding_android`,
+  which already declares pigeon under `dev_dependencies`. Fixes #304.
 
 ## 1.0.2
 
