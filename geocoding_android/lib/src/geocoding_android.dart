@@ -178,8 +178,8 @@ class GeocodingAndroid extends Geocoding {
 class _GeocodeListenerWrapper {
   _GeocodeListenerWrapper({
     required GeocoderProxy geocoderProxy,
-    required Geocoder geocoder,
-  }) : _geocoder = geocoder {
+    required this._geocoder,
+  }) {
     _listener = geocoderProxy.newGeocodeListener(
       onError: (GeocodeListener listener, String? error) {},
       onGeocode: _onGeocode,
