@@ -28,7 +28,7 @@ void main() {
     late MockGeocodingPlatform platform;
 
     setUp(() {
-      platform = MockGeocodingPlatform();
+      platform = MockGeocodingPlatform(const GeocodingCreationParams());
       GeocodingPlatformFactory.instance =
           MockGeocodingPlatformFactory(platform);
     });
@@ -80,9 +80,13 @@ void main() {
 }
 
 class MockGeocodingPlatformFactory extends GeocodingPlatformFactory {
+  final MockGeocodingPlatform platform;
+
+  MockGeocodingPlatformFactory(this.platform);
+
   @override
   pi.Geocoding createGeocoding(GeocodingCreationParams params) {
-    return MockGeocodingPlatform(params);
+    return platform;
   }
 }
 
@@ -116,14 +120,6 @@ class MockGeocodingPlatform extends pi.Geocoding {
     Locale? locale,
   }) async {
     lastLocale = locale;
-    return [mockPlacemark];
-  }
-
-  @override
-  Future<List<Placemark>> placemarkFromAddress(
-    String address, {
-    Locale? locale,
-  }) async {
     return [mockPlacemark];
   }
 }
