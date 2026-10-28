@@ -7,6 +7,7 @@ analyzer:
     # Ignore generated files
     - '**/*.g.dart'
     - 'lib/src/generated/*.dart'
+    - build/**
 linter:
   rules:
     - public_member_api_docs

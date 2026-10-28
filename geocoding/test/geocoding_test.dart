@@ -3,8 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart'
     as pi;
-import 'package:mockito/mockito.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 final mockLocation = Location(
   latitude: 52.2165157,
@@ -27,8 +25,12 @@ const mockPlacemark = Placemark(
 
 void main() {
   group('Geocoding', () {
+    late MockGeocodingPlatform platform;
+
     setUp(() {
-      GeocodingPlatformFactory.instance = MockGeocodingPlatformFactory();
+      platform = MockGeocodingPlatform(const GeocodingCreationParams());
+      GeocodingPlatformFactory.instance =
+          MockGeocodingPlatformFactory(platform);
     });
 
     test('locationFromAddress', () async {
@@ -45,28 +47,70 @@ void main() {
       final placemarks = await (Geocoding().placemarkFromCoordinates(0, 0));
       expect(placemarks.single, mockPlacemark);
     });
+
+    group('locale', () {
+      const constructorLocale = Locale('nl', 'NL');
+      const methodLocale = Locale('en', 'US');
+
+      test('locationFromAddress uses the constructor locale', () async {
+        final geocoding = Geocoding(locale: constructorLocale);
+        await geocoding.locationFromAddress('');
+        expect(platform.lastLocale, constructorLocale);
+      });
+
+      test('placemarkFromAddress uses the constructor locale', () async {
+        final geocoding = Geocoding(locale: constructorLocale);
+        await geocoding.placemarkFromAddress('');
+        expect(platform.lastLocale, constructorLocale);
+      });
+
+      test('placemarkFromCoordinates uses the constructor locale', () async {
+        final geocoding = Geocoding(locale: constructorLocale);
+        await geocoding.placemarkFromCoordinates(0, 0);
+        expect(platform.lastLocale, constructorLocale);
+      });
+
+      test('method locale overrides the constructor locale', () async {
+        final geocoding = Geocoding(locale: constructorLocale);
+        await geocoding.locationFromAddress('', locale: methodLocale);
+        expect(platform.lastLocale, methodLocale);
+      });
+    });
   });
 }
 
-class MockGeocodingPlatformFactory implements GeocodingPlatformFactory {
+class MockGeocodingPlatformFactory extends GeocodingPlatformFactory {
+  final MockGeocodingPlatform platform;
+
+  MockGeocodingPlatformFactory(this.platform);
+
   @override
   pi.Geocoding createGeocoding(GeocodingCreationParams params) {
-    return MockGeocodingPlatform();
+    return platform;
   }
 }
 
-class MockGeocodingPlatform extends Mock
-    with
-        // ignore: prefer_mixin
-        MockPlatformInterfaceMixin
-    implements
-        pi.Geocoding {
+class MockGeocodingPlatform extends pi.Geocoding {
+  MockGeocodingPlatform(super.params) : super.implementation();
+
+  Locale? lastLocale;
+
   @override
   Future<List<Location>> locationFromAddress(
     String address, {
     Locale? locale,
   }) async {
+    lastLocale = locale;
     return [mockLocation];
+  }
+
+  @override
+  Future<List<Placemark>> placemarkFromAddress(
+    String address, {
+    Locale? locale,
+  }) async {
+    lastLocale = locale;
+    return [mockPlacemark];
   }
 
   @override
@@ -75,6 +119,7 @@ class MockGeocodingPlatform extends Mock
     double longitude, {
     Locale? locale,
   }) async {
+    lastLocale = locale;
     return [mockPlacemark];
   }
 }
