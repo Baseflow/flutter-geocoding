@@ -22,15 +22,12 @@ class GeocoderProxy {
 
   /// Creates a [GeocodeListener].
   final GeocodeListener Function({
-    required void Function(
-      GeocodeListener listener,
-      String? errorMessage,
-    ) onError,
-    required void Function(
-      GeocodeListener listener,
-      List<Address?>? addresses,
-    ) onGeocode,
-  }) newGeocodeListener;
+    required void Function(GeocodeListener listener, String? errorMessage)
+    onError,
+    required void Function(GeocodeListener listener, List<Address?>? addresses)
+    onGeocode,
+  })
+  newGeocodeListener;
 
   /// Calls to [Geocoder.isPresent].
   final Future<bool> Function() isPresent;
