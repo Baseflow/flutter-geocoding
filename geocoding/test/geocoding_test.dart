@@ -3,8 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geocoding_platform_interface/geocoding_platform_interface.dart'
     as pi;
-import 'package:mockito/mockito.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 final mockLocation = Location(
   latitude: 52.2165157,
@@ -81,23 +79,16 @@ void main() {
   });
 }
 
-class MockGeocodingPlatformFactory implements GeocodingPlatformFactory {
-  MockGeocodingPlatformFactory(this.platform);
-
-  final MockGeocodingPlatform platform;
-
+class MockGeocodingPlatformFactory extends GeocodingPlatformFactory {
   @override
   pi.Geocoding createGeocoding(GeocodingCreationParams params) {
-    return platform;
+    return MockGeocodingPlatform(params);
   }
 }
 
-class MockGeocodingPlatform extends Mock
-    with
-        // ignore: prefer_mixin
-        MockPlatformInterfaceMixin
-    implements
-        pi.Geocoding {
+class MockGeocodingPlatform extends pi.Geocoding {
+  MockGeocodingPlatform(super.params) : super.implementation();
+
   Locale? lastLocale;
 
   @override
@@ -125,6 +116,14 @@ class MockGeocodingPlatform extends Mock
     Locale? locale,
   }) async {
     lastLocale = locale;
+    return [mockPlacemark];
+  }
+
+  @override
+  Future<List<Placemark>> placemarkFromAddress(
+    String address, {
+    Locale? locale,
+  }) async {
     return [mockPlacemark];
   }
 }
