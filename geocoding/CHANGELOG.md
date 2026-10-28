@@ -1,3 +1,7 @@
+## 5.0.1
+
+- Fixes the `locale` parameter of the `Geocoding` constructor being ignored (#324).
+
 ## 5.0.0
 
 - **BREAKING CHANGES** (see our [migration guide](../docs/migrations/migrate-to-5.0.0.md))
