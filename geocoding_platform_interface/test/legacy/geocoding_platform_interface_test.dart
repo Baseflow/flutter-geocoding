@@ -42,7 +42,8 @@ void main() {
       'Default implementation of locationFromAddress should throw unimplemented error',
       () {
         // Arrange
-        final ExtendsGeocodingPlatform geocodingPlatform = ExtendsGeocodingPlatform();
+        final ExtendsGeocodingPlatform geocodingPlatform =
+            ExtendsGeocodingPlatform();
 
         // Act & Assert
         expect(
@@ -57,7 +58,8 @@ void main() {
       'Default implementation of isPresent should throw unimplemented error',
       () {
         // Arrange
-        final ExtendsGeocodingPlatform geocodingPlatform = ExtendsGeocodingPlatform();
+        final ExtendsGeocodingPlatform geocodingPlatform =
+            ExtendsGeocodingPlatform();
 
         // Act & Assert
         expect(() => geocodingPlatform.isPresent(), throwsUnimplementedError);
@@ -69,7 +71,8 @@ void main() {
       'Default implementation of placemarkFromCoordinates should throw unimplemented error',
       () {
         // Arrange
-        final ExtendsGeocodingPlatform geocodingPlatform = ExtendsGeocodingPlatform();
+        final ExtendsGeocodingPlatform geocodingPlatform =
+            ExtendsGeocodingPlatform();
 
         // Act & Assert
         expect(
@@ -84,7 +87,8 @@ void main() {
       'Default implementation of setLocale should throw unimplemented error',
       () {
         // Arrange
-        final ExtendsGeocodingPlatform geocodingPlatform = ExtendsGeocodingPlatform();
+        final ExtendsGeocodingPlatform geocodingPlatform =
+            ExtendsGeocodingPlatform();
 
         // Act & Assert
         expect(

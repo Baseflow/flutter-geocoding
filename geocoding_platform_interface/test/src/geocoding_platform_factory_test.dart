@@ -43,7 +43,8 @@ void main() {
       'Default implementation of createGeocoding should throw unimplemented error',
       () {
         // Arrange
-        final ExtendsGeocodingPlatformFactory geocodingPlatform = ExtendsGeocodingPlatformFactory();
+        final ExtendsGeocodingPlatformFactory geocodingPlatform =
+            ExtendsGeocodingPlatformFactory();
 
         // Act & Assert
         expect(

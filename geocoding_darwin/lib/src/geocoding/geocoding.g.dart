@@ -6,7 +6,8 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:typed_data' show Float64List, Int32List, Int64List, Uint8List;
 
-import 'package:flutter/foundation.dart' show ReadBuffer, WriteBuffer, immutable, protected, visibleForTesting;
+import 'package:flutter/foundation.dart'
+    show ReadBuffer, WriteBuffer, immutable, protected, visibleForTesting;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart' show WidgetsFlutterBinding;
 
@@ -17,7 +18,11 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
-List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty = false}) {
+List<Object?> wrapResponse({
+  Object? result,
+  PlatformException? error,
+  bool empty = false,
+}) {
   if (empty) {
     return <Object?>[];
   }
@@ -26,6 +31,7 @@ List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty
   }
   return <Object?>[error.code, error.message, error.details];
 }
+
 /// Provides overrides for the constructors and static members of each
 /// Dart proxy class.
 ///
@@ -36,13 +42,16 @@ List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty
 @visibleForTesting
 class PigeonOverrides {
   /// Overrides [CLGeocoder.new].
-  static CLGeocoder Function(
-      {void Function(
-        NSObject pigeon_instance,
-        String? keyPath,
-        NSObject? object,
-        Map<KeyValueChangeKey, Object?>? change,
-      )? observeValue})? cLGeocoder_new;
+  static CLGeocoder Function({
+    void Function(
+      NSObject pigeon_instance,
+      String? keyPath,
+      NSObject? object,
+      Map<KeyValueChangeKey, Object?>? change,
+    )?
+    observeValue,
+  })?
+  cLGeocoder_new;
 
   /// Overrides [CLLocation.new].
   static CLLocation Function({
@@ -53,20 +62,25 @@ class PigeonOverrides {
       String? keyPath,
       NSObject? object,
       Map<KeyValueChangeKey, Object?>? change,
-    )? observeValue,
-  })? cLLocation_new;
+    )?
+    observeValue,
+  })?
+  cLLocation_new;
 
   /// Overrides [Locale.new].
   static Locale Function({required String identifier})? locale_new;
 
   /// Overrides [NSObject.new].
-  static NSObject Function(
-      {void Function(
-        NSObject pigeon_instance,
-        String? keyPath,
-        NSObject? object,
-        Map<KeyValueChangeKey, Object?>? change,
-      )? observeValue})? nSObject_new;
+  static NSObject Function({
+    void Function(
+      NSObject pigeon_instance,
+      String? keyPath,
+      NSObject? object,
+      Map<KeyValueChangeKey, Object?>? change,
+    )?
+    observeValue,
+  })?
+  nSObject_new;
 
   /// Sets all overridden ProxyApi class members to null.
   static void pigeon_reset() {
@@ -89,7 +103,7 @@ abstract class PigeonInternalProxyApiBaseClass {
     this.pigeon_binaryMessenger,
     PigeonInstanceManager? pigeon_instanceManager,
   }) : pigeon_instanceManager =
-            pigeon_instanceManager ?? PigeonInstanceManager.instance;
+           pigeon_instanceManager ?? PigeonInstanceManager.instance;
 
   /// Sends and receives binary data across the Flutter platform barrier.
   ///
@@ -159,9 +173,10 @@ class PigeonInstanceManager {
   // by calling instanceManager.getIdentifier() inside of `==` while this was a
   // HashMap).
   final Expando<int> _identifiers = Expando<int>();
-  final Map<int, WeakReference<PigeonInternalProxyApiBaseClass>> _weakInstances =
-      <int, WeakReference<PigeonInternalProxyApiBaseClass>>{};
-  final Map<int, PigeonInternalProxyApiBaseClass> _strongInstances = <int, PigeonInternalProxyApiBaseClass>{};
+  final Map<int, WeakReference<PigeonInternalProxyApiBaseClass>>
+  _weakInstances = <int, WeakReference<PigeonInternalProxyApiBaseClass>>{};
+  final Map<int, PigeonInternalProxyApiBaseClass> _strongInstances =
+      <int, PigeonInternalProxyApiBaseClass>{};
   late final Finalizer<int> _finalizer;
   int _nextIdentifier = 0;
 
@@ -174,7 +189,8 @@ class PigeonInstanceManager {
       return PigeonInstanceManager(onWeakReferenceRemoved: (_) {});
     }
     WidgetsFlutterBinding.ensureInitialized();
-    final _PigeonInternalInstanceManagerApi api = _PigeonInternalInstanceManagerApi();
+    final _PigeonInternalInstanceManagerApi api =
+        _PigeonInternalInstanceManagerApi();
     // Clears the native `PigeonInstanceManager` on the initial use of the Dart one.
     api.clear();
     final PigeonInstanceManager instanceManager = PigeonInstanceManager(
@@ -182,16 +198,34 @@ class PigeonInstanceManager {
         api.removeStrongReference(identifier);
       },
     );
-    _PigeonInternalInstanceManagerApi.setUpMessageHandlers(instanceManager: instanceManager);
-    CLFloor.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
-    CLGeocoder.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
-    CLLocation.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
-    CLLocationCoordinate2D.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
-    CLLocationSourceInformation.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
-    CLPlacemark.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
-    CNPostalAddress.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
+    _PigeonInternalInstanceManagerApi.setUpMessageHandlers(
+      instanceManager: instanceManager,
+    );
+    CLFloor.pigeon_setUpMessageHandlers(
+      pigeon_instanceManager: instanceManager,
+    );
+    CLGeocoder.pigeon_setUpMessageHandlers(
+      pigeon_instanceManager: instanceManager,
+    );
+    CLLocation.pigeon_setUpMessageHandlers(
+      pigeon_instanceManager: instanceManager,
+    );
+    CLLocationCoordinate2D.pigeon_setUpMessageHandlers(
+      pigeon_instanceManager: instanceManager,
+    );
+    CLLocationSourceInformation.pigeon_setUpMessageHandlers(
+      pigeon_instanceManager: instanceManager,
+    );
+    CLPlacemark.pigeon_setUpMessageHandlers(
+      pigeon_instanceManager: instanceManager,
+    );
+    CNPostalAddress.pigeon_setUpMessageHandlers(
+      pigeon_instanceManager: instanceManager,
+    );
     Locale.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
-    NSObject.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
+    NSObject.pigeon_setUpMessageHandlers(
+      pigeon_instanceManager: instanceManager,
+    );
     return instanceManager;
   }
 
@@ -208,8 +242,9 @@ class PigeonInstanceManager {
 
     final int identifier = _nextUniqueIdentifier();
     _identifiers[instance] = identifier;
-    _weakInstances[identifier] =
-        WeakReference<PigeonInternalProxyApiBaseClass>(instance);
+    _weakInstances[identifier] = WeakReference<PigeonInternalProxyApiBaseClass>(
+      instance,
+    );
     _finalizer.attach(instance, identifier, detach: instance);
 
     final PigeonInternalProxyApiBaseClass copy = instance.pigeon_copy();
@@ -270,15 +305,21 @@ class PigeonInstanceManager {
   ///
   /// This method also expects the host `InstanceManager` to have a strong
   /// reference to the instance the identifier is associated with.
-  T? getInstanceWithWeakReference<T extends PigeonInternalProxyApiBaseClass>(int identifier) {
-    final PigeonInternalProxyApiBaseClass? weakInstance = _weakInstances[identifier]?.target;
+  T? getInstanceWithWeakReference<T extends PigeonInternalProxyApiBaseClass>(
+    int identifier,
+  ) {
+    final PigeonInternalProxyApiBaseClass? weakInstance =
+        _weakInstances[identifier]?.target;
 
     if (weakInstance == null) {
-      final PigeonInternalProxyApiBaseClass? strongInstance = _strongInstances[identifier];
+      final PigeonInternalProxyApiBaseClass? strongInstance =
+          _strongInstances[identifier];
       if (strongInstance != null) {
-        final PigeonInternalProxyApiBaseClass copy = strongInstance.pigeon_copy();
+        final PigeonInternalProxyApiBaseClass copy = strongInstance
+            .pigeon_copy();
         _identifiers[copy] = identifier;
-        _weakInstances[identifier] = WeakReference<PigeonInternalProxyApiBaseClass>(copy);
+        _weakInstances[identifier] =
+            WeakReference<PigeonInternalProxyApiBaseClass>(copy);
         _finalizer.attach(copy, identifier, detach: copy);
         return copy as T;
       }
@@ -300,7 +341,10 @@ class PigeonInstanceManager {
   ///
   /// Throws assertion error if the instance or its identifier has already been
   /// added.
-  void addHostCreatedInstance(PigeonInternalProxyApiBaseClass instance, int identifier) {
+  void addHostCreatedInstance(
+    PigeonInternalProxyApiBaseClass instance,
+    int identifier,
+  ) {
     assert(!containsIdentifier(identifier));
     assert(getIdentifier(instance) == null);
     assert(identifier >= 0);
@@ -329,7 +373,7 @@ class PigeonInstanceManager {
 class _PigeonInternalInstanceManagerApi {
   /// Constructor for [_PigeonInternalInstanceManagerApi].
   _PigeonInternalInstanceManagerApi({BinaryMessenger? binaryMessenger})
-      : pigeonVar_binaryMessenger = binaryMessenger;
+    : pigeonVar_binaryMessenger = binaryMessenger;
 
   final BinaryMessenger? pigeonVar_binaryMessenger;
 
@@ -341,31 +385,37 @@ class _PigeonInternalInstanceManagerApi {
     PigeonInstanceManager? instanceManager,
   }) {
     {
-      final BasicMessageChannel<
-          Object?> pigeonVar_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.geocoding_darwin.PigeonInternalInstanceManager.removeStrongReference',
-          pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.geocoding_darwin.PigeonInternalInstanceManager.removeStrongReference',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.PigeonInternalInstanceManager.removeStrongReference was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.PigeonInternalInstanceManager.removeStrongReference was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_identifier = (args[0] as int?);
-          assert(arg_identifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.PigeonInternalInstanceManager.removeStrongReference was null, expected non-null int.');
+          assert(
+            arg_identifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.PigeonInternalInstanceManager.removeStrongReference was null, expected non-null int.',
+          );
           try {
-            (instanceManager ?? PigeonInstanceManager.instance)
-                .remove(arg_identifier!);
+            (instanceManager ?? PigeonInstanceManager.instance).remove(
+              arg_identifier!,
+            );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -377,12 +427,13 @@ class _PigeonInternalInstanceManagerApi {
         'dev.flutter.pigeon.geocoding_darwin.PigeonInternalInstanceManager.removeStrongReference';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[identifier],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[identifier]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -406,10 +457,10 @@ class _PigeonInternalInstanceManagerApi {
         'dev.flutter.pigeon.geocoding_darwin.PigeonInternalInstanceManager.clear';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
     final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
@@ -428,29 +479,30 @@ class _PigeonInternalInstanceManagerApi {
 }
 
 class _PigeonInternalProxyApiBaseCodec extends _PigeonCodec {
- const _PigeonInternalProxyApiBaseCodec(this.instanceManager);
- final PigeonInstanceManager instanceManager;
- @override
- void writeValue(WriteBuffer buffer, Object? value) {
-   if (value is PigeonInternalProxyApiBaseClass) {
-     buffer.putUint8(128);
-     writeValue(buffer, instanceManager.getIdentifier(value));
-   } else {
-     super.writeValue(buffer, value);
-   }
- }
- @override
- Object? readValueOfType(int type, ReadBuffer buffer) {
-   switch (type) {
-     case 128:
-       return instanceManager
-           .getInstanceWithWeakReference(readValue(buffer)! as int);
-     default:
-       return super.readValueOfType(type, buffer);
-   }
- }
-}
+  const _PigeonInternalProxyApiBaseCodec(this.instanceManager);
+  final PigeonInstanceManager instanceManager;
+  @override
+  void writeValue(WriteBuffer buffer, Object? value) {
+    if (value is PigeonInternalProxyApiBaseClass) {
+      buffer.putUint8(128);
+      writeValue(buffer, instanceManager.getIdentifier(value));
+    } else {
+      super.writeValue(buffer, value);
+    }
+  }
 
+  @override
+  Object? readValueOfType(int type, ReadBuffer buffer) {
+    switch (type) {
+      case 128:
+        return instanceManager.getInstanceWithWeakReference(
+          readValue(buffer)! as int,
+        );
+      default:
+        return super.readValueOfType(type, buffer);
+    }
+  }
+}
 
 /// The values that can be returned in a change dictionary.
 ///
@@ -459,12 +511,15 @@ enum KeyValueObservingOptions {
   /// Indicates that the change dictionary should provide the new attribute
   /// value, if applicable.
   newValue,
+
   /// Indicates that the change dictionary should contain the old attribute
   /// value, if applicable.
   oldValue,
+
   /// If specified, a notification should be sent to the observer immediately,
   /// before the observer registration method even returns.
   initialValue,
+
   /// Whether separate notifications should be sent to the observer before and
   /// after each change, instead of a single notification after the change.
   priorNotification,
@@ -476,15 +531,19 @@ enum KeyValueObservingOptions {
 enum KeyValueChange {
   /// Indicates that the value of the observed key path was set to a new value.
   setting,
+
   /// Indicates that an object has been inserted into the to-many relationship
   /// that is being observed.
   insertion,
+
   /// Indicates that an object has been removed from the to-many relationship
   /// that is being observed.
   removal,
+
   /// Indicates that an object has been replaced in the to-many relationship
   /// that is being observed.
   replacement,
+
   /// The value is not recognized by the wrapper.
   unknown,
 }
@@ -498,27 +557,31 @@ enum KeyValueChangeKey {
   /// `KeyValueChange.replacement`, the value of this key is a Set object that
   /// contains the indexes of the inserted, removed, or replaced objects.
   indexes,
+
   /// An object that contains a value corresponding to one of the
   /// `KeyValueChange` enum, indicating what sort of change has occurred.
   kind,
+
   /// If the value of the `KeyValueChange.kind` entry is
   /// `KeyValueChange.setting, and `KeyValueObservingOptions.newValue` was
   /// specified when the observer was registered, the value of this key is the
   /// new value for the attribute.
   newValue,
+
   /// If the `KeyValueObservingOptions.priorNotification` option was specified
   /// when the observer was registered this notification is sent prior to a
   /// change.
   notificationIsPrior,
+
   /// If the value of the `KeyValueChange.kind` entry is
   /// `KeyValueChange.setting`, and `KeyValueObservingOptions.old` was specified
   /// when the observer was registered, the value of this key is the value
   /// before the attribute was changed.
   oldValue,
+
   /// The value is not recognized by the wrapper.
   unknown,
 }
-
 
 class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
@@ -527,13 +590,13 @@ class _PigeonCodec extends StandardMessageCodec {
     if (value is int) {
       buffer.putUint8(4);
       buffer.putInt64(value);
-    }    else if (value is KeyValueObservingOptions) {
+    } else if (value is KeyValueObservingOptions) {
       buffer.putUint8(129);
       writeValue(buffer, value.index);
-    }    else if (value is KeyValueChange) {
+    } else if (value is KeyValueChange) {
       buffer.putUint8(130);
       writeValue(buffer, value.index);
-    }    else if (value is KeyValueChangeKey) {
+    } else if (value is KeyValueChangeKey) {
       buffer.putUint8(131);
       writeValue(buffer, value.index);
     } else {
@@ -544,13 +607,13 @@ class _PigeonCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 129: 
+      case 129:
         final int? value = readValue(buffer) as int?;
         return value == null ? null : KeyValueObservingOptions.values[value];
-      case 130: 
+      case 130:
         final int? value = readValue(buffer) as int?;
         return value == null ? null : KeyValueChange.values[value];
-      case 131: 
+      case 131:
         final int? value = readValue(buffer) as int?;
         return value == null ? null : KeyValueChangeKey.values[value];
       default:
@@ -558,6 +621,7 @@ class _PigeonCodec extends StandardMessageCodec {
     }
   }
 }
+
 /// The floor of a building on which the user’s device is located.
 ///
 /// See https://developer.apple.com/documentation/corelocation/clfloor.
@@ -585,44 +649,53 @@ class CLFloor extends NSObject {
   }) {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _PigeonInternalProxyApiBaseCodec(
-            pigeon_instanceManager ?? PigeonInstanceManager.instance);
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
     final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
     {
       final BasicMessageChannel<Object?> pigeonVar_channel =
           BasicMessageChannel<Object?>(
-              'dev.flutter.pigeon.geocoding_darwin.CLFloor.pigeon_newInstance',
-              pigeonChannelCodec,
-              binaryMessenger: binaryMessenger);
+            'dev.flutter.pigeon.geocoding_darwin.CLFloor.pigeon_newInstance',
+            pigeonChannelCodec,
+            binaryMessenger: binaryMessenger,
+          );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLFloor.pigeon_newInstance was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLFloor.pigeon_newInstance was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(arg_pigeon_instanceIdentifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLFloor.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLFloor.pigeon_newInstance was null, expected non-null int.',
+          );
           final int? arg_level = (args[1] as int?);
-          assert(arg_level != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLFloor.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_level != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLFloor.pigeon_newInstance was null, expected non-null int.',
+          );
           try {
             (pigeon_instanceManager ?? PigeonInstanceManager.instance)
                 .addHostCreatedInstance(
-              pigeon_newInstance?.call(arg_level!) ??
-                  CLFloor.pigeon_detached(
-                    pigeon_binaryMessenger: pigeon_binaryMessenger,
-                    pigeon_instanceManager: pigeon_instanceManager,
-                    level: arg_level!,
-                  ),
-              arg_pigeon_instanceIdentifier!,
-            );
+                  pigeon_newInstance?.call(arg_level!) ??
+                      CLFloor.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                        level: arg_level!,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -654,7 +727,8 @@ class CLGeocoder extends NSObject {
       String? keyPath,
       NSObject? object,
       Map<KeyValueChangeKey, Object?>? change,
-    )? observeValue,
+    )?
+    observeValue,
   }) {
     if (PigeonOverrides.cLGeocoder_new != null) {
       return PigeonOverrides.cLGeocoder_new!(observeValue: observeValue);
@@ -673,8 +747,8 @@ class CLGeocoder extends NSObject {
     super.pigeon_instanceManager,
     super.observeValue,
   }) : super.pigeon_detached() {
-    final int pigeonVar_instanceIdentifier =
-        pigeon_instanceManager.addDartCreatedInstance(this);
+    final int pigeonVar_instanceIdentifier = pigeon_instanceManager
+        .addDartCreatedInstance(this);
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _pigeonVar_codecCLGeocoder;
     final BinaryMessenger? pigeonVar_binaryMessenger = pigeon_binaryMessenger;
@@ -682,12 +756,13 @@ class CLGeocoder extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLGeocoder.pigeon_defaultConstructor';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[pigeonVar_instanceIdentifier],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[pigeonVar_instanceIdentifier]);
     () async {
       final List<Object?>? pigeonVar_replyList =
           await pigeonVar_sendFuture as List<Object?>?;
@@ -727,41 +802,47 @@ class CLGeocoder extends NSObject {
   }) {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _PigeonInternalProxyApiBaseCodec(
-            pigeon_instanceManager ?? PigeonInstanceManager.instance);
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
     final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
     {
-      final BasicMessageChannel<
-          Object?> pigeonVar_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.geocoding_darwin.CLGeocoder.pigeon_newInstance',
-          pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?> pigeonVar_channel =
+          BasicMessageChannel<Object?>(
+            'dev.flutter.pigeon.geocoding_darwin.CLGeocoder.pigeon_newInstance',
+            pigeonChannelCodec,
+            binaryMessenger: binaryMessenger,
+          );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLGeocoder.pigeon_newInstance was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLGeocoder.pigeon_newInstance was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(arg_pigeon_instanceIdentifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLGeocoder.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLGeocoder.pigeon_newInstance was null, expected non-null int.',
+          );
           try {
             (pigeon_instanceManager ?? PigeonInstanceManager.instance)
                 .addHostCreatedInstance(
-              pigeon_newInstance?.call() ??
-                  CLGeocoder.pigeon_detached(
-                    pigeon_binaryMessenger: pigeon_binaryMessenger,
-                    pigeon_instanceManager: pigeon_instanceManager,
-                  ),
-              arg_pigeon_instanceIdentifier!,
-            );
+                  pigeon_newInstance?.call() ??
+                      CLGeocoder.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -781,12 +862,13 @@ class CLGeocoder extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLGeocoder.geocodeAddressString';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this, address, locale],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this, address, locale]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -815,12 +897,13 @@ class CLGeocoder extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLGeocoder.geocodePostalAddress';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this, postalAddress, locale],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this, postalAddress, locale]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -848,12 +931,13 @@ class CLGeocoder extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLGeocoder.reverseGeocodeLocation';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this, location, locale],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this, location, locale]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -892,7 +976,8 @@ class CLLocation extends NSObject {
       String? keyPath,
       NSObject? object,
       Map<KeyValueChangeKey, Object?>? change,
-    )? observeValue,
+    )?
+    observeValue,
     required double latitude,
     required double longitude,
   }) {
@@ -921,8 +1006,8 @@ class CLLocation extends NSObject {
     required double latitude,
     required double longitude,
   }) : super.pigeon_detached() {
-    final int pigeonVar_instanceIdentifier =
-        pigeon_instanceManager.addDartCreatedInstance(this);
+    final int pigeonVar_instanceIdentifier = pigeon_instanceManager
+        .addDartCreatedInstance(this);
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _pigeonVar_codecCLLocation;
     final BinaryMessenger? pigeonVar_binaryMessenger = pigeon_binaryMessenger;
@@ -930,12 +1015,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.pigeon_defaultConstructor';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[pigeonVar_instanceIdentifier, latitude, longitude],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel
-        .send(<Object?>[pigeonVar_instanceIdentifier, latitude, longitude]);
     () async {
       final List<Object?>? pigeonVar_replyList =
           await pigeonVar_sendFuture as List<Object?>?;
@@ -975,41 +1061,47 @@ class CLLocation extends NSObject {
   }) {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _PigeonInternalProxyApiBaseCodec(
-            pigeon_instanceManager ?? PigeonInstanceManager.instance);
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
     final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
     {
-      final BasicMessageChannel<
-          Object?> pigeonVar_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.geocoding_darwin.CLLocation.pigeon_newInstance',
-          pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?> pigeonVar_channel =
+          BasicMessageChannel<Object?>(
+            'dev.flutter.pigeon.geocoding_darwin.CLLocation.pigeon_newInstance',
+            pigeonChannelCodec,
+            binaryMessenger: binaryMessenger,
+          );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocation.pigeon_newInstance was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocation.pigeon_newInstance was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(arg_pigeon_instanceIdentifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocation.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocation.pigeon_newInstance was null, expected non-null int.',
+          );
           try {
             (pigeon_instanceManager ?? PigeonInstanceManager.instance)
                 .addHostCreatedInstance(
-              pigeon_newInstance?.call() ??
-                  CLLocation.pigeon_detached(
-                    pigeon_binaryMessenger: pigeon_binaryMessenger,
-                    pigeon_instanceManager: pigeon_instanceManager,
-                  ),
-              arg_pigeon_instanceIdentifier!,
-            );
+                  pigeon_newInstance?.call() ??
+                      CLLocation.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -1025,12 +1117,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getCoordinate';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1061,12 +1154,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getAltitude';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1097,12 +1191,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getEllipsoidalAltitude';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1132,12 +1227,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getFloor';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1162,12 +1258,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getTimestamp';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1197,12 +1294,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getSourceInformation';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1227,12 +1325,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getHorizontalAccuracy';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1263,12 +1362,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getVerticalAccuracy';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1298,12 +1398,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getSpeed';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1333,12 +1434,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getSpeedAccuracy';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1369,12 +1471,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getCourse';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1404,12 +1507,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.getCourseAccuracy';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1440,12 +1544,13 @@ class CLLocation extends NSObject {
         'dev.flutter.pigeon.geocoding_darwin.CLLocation.distance';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this, from],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this, from]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -1504,56 +1609,64 @@ class CLLocationCoordinate2D extends NSObject {
     bool pigeon_clearHandlers = false,
     BinaryMessenger? pigeon_binaryMessenger,
     PigeonInstanceManager? pigeon_instanceManager,
-    CLLocationCoordinate2D Function(
-      double latitude,
-      double longitude,
-    )? pigeon_newInstance,
+    CLLocationCoordinate2D Function(double latitude, double longitude)?
+    pigeon_newInstance,
   }) {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _PigeonInternalProxyApiBaseCodec(
-            pigeon_instanceManager ?? PigeonInstanceManager.instance);
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
     final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
     {
-      final BasicMessageChannel<
-          Object?> pigeonVar_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance',
-          pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(arg_pigeon_instanceIdentifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance was null, expected non-null int.',
+          );
           final double? arg_latitude = (args[1] as double?);
-          assert(arg_latitude != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance was null, expected non-null double.');
+          assert(
+            arg_latitude != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance was null, expected non-null double.',
+          );
           final double? arg_longitude = (args[2] as double?);
-          assert(arg_longitude != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance was null, expected non-null double.');
+          assert(
+            arg_longitude != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationCoordinate2D.pigeon_newInstance was null, expected non-null double.',
+          );
           try {
             (pigeon_instanceManager ?? PigeonInstanceManager.instance)
                 .addHostCreatedInstance(
-              pigeon_newInstance?.call(arg_latitude!, arg_longitude!) ??
-                  CLLocationCoordinate2D.pigeon_detached(
-                    pigeon_binaryMessenger: pigeon_binaryMessenger,
-                    pigeon_instanceManager: pigeon_instanceManager,
-                    latitude: arg_latitude!,
-                    longitude: arg_longitude!,
-                  ),
-              arg_pigeon_instanceIdentifier!,
-            );
+                  pigeon_newInstance?.call(arg_latitude!, arg_longitude!) ??
+                      CLLocationCoordinate2D.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                        latitude: arg_latitude!,
+                        longitude: arg_longitude!,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -1604,54 +1717,67 @@ class CLLocationSourceInformation extends NSObject {
     CLLocationSourceInformation Function(
       bool isProducedByAccessory,
       bool isSimulatedBySoftware,
-    )? pigeon_newInstance,
+    )?
+    pigeon_newInstance,
   }) {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _PigeonInternalProxyApiBaseCodec(
-            pigeon_instanceManager ?? PigeonInstanceManager.instance);
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
     final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
     {
-      final BasicMessageChannel<
-          Object?> pigeonVar_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance',
-          pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(arg_pigeon_instanceIdentifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance was null, expected non-null int.',
+          );
           final bool? arg_isProducedByAccessory = (args[1] as bool?);
-          assert(arg_isProducedByAccessory != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance was null, expected non-null bool.');
+          assert(
+            arg_isProducedByAccessory != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance was null, expected non-null bool.',
+          );
           final bool? arg_isSimulatedBySoftware = (args[2] as bool?);
-          assert(arg_isSimulatedBySoftware != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance was null, expected non-null bool.');
+          assert(
+            arg_isSimulatedBySoftware != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLLocationSourceInformation.pigeon_newInstance was null, expected non-null bool.',
+          );
           try {
             (pigeon_instanceManager ?? PigeonInstanceManager.instance)
                 .addHostCreatedInstance(
-              pigeon_newInstance?.call(
-                      arg_isProducedByAccessory!, arg_isSimulatedBySoftware!) ??
-                  CLLocationSourceInformation.pigeon_detached(
-                    pigeon_binaryMessenger: pigeon_binaryMessenger,
-                    pigeon_instanceManager: pigeon_instanceManager,
-                    isProducedByAccessory: arg_isProducedByAccessory!,
-                    isSimulatedBySoftware: arg_isSimulatedBySoftware!,
-                  ),
-              arg_pigeon_instanceIdentifier!,
-            );
+                  pigeon_newInstance?.call(
+                        arg_isProducedByAccessory!,
+                        arg_isSimulatedBySoftware!,
+                      ) ??
+                      CLLocationSourceInformation.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                        isProducedByAccessory: arg_isProducedByAccessory!,
+                        isSimulatedBySoftware: arg_isSimulatedBySoftware!,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -1751,29 +1877,35 @@ class CLPlacemark extends NSObject {
       String? isoCountryCode,
       String? country,
       CNPostalAddress? postalAddress,
-    )? pigeon_newInstance,
+    )?
+    pigeon_newInstance,
   }) {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _PigeonInternalProxyApiBaseCodec(
-            pigeon_instanceManager ?? PigeonInstanceManager.instance);
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
     final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
     {
-      final BasicMessageChannel<
-          Object?> pigeonVar_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.geocoding_darwin.CLPlacemark.pigeon_newInstance',
-          pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.geocoding_darwin.CLPlacemark.pigeon_newInstance',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLPlacemark.pigeon_newInstance was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLPlacemark.pigeon_newInstance was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(arg_pigeon_instanceIdentifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CLPlacemark.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CLPlacemark.pigeon_newInstance was null, expected non-null int.',
+          );
           final CLLocation? arg_location = (args[1] as CLLocation?);
           final String? arg_name = (args[2] as String?);
           final String? arg_thoroughfare = (args[3] as String?);
@@ -1790,43 +1922,45 @@ class CLPlacemark extends NSObject {
           try {
             (pigeon_instanceManager ?? PigeonInstanceManager.instance)
                 .addHostCreatedInstance(
-              pigeon_newInstance?.call(
-                      arg_location,
-                      arg_name,
-                      arg_thoroughfare,
-                      arg_subThoroughfare,
-                      arg_locality,
-                      arg_subLocality,
-                      arg_administrativeArea,
-                      arg_subAdministrativeArea,
-                      arg_postalCode,
-                      arg_isoCountryCode,
-                      arg_country,
-                      arg_postalAddress) ??
-                  CLPlacemark.pigeon_detached(
-                    pigeon_binaryMessenger: pigeon_binaryMessenger,
-                    pigeon_instanceManager: pigeon_instanceManager,
-                    location: arg_location,
-                    name: arg_name,
-                    thoroughfare: arg_thoroughfare,
-                    subThoroughfare: arg_subThoroughfare,
-                    locality: arg_locality,
-                    subLocality: arg_subLocality,
-                    administrativeArea: arg_administrativeArea,
-                    subAdministrativeArea: arg_subAdministrativeArea,
-                    postalCode: arg_postalCode,
-                    isoCountryCode: arg_isoCountryCode,
-                    country: arg_country,
-                    postalAddress: arg_postalAddress,
-                  ),
-              arg_pigeon_instanceIdentifier!,
-            );
+                  pigeon_newInstance?.call(
+                        arg_location,
+                        arg_name,
+                        arg_thoroughfare,
+                        arg_subThoroughfare,
+                        arg_locality,
+                        arg_subLocality,
+                        arg_administrativeArea,
+                        arg_subAdministrativeArea,
+                        arg_postalCode,
+                        arg_isoCountryCode,
+                        arg_country,
+                        arg_postalAddress,
+                      ) ??
+                      CLPlacemark.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                        location: arg_location,
+                        name: arg_name,
+                        thoroughfare: arg_thoroughfare,
+                        subThoroughfare: arg_subThoroughfare,
+                        locality: arg_locality,
+                        subLocality: arg_subLocality,
+                        administrativeArea: arg_administrativeArea,
+                        subAdministrativeArea: arg_subAdministrativeArea,
+                        postalCode: arg_postalCode,
+                        isoCountryCode: arg_isoCountryCode,
+                        country: arg_country,
+                        postalAddress: arg_postalAddress,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -1918,85 +2052,109 @@ class CNPostalAddress extends NSObject {
       String isoCountryCode,
       String subAdministrativeArea,
       String subLocality,
-    )? pigeon_newInstance,
+    )?
+    pigeon_newInstance,
   }) {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _PigeonInternalProxyApiBaseCodec(
-            pigeon_instanceManager ?? PigeonInstanceManager.instance);
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
     final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
     {
-      final BasicMessageChannel<
-          Object?> pigeonVar_channel = BasicMessageChannel<
-              Object?>(
-          'dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance',
-          pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(arg_pigeon_instanceIdentifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null int.',
+          );
           final String? arg_street = (args[1] as String?);
-          assert(arg_street != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.');
+          assert(
+            arg_street != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.',
+          );
           final String? arg_city = (args[2] as String?);
-          assert(arg_city != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.');
+          assert(
+            arg_city != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.',
+          );
           final String? arg_state = (args[3] as String?);
-          assert(arg_state != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.');
+          assert(
+            arg_state != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.',
+          );
           final String? arg_postalCode = (args[4] as String?);
-          assert(arg_postalCode != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.');
+          assert(
+            arg_postalCode != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.',
+          );
           final String? arg_country = (args[5] as String?);
-          assert(arg_country != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.');
+          assert(
+            arg_country != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.',
+          );
           final String? arg_isoCountryCode = (args[6] as String?);
-          assert(arg_isoCountryCode != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.');
+          assert(
+            arg_isoCountryCode != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.',
+          );
           final String? arg_subAdministrativeArea = (args[7] as String?);
-          assert(arg_subAdministrativeArea != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.');
+          assert(
+            arg_subAdministrativeArea != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.',
+          );
           final String? arg_subLocality = (args[8] as String?);
-          assert(arg_subLocality != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.');
+          assert(
+            arg_subLocality != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.CNPostalAddress.pigeon_newInstance was null, expected non-null String.',
+          );
           try {
             (pigeon_instanceManager ?? PigeonInstanceManager.instance)
                 .addHostCreatedInstance(
-              pigeon_newInstance?.call(
-                      arg_street!,
-                      arg_city!,
-                      arg_state!,
-                      arg_postalCode!,
-                      arg_country!,
-                      arg_isoCountryCode!,
-                      arg_subAdministrativeArea!,
-                      arg_subLocality!) ??
-                  CNPostalAddress.pigeon_detached(
-                    pigeon_binaryMessenger: pigeon_binaryMessenger,
-                    pigeon_instanceManager: pigeon_instanceManager,
-                    street: arg_street!,
-                    city: arg_city!,
-                    state: arg_state!,
-                    postalCode: arg_postalCode!,
-                    country: arg_country!,
-                    isoCountryCode: arg_isoCountryCode!,
-                    subAdministrativeArea: arg_subAdministrativeArea!,
-                    subLocality: arg_subLocality!,
-                  ),
-              arg_pigeon_instanceIdentifier!,
-            );
+                  pigeon_newInstance?.call(
+                        arg_street!,
+                        arg_city!,
+                        arg_state!,
+                        arg_postalCode!,
+                        arg_country!,
+                        arg_isoCountryCode!,
+                        arg_subAdministrativeArea!,
+                        arg_subLocality!,
+                      ) ??
+                      CNPostalAddress.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                        street: arg_street!,
+                        city: arg_city!,
+                        state: arg_state!,
+                        postalCode: arg_postalCode!,
+                        country: arg_country!,
+                        isoCountryCode: arg_isoCountryCode!,
+                        subAdministrativeArea: arg_subAdministrativeArea!,
+                        subLocality: arg_subLocality!,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -2049,8 +2207,8 @@ class Locale extends PigeonInternalProxyApiBaseClass {
     super.pigeon_instanceManager,
     required String identifier,
   }) {
-    final int pigeonVar_instanceIdentifier =
-        pigeon_instanceManager.addDartCreatedInstance(this);
+    final int pigeonVar_instanceIdentifier = pigeon_instanceManager
+        .addDartCreatedInstance(this);
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _pigeonVar_codecLocale;
     final BinaryMessenger? pigeonVar_binaryMessenger = pigeon_binaryMessenger;
@@ -2058,12 +2216,13 @@ class Locale extends PigeonInternalProxyApiBaseClass {
         'dev.flutter.pigeon.geocoding_darwin.Locale.pigeon_defaultConstructor';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[pigeonVar_instanceIdentifier, identifier],
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel
-        .send(<Object?>[pigeonVar_instanceIdentifier, identifier]);
     () async {
       final List<Object?>? pigeonVar_replyList =
           await pigeonVar_sendFuture as List<Object?>?;
@@ -2102,40 +2261,47 @@ class Locale extends PigeonInternalProxyApiBaseClass {
   }) {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _PigeonInternalProxyApiBaseCodec(
-            pigeon_instanceManager ?? PigeonInstanceManager.instance);
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
     final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
     {
       final BasicMessageChannel<Object?> pigeonVar_channel =
           BasicMessageChannel<Object?>(
-              'dev.flutter.pigeon.geocoding_darwin.Locale.pigeon_newInstance',
-              pigeonChannelCodec,
-              binaryMessenger: binaryMessenger);
+            'dev.flutter.pigeon.geocoding_darwin.Locale.pigeon_newInstance',
+            pigeonChannelCodec,
+            binaryMessenger: binaryMessenger,
+          );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.Locale.pigeon_newInstance was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.Locale.pigeon_newInstance was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(arg_pigeon_instanceIdentifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.Locale.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.Locale.pigeon_newInstance was null, expected non-null int.',
+          );
           try {
             (pigeon_instanceManager ?? PigeonInstanceManager.instance)
                 .addHostCreatedInstance(
-              pigeon_newInstance?.call() ??
-                  Locale.pigeon_detached(
-                    pigeon_binaryMessenger: pigeon_binaryMessenger,
-                    pigeon_instanceManager: pigeon_instanceManager,
-                  ),
-              arg_pigeon_instanceIdentifier!,
-            );
+                  pigeon_newInstance?.call() ??
+                      Locale.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -2151,12 +2317,13 @@ class Locale extends PigeonInternalProxyApiBaseClass {
         'dev.flutter.pigeon.geocoding_darwin.Locale.getIdentifier';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -2200,7 +2367,8 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
       String? keyPath,
       NSObject? object,
       Map<KeyValueChangeKey, Object?>? change,
-    )? observeValue,
+    )?
+    observeValue,
   }) {
     if (PigeonOverrides.nSObject_new != null) {
       return PigeonOverrides.nSObject_new!(observeValue: observeValue);
@@ -2218,8 +2386,8 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
     super.pigeon_instanceManager,
     this.observeValue,
   }) {
-    final int pigeonVar_instanceIdentifier =
-        pigeon_instanceManager.addDartCreatedInstance(this);
+    final int pigeonVar_instanceIdentifier = pigeon_instanceManager
+        .addDartCreatedInstance(this);
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _pigeonVar_codecNSObject;
     final BinaryMessenger? pigeonVar_binaryMessenger = pigeon_binaryMessenger;
@@ -2227,12 +2395,13 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
         'dev.flutter.pigeon.geocoding_darwin.NSObject.pigeon_defaultConstructor';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[pigeonVar_instanceIdentifier],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[pigeonVar_instanceIdentifier]);
     () async {
       final List<Object?>? pigeonVar_replyList =
           await pigeonVar_sendFuture as List<Object?>?;
@@ -2289,7 +2458,8 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
     String? keyPath,
     NSObject? object,
     Map<KeyValueChangeKey, Object?>? change,
-  )? observeValue;
+  )?
+  observeValue;
 
   static void pigeon_setUpMessageHandlers({
     bool pigeon_clearHandlers = false,
@@ -2301,44 +2471,52 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
       String? keyPath,
       NSObject? object,
       Map<KeyValueChangeKey, Object?>? change,
-    )? observeValue,
+    )?
+    observeValue,
   }) {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _PigeonInternalProxyApiBaseCodec(
-            pigeon_instanceManager ?? PigeonInstanceManager.instance);
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
     final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
     {
       final BasicMessageChannel<Object?> pigeonVar_channel =
           BasicMessageChannel<Object?>(
-              'dev.flutter.pigeon.geocoding_darwin.NSObject.pigeon_newInstance',
-              pigeonChannelCodec,
-              binaryMessenger: binaryMessenger);
+            'dev.flutter.pigeon.geocoding_darwin.NSObject.pigeon_newInstance',
+            pigeonChannelCodec,
+            binaryMessenger: binaryMessenger,
+          );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.NSObject.pigeon_newInstance was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.NSObject.pigeon_newInstance was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(arg_pigeon_instanceIdentifier != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.NSObject.pigeon_newInstance was null, expected non-null int.');
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.NSObject.pigeon_newInstance was null, expected non-null int.',
+          );
           try {
             (pigeon_instanceManager ?? PigeonInstanceManager.instance)
                 .addHostCreatedInstance(
-              pigeon_newInstance?.call() ??
-                  NSObject.pigeon_detached(
-                    pigeon_binaryMessenger: pigeon_binaryMessenger,
-                    pigeon_instanceManager: pigeon_instanceManager,
-                  ),
-              arg_pigeon_instanceIdentifier!,
-            );
+                  pigeon_newInstance?.call() ??
+                      NSObject.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -2347,19 +2525,24 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
     {
       final BasicMessageChannel<Object?> pigeonVar_channel =
           BasicMessageChannel<Object?>(
-              'dev.flutter.pigeon.geocoding_darwin.NSObject.observeValue',
-              pigeonChannelCodec,
-              binaryMessenger: binaryMessenger);
+            'dev.flutter.pigeon.geocoding_darwin.NSObject.observeValue',
+            pigeonChannelCodec,
+            binaryMessenger: binaryMessenger,
+          );
       if (pigeon_clearHandlers) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
         pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(message != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.NSObject.observeValue was null.');
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.NSObject.observeValue was null.',
+          );
           final List<Object?> args = (message as List<Object?>?)!;
           final NSObject? arg_pigeon_instance = (args[0] as NSObject?);
-          assert(arg_pigeon_instance != null,
-              'Argument for dev.flutter.pigeon.geocoding_darwin.NSObject.observeValue was null, expected non-null NSObject.');
+          assert(
+            arg_pigeon_instance != null,
+            'Argument for dev.flutter.pigeon.geocoding_darwin.NSObject.observeValue was null, expected non-null NSObject.',
+          );
           final String? arg_keyPath = (args[1] as String?);
           final NSObject? arg_object = (args[2] as NSObject?);
           final Map<KeyValueChangeKey, Object?>? arg_change =
@@ -2367,13 +2550,18 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
                   ?.cast<KeyValueChangeKey, Object?>();
           try {
             (observeValue ?? arg_pigeon_instance!.observeValue)?.call(
-                arg_pigeon_instance!, arg_keyPath, arg_object, arg_change);
+              arg_pigeon_instance!,
+              arg_keyPath,
+              arg_object,
+              arg_change,
+            );
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
           } catch (e) {
             return wrapResponse(
-                error: PlatformException(code: 'error', message: e.toString()));
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }
@@ -2394,12 +2582,13 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
         'dev.flutter.pigeon.geocoding_darwin.NSObject.addObserver';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this, observer, keyPath, options],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this, observer, keyPath, options]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -2418,10 +2607,7 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
   /// Stops the observer object from receiving change notifications for the
   /// property specified by the key path relative to the object receiving this
   /// message.
-  Future<void> removeObserver(
-    NSObject observer,
-    String keyPath,
-  ) async {
+  Future<void> removeObserver(NSObject observer, String keyPath) async {
     final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
         _pigeonVar_codecNSObject;
     final BinaryMessenger? pigeonVar_binaryMessenger = pigeon_binaryMessenger;
@@ -2429,12 +2615,13 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
         'dev.flutter.pigeon.geocoding_darwin.NSObject.removeObserver';
     final BasicMessageChannel<Object?> pigeonVar_channel =
         BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[this, observer, keyPath],
     );
-    final Future<Object?> pigeonVar_sendFuture =
-        pigeonVar_channel.send(<Object?>[this, observer, keyPath]);
     final List<Object?>? pigeonVar_replyList =
         await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
@@ -2459,4 +2646,3 @@ class NSObject extends PigeonInternalProxyApiBaseClass {
     );
   }
 }
-
