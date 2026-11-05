@@ -3,8 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/geocoding.svg)](https://pub.dartlang.org/packages/geocoding)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
-[![Buid status](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding.yaml/badge.svg)](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding.yaml)
-[![codecov](https://codecov.io/gh/Baseflow/flutter-geocoding/branch/main/graph/badge.svg)](https://codecov.io/gh/Baseflow/flutter-geocoding)
+[![Build status](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_ci.yaml/badge.svg?branch=main)](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_ci.yaml)
 
 A Flutter Geocoding plugin which provides easy geocoding and reverse-geocoding features.
 

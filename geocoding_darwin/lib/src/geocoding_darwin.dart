@@ -22,9 +22,7 @@ class GeocodingDarwinCreationParams extends GeocodingCreationParams {
     @flt.visibleForTesting
     CLGeocoderProxy coreLocationGeocoderProxy = const CLGeocoderProxy(),
     @flt.visibleForTesting PigeonInstanceManager? instanceManager,
-  }) : this(
-         coreLocationGeocoderProxy: coreLocationGeocoderProxy,
-       );
+  }) : this(coreLocationGeocoderProxy: coreLocationGeocoderProxy);
 
   /// Handles constructing objects and calling static method for the Core
   /// Location Geocoder native library.
