@@ -3,8 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/geocoding.svg)](https://pub.dev/packages/geocoding)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
-[![Buid status](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding.yaml/badge.svg)](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding.yaml)
-[![codecov](https://codecov.io/gh/Baseflow/flutter-geocoding/branch/main/graph/badge.svg)](https://codecov.io/gh/Baseflow/flutter-geocoding)
+[![Build status](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_ci.yaml/badge.svg?branch=main)](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_ci.yaml)
 
 The Flutter geocoding plugin is build following the federated plugin architecture. A detailed explanation of the federated plugin concept can be found in the [Flutter documentation](https://docs.flutter.dev/development/development/packages-and-plugins/developing-packages#federated-plugins). This means the geocoding plugin is separated into the following packages:
 

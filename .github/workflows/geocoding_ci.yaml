@@ -1,0 +1,117 @@
+name: Geocoding - Continuous Integration
+
+# Single entry point for CI. Every package is checked by the reusable
+# geocoding_package.yaml, and only when that package changed. Make `ci-result`
+# the only required status check: it reports on every run, also when the
+# package jobs are skipped.
+#
+# Starting it by hand runs every package, for example to check main against a
+# new Flutter stable release.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# A new push to a pull request cancels the run for the previous one. Every other
+# run gets a group of its own and is never cancelled, so every merged commit and
+# every manual run gets a result.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# The called workflow inherits these and can only narrow them. paths-filter
+# reads the changed files of a pull request through the API.
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      android: ${{ steps.filter.outputs.android }}
+      darwin: ${{ steps.filter.outputs.darwin }}
+      platform_interface: ${{ steps.filter.outputs.platform_interface }}
+      app_facing: ${{ steps.filter.outputs.app_facing }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dorny/paths-filter@v4
+        id: filter
+        if: github.event_name != 'workflow_dispatch'
+        with:
+          # The packages are not a pub workspace: each one resolves its
+          # siblings from pub.dev, so a package only needs checking when its
+          # own sources or the CI configuration changed.
+          filters: |
+            shared: &shared
+              - '.github/workflows/geocoding_ci.yaml'
+              - '.github/workflows/geocoding_package.yaml'
+            platform_interface:
+              - *shared
+              - 'geocoding_platform_interface/**'
+            android:
+              - *shared
+              - 'geocoding_android/**'
+            darwin:
+              - *shared
+              - 'geocoding_darwin/**'
+            app_facing:
+              - *shared
+              - 'geocoding/**'
+
+  platform_interface:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.platform_interface == 'true'
+    uses: ./.github/workflows/geocoding_package.yaml
+    with:
+      package: geocoding_platform_interface
+      runs-on: ubuntu-latest
+      unit-tests: true
+
+  android:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.android == 'true'
+    uses: ./.github/workflows/geocoding_package.yaml
+    with:
+      package: geocoding_android
+      runs-on: ubuntu-latest
+      java: true
+      example-build: flutter build apk --release
+
+  # geocoding_darwin is the iOS and macOS implementation, so the example is
+  # built for both.
+  darwin:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.darwin == 'true'
+    uses: ./.github/workflows/geocoding_package.yaml
+    with:
+      package: geocoding_darwin
+      runs-on: macos-latest
+      example-build: |
+        flutter build ios --no-codesign --release
+        flutter build macos --release
+
+  app_facing:
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.app_facing == 'true'
+    uses: ./.github/workflows/geocoding_package.yaml
+    with:
+      package: geocoding
+      runs-on: macos-latest
+      java: true
+      unit-tests: true
+      example-build: |
+        flutter build apk --release
+        flutter build ios --release --no-codesign
+
+  ci-result:            # ← the only required check
+    needs: [changes, platform_interface, android, darwin, app_facing]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          if [[ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" == "true" ]]; then
+            exit 1
+          fi

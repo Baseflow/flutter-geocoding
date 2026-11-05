@@ -1,7 +1,7 @@
 # geocoding_platform_interface
 
 [![pub package](https://img.shields.io/pub/v/geocoding_platform_interface.svg)](https://pub.dartlang.org/packages/geocoding_platform_interface)
-[![Buid status](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_platform_interface.yaml/badge.svg)](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_platform_interface.yaml)
+[![Build status](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_ci.yaml/badge.svg?branch=main)](https://github.com/Baseflow/flutter-geocoding/actions/workflows/geocoding_ci.yaml)
 [![style: flutter_lints](https://img.shields.io/badge/style-flutter_lints-40c4ff.svg)](https://pub.dev/packages/flutter_lints)
 
 A common platform interface for the [`geocoding`][1] plugin.
