@@ -156,6 +156,7 @@ abstract class Geocoder {
   @Deprecated(
     'This method was deprecated in Android API level 33. Use `getFromLocation` instead.',
   )
+  @async
   List<Address?>? getFromLocationPreAndroidApi33(
     double latitude,
     double longitude,
@@ -190,6 +191,7 @@ abstract class Geocoder {
   @Deprecated(
     'This method was deprecated in Android API level 33. Use `getFromLocationName` instead.',
   )
+  @async
   List<Address?>? getFromLocationNamePreAndroidApi33(
     String locationName,
     int maxResults, {

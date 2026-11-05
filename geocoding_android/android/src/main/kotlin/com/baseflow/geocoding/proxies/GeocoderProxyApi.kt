@@ -10,6 +10,8 @@ import com.baseflow.geocoding.GeographicBounds
 import com.baseflow.geocoding.PigeonApiGeocoder
 import com.baseflow.geocoding.ProxyApiRegistrar
 import java.util.Locale
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 /**
  * ProxyApi implementation for {@link Geocoder}. This class may handle instantiating native
@@ -18,6 +20,10 @@ import java.util.Locale
  */
 class GeocoderProxyApi(pigeonRegistrar: AndroidGeocoderLibraryPigeonProxyApiRegistrar) :
     PigeonApiGeocoder(pigeonRegistrar) {
+    companion object {
+        private val executor: ExecutorService = Executors.newSingleThreadExecutor()
+    }
+
     override fun pigeon_defaultConstructor(locale: Locale?): Geocoder {
         check(pigeonRegistrar is ProxyApiRegistrar) { "The pigeonRegistrar is not an instance of ProxyApiRegistrar." }
 
@@ -43,9 +49,12 @@ class GeocoderProxyApi(pigeonRegistrar: AndroidGeocoderLibraryPigeonProxyApiRegi
         pigeon_instance: Geocoder,
         latitude: Double,
         longitude: Double,
-        maxResults: Long
-    ): List<Address?>? {
-        return pigeon_instance.getFromLocation(latitude, longitude, maxResults.toInt());
+        maxResults: Long,
+        callback: (Result<List<Address?>?>) -> Unit
+    ) {
+        runInBackground(callback) {
+            pigeon_instance.getFromLocation(latitude, longitude, maxResults.toInt())
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -70,13 +79,33 @@ class GeocoderProxyApi(pigeonRegistrar: AndroidGeocoderLibraryPigeonProxyApiRegi
         pigeon_instance: Geocoder,
         locationName: String,
         maxResults: Long,
-        bounds: GeographicBounds?
-    ): List<Address?>? {
-        if (bounds != null) {
-            return pigeon_instance.getFromLocationName(locationName, maxResults.toInt(), bounds.lowerLeftLatitude, bounds.lowerLeftLongitude, bounds.upperRightLatitude, bounds.upperRightLongitude)
+        bounds: GeographicBounds?,
+        callback: (Result<List<Address?>?>) -> Unit
+    ) {
+        runInBackground(callback) {
+            if (bounds != null) {
+                pigeon_instance.getFromLocationName(locationName, maxResults.toInt(), bounds.lowerLeftLatitude, bounds.lowerLeftLongitude, bounds.upperRightLatitude, bounds.upperRightLongitude)
+            } else {
+                pigeon_instance.getFromLocationName(locationName, maxResults.toInt())
+            }
         }
+    }
 
-        return pigeon_instance.getFromLocationName(locationName, maxResults.toInt())
+    /**
+     * Runs a blocking [Geocoder] lookup on a background thread and delivers the result on the main
+     * thread, so that the pre-API 33 synchronous methods never block the UI thread.
+     */
+    private fun runInBackground(
+        callback: (Result<List<Address?>?>) -> Unit,
+        lookup: () -> List<Address?>?
+    ) {
+        check(pigeonRegistrar is ProxyApiRegistrar) { "The pigeonRegistrar is not an instance of ProxyApiRegistrar." }
+        val registrar = pigeonRegistrar as ProxyApiRegistrar
+
+        executor.execute {
+            val result = runCatching(lookup)
+            registrar.runOnMainThread { callback(result) }
+        }
     }
 
     override fun isPresent(): Boolean {

@@ -403,12 +403,6 @@ abstract class AndroidGeocoderLibraryPigeonProxyApiRegistrar(val binaryMessenger
   abstract fun getPigeonApiAddress(): PigeonApiAddress
 
   /**
-   * An implementation of [PigeonApiGeographicBounds] used to add a new Dart instance of
-   * `GeographicBounds` to the Dart `InstanceManager`.
-   */
-  abstract fun getPigeonApiGeographicBounds(): PigeonApiGeographicBounds
-
-  /**
    * An implementation of [PigeonApiBuild] used to add a new Dart instance of
    * `Build` to the Dart `InstanceManager`.
    */
@@ -427,6 +421,12 @@ abstract class AndroidGeocoderLibraryPigeonProxyApiRegistrar(val binaryMessenger
   abstract fun getPigeonApiGeocoder(): PigeonApiGeocoder
 
   /**
+   * An implementation of [PigeonApiGeographicBounds] used to add a new Dart instance of
+   * `GeographicBounds` to the Dart `InstanceManager`.
+   */
+  abstract fun getPigeonApiGeographicBounds(): PigeonApiGeographicBounds
+
+  /**
    * An implementation of [PigeonApiLocale] used to add a new Dart instance of
    * `Locale` to the Dart `InstanceManager`.
    */
@@ -435,19 +435,19 @@ abstract class AndroidGeocoderLibraryPigeonProxyApiRegistrar(val binaryMessenger
   fun setUp() {
     AndroidGeocoderLibraryPigeonInstanceManagerApi.setUpMessageHandlers(binaryMessenger, instanceManager)
     PigeonApiAddress.setUpMessageHandlers(binaryMessenger, getPigeonApiAddress())
-    PigeonApiGeographicBounds.setUpMessageHandlers(binaryMessenger, getPigeonApiGeographicBounds())
     PigeonApiBuild.setUpMessageHandlers(binaryMessenger, getPigeonApiBuild())
     PigeonApiGeocodeListener.setUpMessageHandlers(binaryMessenger, getPigeonApiGeocodeListener())
     PigeonApiGeocoder.setUpMessageHandlers(binaryMessenger, getPigeonApiGeocoder())
+    PigeonApiGeographicBounds.setUpMessageHandlers(binaryMessenger, getPigeonApiGeographicBounds())
     PigeonApiLocale.setUpMessageHandlers(binaryMessenger, getPigeonApiLocale())
   }
   fun tearDown() {
     AndroidGeocoderLibraryPigeonInstanceManagerApi.setUpMessageHandlers(binaryMessenger, null)
     PigeonApiAddress.setUpMessageHandlers(binaryMessenger, null)
-    PigeonApiGeographicBounds.setUpMessageHandlers(binaryMessenger, null)
     PigeonApiBuild.setUpMessageHandlers(binaryMessenger, null)
     PigeonApiGeocodeListener.setUpMessageHandlers(binaryMessenger, null)
     PigeonApiGeocoder.setUpMessageHandlers(binaryMessenger, null)
+    PigeonApiGeographicBounds.setUpMessageHandlers(binaryMessenger, null)
     PigeonApiLocale.setUpMessageHandlers(binaryMessenger, null)
   }
 }
@@ -489,13 +489,6 @@ private class AndroidGeocoderLibraryPigeonProxyApiBaseCodec(val registrar: Andro
         }
       }
     }
-     else if (value is GeographicBounds) {
-      registrar.getPigeonApiGeographicBounds().pigeon_newInstance(value) {
-        if (it.isFailure) {
-          logNewInstanceFailure("GeographicBounds", value, it.exceptionOrNull())
-        }
-      }
-    }
      else if (value is android.os.Build) {
       registrar.getPigeonApiBuild().pigeon_newInstance(value) {
         if (it.isFailure) {
@@ -514,6 +507,13 @@ private class AndroidGeocoderLibraryPigeonProxyApiBaseCodec(val registrar: Andro
       registrar.getPigeonApiGeocoder().pigeon_newInstance(value) {
         if (it.isFailure) {
           logNewInstanceFailure("Geocoder", value, it.exceptionOrNull())
+        }
+      }
+    }
+     else if (value is GeographicBounds) {
+      registrar.getPigeonApiGeographicBounds().pigeon_newInstance(value) {
+        if (it.isFailure) {
+          logNewInstanceFailure("GeographicBounds", value, it.exceptionOrNull())
         }
       }
     }
@@ -1026,83 +1026,6 @@ abstract class PigeonApiAddress(open val pigeonRegistrar: AndroidGeocoderLibrary
   }
 
 }
-/** Geographical bounds describing a geographic box. */
-@Suppress("UNCHECKED_CAST")
-abstract class PigeonApiGeographicBounds(open val pigeonRegistrar: AndroidGeocoderLibraryPigeonProxyApiRegistrar) {
-  abstract fun pigeon_defaultConstructor(lowerLeftLatitude: Double, lowerLeftLongitude: Double, upperRightLatitude: Double, upperRightLongitude: Double): GeographicBounds
-
-  abstract fun lowerLeftLatitude(pigeon_instance: GeographicBounds): Double
-
-  abstract fun lowerLeftLongitude(pigeon_instance: GeographicBounds): Double
-
-  abstract fun upperRightLatitude(pigeon_instance: GeographicBounds): Double
-
-  abstract fun upperRightLongitude(pigeon_instance: GeographicBounds): Double
-
-  companion object {
-    @Suppress("LocalVariableName")
-    fun setUpMessageHandlers(binaryMessenger: BinaryMessenger, api: PigeonApiGeographicBounds?) {
-      val codec = api?.pigeonRegistrar?.codec ?: AndroidGeocoderLibraryPigeonCodec()
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_defaultConstructor", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val pigeon_identifierArg = args[0] as Long
-            val lowerLeftLatitudeArg = args[1] as Double
-            val lowerLeftLongitudeArg = args[2] as Double
-            val upperRightLatitudeArg = args[3] as Double
-            val upperRightLongitudeArg = args[4] as Double
-            val wrapped: List<Any?> = try {
-              api.pigeonRegistrar.instanceManager.addDartCreatedInstance(api.pigeon_defaultConstructor(lowerLeftLatitudeArg,lowerLeftLongitudeArg,upperRightLatitudeArg,upperRightLongitudeArg), pigeon_identifierArg)
-              listOf(null)
-            } catch (exception: Throwable) {
-              AndroidGeocoderLibraryPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-    }
-  }
-
-  @Suppress("LocalVariableName", "FunctionName")
-  /** Creates a Dart instance of GeographicBounds and attaches it to [pigeon_instanceArg]. */
-  fun pigeon_newInstance(pigeon_instanceArg: GeographicBounds, callback: (Result<Unit>) -> Unit)
-{
-    if (pigeonRegistrar.ignoreCallsToDart) {
-      callback(
-          Result.failure(
-              AndroidGeocoderError("ignore-calls-error", "Calls to Dart are being ignored.", "")))
-    }     else if (pigeonRegistrar.instanceManager.containsInstance(pigeon_instanceArg)) {
-      callback(Result.success(Unit))
-    }     else {
-      val pigeon_identifierArg = pigeonRegistrar.instanceManager.addHostCreatedInstance(pigeon_instanceArg)
-      val lowerLeftLatitudeArg = lowerLeftLatitude(pigeon_instanceArg)
-      val lowerLeftLongitudeArg = lowerLeftLongitude(pigeon_instanceArg)
-      val upperRightLatitudeArg = upperRightLatitude(pigeon_instanceArg)
-      val upperRightLongitudeArg = upperRightLongitude(pigeon_instanceArg)
-      val binaryMessenger = pigeonRegistrar.binaryMessenger
-      val codec = pigeonRegistrar.codec
-      val channelName = "dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance"
-      val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
-      channel.send(listOf(pigeon_identifierArg, lowerLeftLatitudeArg, lowerLeftLongitudeArg, upperRightLatitudeArg, upperRightLongitudeArg)) {
-        if (it is List<*>) {
-          if (it.size > 1) {
-            callback(Result.failure(AndroidGeocoderError(it[0] as String, it[1] as String, it[2] as String?)))
-          } else {
-            callback(Result.success(Unit))
-          }
-        } else {
-          callback(Result.failure(AndroidGeocoderLibraryPigeonUtils.createConnectionError(channelName)))
-        } 
-      }
-    }
-  }
-
-}
 /** Information about the current Android build, extracted from system properties. */
 @Suppress("UNCHECKED_CAST")
 abstract class PigeonApiBuild(open val pigeonRegistrar: AndroidGeocoderLibraryPigeonProxyApiRegistrar) {
@@ -1313,7 +1236,7 @@ abstract class PigeonApiGeocoder(open val pigeonRegistrar: AndroidGeocoderLibrar
    * in blocking the main thread. On Android devices running API 33 or higher
    * please use the [Geocoder.getFromLocation] method.
    */
-  abstract fun getFromLocationPreAndroidApi33(pigeon_instance: android.location.Geocoder, latitude: Double, longitude: Double, maxResults: Long): List<android.location.Address?>?
+  abstract fun getFromLocationPreAndroidApi33(pigeon_instance: android.location.Geocoder, latitude: Double, longitude: Double, maxResults: Long, callback: (Result<List<android.location.Address?>?>) -> Unit)
 
   /**
    * Returns an array of Addresses that attempt to describe the named location,
@@ -1340,7 +1263,7 @@ abstract class PigeonApiGeocoder(open val pigeonRegistrar: AndroidGeocoderLibrar
    * in blocking the main thread. On Android devices running API 33 or higher
    * please use the [Geocoder.getFromLocation] method.
    */
-  abstract fun getFromLocationNamePreAndroidApi33(pigeon_instance: android.location.Geocoder, locationName: String, maxResults: Long, bounds: GeographicBounds?): List<android.location.Address?>?
+  abstract fun getFromLocationNamePreAndroidApi33(pigeon_instance: android.location.Geocoder, locationName: String, maxResults: Long, bounds: GeographicBounds?, callback: (Result<List<android.location.Address?>?>) -> Unit)
 
   /**
    * Returns true if there is a geocoder implementation present on the device
@@ -1419,12 +1342,15 @@ abstract class PigeonApiGeocoder(open val pigeonRegistrar: AndroidGeocoderLibrar
             val latitudeArg = args[1] as Double
             val longitudeArg = args[2] as Double
             val maxResultsArg = args[3] as Long
-            val wrapped: List<Any?> = try {
-              listOf(api.getFromLocationPreAndroidApi33(pigeon_instanceArg, latitudeArg, longitudeArg, maxResultsArg))
-            } catch (exception: Throwable) {
-              AndroidGeocoderLibraryPigeonUtils.wrapError(exception)
+            api.getFromLocationPreAndroidApi33(pigeon_instanceArg, latitudeArg, longitudeArg, maxResultsArg) { result: Result<List<android.location.Address?>?> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(AndroidGeocoderLibraryPigeonUtils.wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(AndroidGeocoderLibraryPigeonUtils.wrapResult(data))
+              }
             }
-            reply.reply(wrapped)
           }
         } else {
           channel.setMessageHandler(null)
@@ -1478,12 +1404,15 @@ abstract class PigeonApiGeocoder(open val pigeonRegistrar: AndroidGeocoderLibrar
             val locationNameArg = args[1] as String
             val maxResultsArg = args[2] as Long
             val boundsArg = args[3] as GeographicBounds?
-            val wrapped: List<Any?> = try {
-              listOf(api.getFromLocationNamePreAndroidApi33(pigeon_instanceArg, locationNameArg, maxResultsArg, boundsArg))
-            } catch (exception: Throwable) {
-              AndroidGeocoderLibraryPigeonUtils.wrapError(exception)
+            api.getFromLocationNamePreAndroidApi33(pigeon_instanceArg, locationNameArg, maxResultsArg, boundsArg) { result: Result<List<android.location.Address?>?> ->
+              val error = result.exceptionOrNull()
+              if (error != null) {
+                reply.reply(AndroidGeocoderLibraryPigeonUtils.wrapError(error))
+              } else {
+                val data = result.getOrNull()
+                reply.reply(AndroidGeocoderLibraryPigeonUtils.wrapResult(data))
+              }
             }
-            reply.reply(wrapped)
           }
         } else {
           channel.setMessageHandler(null)
@@ -1524,6 +1453,83 @@ abstract class PigeonApiGeocoder(open val pigeonRegistrar: AndroidGeocoderLibrar
       val channelName = "dev.flutter.pigeon.geocoding_android.Geocoder.pigeon_newInstance"
       val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
       channel.send(listOf(pigeon_identifierArg)) {
+        if (it is List<*>) {
+          if (it.size > 1) {
+            callback(Result.failure(AndroidGeocoderError(it[0] as String, it[1] as String, it[2] as String?)))
+          } else {
+            callback(Result.success(Unit))
+          }
+        } else {
+          callback(Result.failure(AndroidGeocoderLibraryPigeonUtils.createConnectionError(channelName)))
+        } 
+      }
+    }
+  }
+
+}
+/** Geographical bounds describing a geographic box. */
+@Suppress("UNCHECKED_CAST")
+abstract class PigeonApiGeographicBounds(open val pigeonRegistrar: AndroidGeocoderLibraryPigeonProxyApiRegistrar) {
+  abstract fun pigeon_defaultConstructor(lowerLeftLatitude: Double, lowerLeftLongitude: Double, upperRightLatitude: Double, upperRightLongitude: Double): GeographicBounds
+
+  abstract fun lowerLeftLatitude(pigeon_instance: GeographicBounds): Double
+
+  abstract fun lowerLeftLongitude(pigeon_instance: GeographicBounds): Double
+
+  abstract fun upperRightLatitude(pigeon_instance: GeographicBounds): Double
+
+  abstract fun upperRightLongitude(pigeon_instance: GeographicBounds): Double
+
+  companion object {
+    @Suppress("LocalVariableName")
+    fun setUpMessageHandlers(binaryMessenger: BinaryMessenger, api: PigeonApiGeographicBounds?) {
+      val codec = api?.pigeonRegistrar?.codec ?: AndroidGeocoderLibraryPigeonCodec()
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_defaultConstructor", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val pigeon_identifierArg = args[0] as Long
+            val lowerLeftLatitudeArg = args[1] as Double
+            val lowerLeftLongitudeArg = args[2] as Double
+            val upperRightLatitudeArg = args[3] as Double
+            val upperRightLongitudeArg = args[4] as Double
+            val wrapped: List<Any?> = try {
+              api.pigeonRegistrar.instanceManager.addDartCreatedInstance(api.pigeon_defaultConstructor(lowerLeftLatitudeArg,lowerLeftLongitudeArg,upperRightLatitudeArg,upperRightLongitudeArg), pigeon_identifierArg)
+              listOf(null)
+            } catch (exception: Throwable) {
+              AndroidGeocoderLibraryPigeonUtils.wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+    }
+  }
+
+  @Suppress("LocalVariableName", "FunctionName")
+  /** Creates a Dart instance of GeographicBounds and attaches it to [pigeon_instanceArg]. */
+  fun pigeon_newInstance(pigeon_instanceArg: GeographicBounds, callback: (Result<Unit>) -> Unit)
+{
+    if (pigeonRegistrar.ignoreCallsToDart) {
+      callback(
+          Result.failure(
+              AndroidGeocoderError("ignore-calls-error", "Calls to Dart are being ignored.", "")))
+    }     else if (pigeonRegistrar.instanceManager.containsInstance(pigeon_instanceArg)) {
+      callback(Result.success(Unit))
+    }     else {
+      val pigeon_identifierArg = pigeonRegistrar.instanceManager.addHostCreatedInstance(pigeon_instanceArg)
+      val lowerLeftLatitudeArg = lowerLeftLatitude(pigeon_instanceArg)
+      val lowerLeftLongitudeArg = lowerLeftLongitude(pigeon_instanceArg)
+      val upperRightLatitudeArg = upperRightLatitude(pigeon_instanceArg)
+      val upperRightLongitudeArg = upperRightLongitude(pigeon_instanceArg)
+      val binaryMessenger = pigeonRegistrar.binaryMessenger
+      val codec = pigeonRegistrar.codec
+      val channelName = "dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance"
+      val channel = BasicMessageChannel<Any?>(binaryMessenger, channelName, codec)
+      channel.send(listOf(pigeon_identifierArg, lowerLeftLatitudeArg, lowerLeftLongitudeArg, upperRightLatitudeArg, upperRightLongitudeArg)) {
         if (it is List<*>) {
           if (it.size > 1) {
             callback(Result.failure(AndroidGeocoderError(it[0] as String, it[1] as String, it[2] as String?)))

@@ -1,3 +1,7 @@
+## 5.1.1
+
+- Runs the deprecated pre-API 33 `Geocoder.getFromLocation` and `Geocoder.getFromLocationName` lookups on a background thread instead of the platform main thread, preventing ANRs on Android 12 and lower when the geocoding service is slow.
+
 ## 5.1.0
 
 - Updates minimum supported SDK version to Flutter 3.44/Dart 3.12.

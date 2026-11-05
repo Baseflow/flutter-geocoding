@@ -41,15 +41,6 @@ List<Object?> wrapResponse({
 /// See [PigeonOverrides.pigeon_reset] to set all overrides back to null.
 @visibleForTesting
 class PigeonOverrides {
-  /// Overrides [GeographicBounds.new].
-  static GeographicBounds Function({
-    required double lowerLeftLatitude,
-    required double lowerLeftLongitude,
-    required double upperRightLatitude,
-    required double upperRightLongitude,
-  })?
-  geographicBounds_new;
-
   /// Overrides [GeocodeListener.new].
   static GeocodeListener Function({
     required void Function(
@@ -68,6 +59,15 @@ class PigeonOverrides {
   /// Overrides [Geocoder.new].
   static Geocoder Function({Locale? locale})? geocoder_new;
 
+  /// Overrides [GeographicBounds.new].
+  static GeographicBounds Function({
+    required double lowerLeftLatitude,
+    required double lowerLeftLongitude,
+    required double upperRightLatitude,
+    required double upperRightLongitude,
+  })?
+  geographicBounds_new;
+
   /// Overrides [Locale.new].
   static Locale Function({required String identifier})? locale_new;
 
@@ -79,11 +79,11 @@ class PigeonOverrides {
 
   /// Sets all overridden ProxyApi class members to null.
   static void pigeon_reset() {
-    geographicBounds_new = null;
     build_getSdkVersion = null;
     geocodeListener_new = null;
     geocoder_new = null;
     geocoder_isPresent = null;
+    geographicBounds_new = null;
     locale_new = null;
   }
 }
@@ -201,14 +201,14 @@ class PigeonInstanceManager {
     Address.pigeon_setUpMessageHandlers(
       pigeon_instanceManager: instanceManager,
     );
-    GeographicBounds.pigeon_setUpMessageHandlers(
-      pigeon_instanceManager: instanceManager,
-    );
     Build.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
     GeocodeListener.pigeon_setUpMessageHandlers(
       pigeon_instanceManager: instanceManager,
     );
     Geocoder.pigeon_setUpMessageHandlers(
+      pigeon_instanceManager: instanceManager,
+    );
+    GeographicBounds.pigeon_setUpMessageHandlers(
       pigeon_instanceManager: instanceManager,
     );
     Locale.pigeon_setUpMessageHandlers(pigeon_instanceManager: instanceManager);
@@ -1245,209 +1245,6 @@ class Address extends PigeonInternalProxyApiBaseClass {
   }
 }
 
-/// Geographical bounds describing a geographic box.
-class GeographicBounds extends PigeonInternalProxyApiBaseClass {
-  factory GeographicBounds({
-    BinaryMessenger? pigeon_binaryMessenger,
-    PigeonInstanceManager? pigeon_instanceManager,
-    required double lowerLeftLatitude,
-    required double lowerLeftLongitude,
-    required double upperRightLatitude,
-    required double upperRightLongitude,
-  }) {
-    if (PigeonOverrides.geographicBounds_new != null) {
-      return PigeonOverrides.geographicBounds_new!(
-        lowerLeftLatitude: lowerLeftLatitude,
-        lowerLeftLongitude: lowerLeftLongitude,
-        upperRightLatitude: upperRightLatitude,
-        upperRightLongitude: upperRightLongitude,
-      );
-    }
-    return GeographicBounds.pigeon_new(
-      pigeon_binaryMessenger: pigeon_binaryMessenger,
-      pigeon_instanceManager: pigeon_instanceManager,
-      lowerLeftLatitude: lowerLeftLatitude,
-      lowerLeftLongitude: lowerLeftLongitude,
-      upperRightLatitude: upperRightLatitude,
-      upperRightLongitude: upperRightLongitude,
-    );
-  }
-
-  @protected
-  GeographicBounds.pigeon_new({
-    super.pigeon_binaryMessenger,
-    super.pigeon_instanceManager,
-    required this.lowerLeftLatitude,
-    required this.lowerLeftLongitude,
-    required this.upperRightLatitude,
-    required this.upperRightLongitude,
-  }) {
-    final int pigeonVar_instanceIdentifier = pigeon_instanceManager
-        .addDartCreatedInstance(this);
-    final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
-        _pigeonVar_codecGeographicBounds;
-    final BinaryMessenger? pigeonVar_binaryMessenger = pigeon_binaryMessenger;
-    const String pigeonVar_channelName =
-        'dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_defaultConstructor';
-    final BasicMessageChannel<Object?> pigeonVar_channel =
-        BasicMessageChannel<Object?>(
-          pigeonVar_channelName,
-          pigeonChannelCodec,
-          binaryMessenger: pigeonVar_binaryMessenger,
-        );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel
-        .send(<Object?>[
-          pigeonVar_instanceIdentifier,
-          lowerLeftLatitude,
-          lowerLeftLongitude,
-          upperRightLatitude,
-          upperRightLongitude,
-        ]);
-    () async {
-      final List<Object?>? pigeonVar_replyList =
-          await pigeonVar_sendFuture as List<Object?>?;
-      if (pigeonVar_replyList == null) {
-        throw _createConnectionError(pigeonVar_channelName);
-      } else if (pigeonVar_replyList.length > 1) {
-        throw PlatformException(
-          code: pigeonVar_replyList[0]! as String,
-          message: pigeonVar_replyList[1] as String?,
-          details: pigeonVar_replyList[2],
-        );
-      } else {
-        return;
-      }
-    }();
-  }
-
-  /// Constructs [GeographicBounds] without creating the associated native object.
-  ///
-  /// This should only be used by subclasses created by this library or to
-  /// create copies for an [PigeonInstanceManager].
-  @protected
-  GeographicBounds.pigeon_detached({
-    super.pigeon_binaryMessenger,
-    super.pigeon_instanceManager,
-    required this.lowerLeftLatitude,
-    required this.lowerLeftLongitude,
-    required this.upperRightLatitude,
-    required this.upperRightLongitude,
-  });
-
-  late final _PigeonInternalProxyApiBaseCodec _pigeonVar_codecGeographicBounds =
-      _PigeonInternalProxyApiBaseCodec(pigeon_instanceManager);
-
-  final double lowerLeftLatitude;
-
-  final double lowerLeftLongitude;
-
-  final double upperRightLatitude;
-
-  final double upperRightLongitude;
-
-  static void pigeon_setUpMessageHandlers({
-    bool pigeon_clearHandlers = false,
-    BinaryMessenger? pigeon_binaryMessenger,
-    PigeonInstanceManager? pigeon_instanceManager,
-    GeographicBounds Function(
-      double lowerLeftLatitude,
-      double lowerLeftLongitude,
-      double upperRightLatitude,
-      double upperRightLongitude,
-    )?
-    pigeon_newInstance,
-  }) {
-    final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
-        _PigeonInternalProxyApiBaseCodec(
-          pigeon_instanceManager ?? PigeonInstanceManager.instance,
-        );
-    final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
-    {
-      final BasicMessageChannel<Object?>
-      pigeonVar_channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance',
-        pigeonChannelCodec,
-        binaryMessenger: binaryMessenger,
-      );
-      if (pigeon_clearHandlers) {
-        pigeonVar_channel.setMessageHandler(null);
-      } else {
-        pigeonVar_channel.setMessageHandler((Object? message) async {
-          assert(
-            message != null,
-            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null.',
-          );
-          final List<Object?> args = (message as List<Object?>?)!;
-          final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
-          assert(
-            arg_pigeon_instanceIdentifier != null,
-            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null int.',
-          );
-          final double? arg_lowerLeftLatitude = (args[1] as double?);
-          assert(
-            arg_lowerLeftLatitude != null,
-            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null double.',
-          );
-          final double? arg_lowerLeftLongitude = (args[2] as double?);
-          assert(
-            arg_lowerLeftLongitude != null,
-            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null double.',
-          );
-          final double? arg_upperRightLatitude = (args[3] as double?);
-          assert(
-            arg_upperRightLatitude != null,
-            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null double.',
-          );
-          final double? arg_upperRightLongitude = (args[4] as double?);
-          assert(
-            arg_upperRightLongitude != null,
-            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null double.',
-          );
-          try {
-            (pigeon_instanceManager ?? PigeonInstanceManager.instance)
-                .addHostCreatedInstance(
-                  pigeon_newInstance?.call(
-                        arg_lowerLeftLatitude!,
-                        arg_lowerLeftLongitude!,
-                        arg_upperRightLatitude!,
-                        arg_upperRightLongitude!,
-                      ) ??
-                      GeographicBounds.pigeon_detached(
-                        pigeon_binaryMessenger: pigeon_binaryMessenger,
-                        pigeon_instanceManager: pigeon_instanceManager,
-                        lowerLeftLatitude: arg_lowerLeftLatitude!,
-                        lowerLeftLongitude: arg_lowerLeftLongitude!,
-                        upperRightLatitude: arg_upperRightLatitude!,
-                        upperRightLongitude: arg_upperRightLongitude!,
-                      ),
-                  arg_pigeon_instanceIdentifier!,
-                );
-            return wrapResponse(empty: true);
-          } on PlatformException catch (e) {
-            return wrapResponse(error: e);
-          } catch (e) {
-            return wrapResponse(
-              error: PlatformException(code: 'error', message: e.toString()),
-            );
-          }
-        });
-      }
-    }
-  }
-
-  @override
-  GeographicBounds pigeon_copy() {
-    return GeographicBounds.pigeon_detached(
-      pigeon_binaryMessenger: pigeon_binaryMessenger,
-      pigeon_instanceManager: pigeon_instanceManager,
-      lowerLeftLatitude: lowerLeftLatitude,
-      lowerLeftLongitude: lowerLeftLongitude,
-      upperRightLatitude: upperRightLatitude,
-      upperRightLongitude: upperRightLongitude,
-    );
-  }
-}
-
 /// Information about the current Android build, extracted from system properties.
 class Build extends PigeonInternalProxyApiBaseClass {
   /// Constructs [Build] without creating the associated native object.
@@ -2154,6 +1951,209 @@ class Geocoder extends PigeonInternalProxyApiBaseClass {
     return Geocoder.pigeon_detached(
       pigeon_binaryMessenger: pigeon_binaryMessenger,
       pigeon_instanceManager: pigeon_instanceManager,
+    );
+  }
+}
+
+/// Geographical bounds describing a geographic box.
+class GeographicBounds extends PigeonInternalProxyApiBaseClass {
+  factory GeographicBounds({
+    BinaryMessenger? pigeon_binaryMessenger,
+    PigeonInstanceManager? pigeon_instanceManager,
+    required double lowerLeftLatitude,
+    required double lowerLeftLongitude,
+    required double upperRightLatitude,
+    required double upperRightLongitude,
+  }) {
+    if (PigeonOverrides.geographicBounds_new != null) {
+      return PigeonOverrides.geographicBounds_new!(
+        lowerLeftLatitude: lowerLeftLatitude,
+        lowerLeftLongitude: lowerLeftLongitude,
+        upperRightLatitude: upperRightLatitude,
+        upperRightLongitude: upperRightLongitude,
+      );
+    }
+    return GeographicBounds.pigeon_new(
+      pigeon_binaryMessenger: pigeon_binaryMessenger,
+      pigeon_instanceManager: pigeon_instanceManager,
+      lowerLeftLatitude: lowerLeftLatitude,
+      lowerLeftLongitude: lowerLeftLongitude,
+      upperRightLatitude: upperRightLatitude,
+      upperRightLongitude: upperRightLongitude,
+    );
+  }
+
+  @protected
+  GeographicBounds.pigeon_new({
+    super.pigeon_binaryMessenger,
+    super.pigeon_instanceManager,
+    required this.lowerLeftLatitude,
+    required this.lowerLeftLongitude,
+    required this.upperRightLatitude,
+    required this.upperRightLongitude,
+  }) {
+    final int pigeonVar_instanceIdentifier = pigeon_instanceManager
+        .addDartCreatedInstance(this);
+    final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
+        _pigeonVar_codecGeographicBounds;
+    final BinaryMessenger? pigeonVar_binaryMessenger = pigeon_binaryMessenger;
+    const String pigeonVar_channelName =
+        'dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_defaultConstructor';
+    final BasicMessageChannel<Object?> pigeonVar_channel =
+        BasicMessageChannel<Object?>(
+          pigeonVar_channelName,
+          pigeonChannelCodec,
+          binaryMessenger: pigeonVar_binaryMessenger,
+        );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel
+        .send(<Object?>[
+          pigeonVar_instanceIdentifier,
+          lowerLeftLatitude,
+          lowerLeftLongitude,
+          upperRightLatitude,
+          upperRightLongitude,
+        ]);
+    () async {
+      final List<Object?>? pigeonVar_replyList =
+          await pigeonVar_sendFuture as List<Object?>?;
+      if (pigeonVar_replyList == null) {
+        throw _createConnectionError(pigeonVar_channelName);
+      } else if (pigeonVar_replyList.length > 1) {
+        throw PlatformException(
+          code: pigeonVar_replyList[0]! as String,
+          message: pigeonVar_replyList[1] as String?,
+          details: pigeonVar_replyList[2],
+        );
+      } else {
+        return;
+      }
+    }();
+  }
+
+  /// Constructs [GeographicBounds] without creating the associated native object.
+  ///
+  /// This should only be used by subclasses created by this library or to
+  /// create copies for an [PigeonInstanceManager].
+  @protected
+  GeographicBounds.pigeon_detached({
+    super.pigeon_binaryMessenger,
+    super.pigeon_instanceManager,
+    required this.lowerLeftLatitude,
+    required this.lowerLeftLongitude,
+    required this.upperRightLatitude,
+    required this.upperRightLongitude,
+  });
+
+  late final _PigeonInternalProxyApiBaseCodec _pigeonVar_codecGeographicBounds =
+      _PigeonInternalProxyApiBaseCodec(pigeon_instanceManager);
+
+  final double lowerLeftLatitude;
+
+  final double lowerLeftLongitude;
+
+  final double upperRightLatitude;
+
+  final double upperRightLongitude;
+
+  static void pigeon_setUpMessageHandlers({
+    bool pigeon_clearHandlers = false,
+    BinaryMessenger? pigeon_binaryMessenger,
+    PigeonInstanceManager? pigeon_instanceManager,
+    GeographicBounds Function(
+      double lowerLeftLatitude,
+      double lowerLeftLongitude,
+      double upperRightLatitude,
+      double upperRightLongitude,
+    )?
+    pigeon_newInstance,
+  }) {
+    final _PigeonInternalProxyApiBaseCodec pigeonChannelCodec =
+        _PigeonInternalProxyApiBaseCodec(
+          pigeon_instanceManager ?? PigeonInstanceManager.instance,
+        );
+    final BinaryMessenger? binaryMessenger = pigeon_binaryMessenger;
+    {
+      final BasicMessageChannel<Object?>
+      pigeonVar_channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
+      if (pigeon_clearHandlers) {
+        pigeonVar_channel.setMessageHandler(null);
+      } else {
+        pigeonVar_channel.setMessageHandler((Object? message) async {
+          assert(
+            message != null,
+            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null.',
+          );
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_pigeon_instanceIdentifier = (args[0] as int?);
+          assert(
+            arg_pigeon_instanceIdentifier != null,
+            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null int.',
+          );
+          final double? arg_lowerLeftLatitude = (args[1] as double?);
+          assert(
+            arg_lowerLeftLatitude != null,
+            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null double.',
+          );
+          final double? arg_lowerLeftLongitude = (args[2] as double?);
+          assert(
+            arg_lowerLeftLongitude != null,
+            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null double.',
+          );
+          final double? arg_upperRightLatitude = (args[3] as double?);
+          assert(
+            arg_upperRightLatitude != null,
+            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null double.',
+          );
+          final double? arg_upperRightLongitude = (args[4] as double?);
+          assert(
+            arg_upperRightLongitude != null,
+            'Argument for dev.flutter.pigeon.geocoding_android.GeographicBounds.pigeon_newInstance was null, expected non-null double.',
+          );
+          try {
+            (pigeon_instanceManager ?? PigeonInstanceManager.instance)
+                .addHostCreatedInstance(
+                  pigeon_newInstance?.call(
+                        arg_lowerLeftLatitude!,
+                        arg_lowerLeftLongitude!,
+                        arg_upperRightLatitude!,
+                        arg_upperRightLongitude!,
+                      ) ??
+                      GeographicBounds.pigeon_detached(
+                        pigeon_binaryMessenger: pigeon_binaryMessenger,
+                        pigeon_instanceManager: pigeon_instanceManager,
+                        lowerLeftLatitude: arg_lowerLeftLatitude!,
+                        lowerLeftLongitude: arg_lowerLeftLongitude!,
+                        upperRightLatitude: arg_upperRightLatitude!,
+                        upperRightLongitude: arg_upperRightLongitude!,
+                      ),
+                  arg_pigeon_instanceIdentifier!,
+                );
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
+          }
+        });
+      }
+    }
+  }
+
+  @override
+  GeographicBounds pigeon_copy() {
+    return GeographicBounds.pigeon_detached(
+      pigeon_binaryMessenger: pigeon_binaryMessenger,
+      pigeon_instanceManager: pigeon_instanceManager,
+      lowerLeftLatitude: lowerLeftLatitude,
+      lowerLeftLongitude: lowerLeftLongitude,
+      upperRightLatitude: upperRightLatitude,
+      upperRightLongitude: upperRightLongitude,
     );
   }
 }
